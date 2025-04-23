@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"  src="style.css">
+
+    <style>
+
+
+    :root {
+        --bg-default: #fff;
+        --bg-violeta: #9900ffc0;
+        --bg-rojo:#ff0000c0;
+        --bg-azul: #0000ffc0;
+        --bg-amarillo:#ffff00c0;
+        --bg-blanco:#fff;
+        --bg-magenta:#ff00ffc0;
+        --bg-naranja: #ffa500c0;
+    }
+    
+    body{
+        height: 100vh;
+        background-color: var(--bg-default);
+        transition: background-color 1.5s;
+    }
+
+    body, div, p{
+        margin: 0;
+    }
+
+
+    body, .container, .dado{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        margin: auto;
+        max-width: 1200px;
+    }
+
+    .dado_img{
+        position: relative;
+        width: 120px;
+        transition: opacity 3s;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        animation-name: defaultDado;
+        animation-duration: 3s;                                                  animation-iteration-count: initial; /* Repetir indefinidamente */
+        animation-direction: alternate;
+    }
+
+    .dado .onload {
+        animation-name: inicialDado!important;
+    }
+
+    .tirarDado{
+        animation-name: tirarDado !important;
+    }
+
+    .dado_img:hover{
+        cursor:pointer;
+    }
+
+    .dado_msg {
+        color: white;
+        font-size: 50px;
+        font-weight: 800;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 4s;
+    }
+
+
+    @keyframes inicialDado {
+      0% {top: -100vh;}
+      50% {top: 30vh;}
+      100% {top: 0;transform: rotate(360deg);}
+    }
+
+
+    @keyframes defaultDado {
+      0% { top: 0; opacity:1;}
+      50% {top: -30vh; opacity: 1;}
+      100% { top: 0; transform: rotate(360deg); }
+    }
+
+    @keyframes tirarDado {
+      0% { top: 0; opacity:1; }
+      50% { top: -30vh; opacity: 1; }
+      100% { top: 0; transform: rotate(360deg);}
+    }
+
+    </style>
+
+    <title>Dado</title>
+</head>
+
+<script src="script.js" defer></script>
+
+<body>
+    <div class="container">
+            <div class="dado">
+                <img class="dado_img onload" src="/open-box.png">
+                <img class="dado_msg" width="80px" src="#" alt="">                   
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
