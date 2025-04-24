@@ -1,1 +1,3 @@
 # randbox
+
+![](ui/randbox.gif)
