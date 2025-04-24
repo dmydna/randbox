@@ -4,10 +4,12 @@ const randbox = document.querySelector(".randbox");
 const randbox_msg = document.querySelector(".randbox_msg");
 const cantAp = document.querySelector(".cantAp")
 const ui = document.querySelector(".ui")
+const salud = document.querySelectorAll(".heart")
 
 
 let clickEvent = 0;
 let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones")) || [];
+let vidaIndex = salud.length - 1;
 
 console.log(cantRepetciones);
 
@@ -80,14 +82,27 @@ let ultimaImgen = 0;
 checkBtn.addEventListener('click', () => {
   cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
 
-  if (`${cantRepetciones[ultimaImgen]}` === cantAp.innerHTML) {
+  if ( cantRepetciones[ultimaImgen] == Number(cantAp.innerHTML)) {
     document.querySelector(".cartel h2").innerHTML="Respuesta Correcta!";
     correctos[ultimaImgen] = true;
   }else{
     document.querySelector(".cartel h2").innerHTML="Respuesta Incorrecta!";
+	 salud[vidaIndex].src = "ui/heart_off.png"
+	 	if (vidaIndex == 0){
+		 document.querySelector(".cartel h2").innerHTML="Game Over!"
+      } else{
+      vidaIndex --;
+   } 
   }
 
   console.log(correctos);
+
+	//si la respuesta es correcta pasa a la sig imagen
+	if (correctos[ultimaImgen]){
+		setTimeout( () => { randbox_img.click() }, 1000) 
+	}
+
+
 })
 
 resetBtn.addEventListener('click', () => { 
