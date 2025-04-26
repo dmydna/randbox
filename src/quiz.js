@@ -1,72 +1,86 @@
+import { btn_ui, cantVidas, gift_img } from "./config.js";
+
+
+let game_end = false;
+
 const box = document.querySelector(".box");
 const cantAp = document.querySelector(".cantAp")
 const ui = document.querySelector(".ui")
-const salud = document.querySelectorAll(".heart")
 const container_cartel = document.getElementById("container-cartel")
+const saludBar = document.querySelector(".salud")
 
-let game_over = false;
-let clickEvent = 0;
 let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones")) || [];
-
-let vidaIndex = salud.length - 1;
-
-let correctos = [false, false, false, false, false, false, false]
-
-const colores =  ["blanco","violeta","azul","magenta","naranja","rojo"];
-const btn_ui =   ["reset", "plus", "check"]
-const imgsHell = ["randbox.png","apple.png","cheese.png","hamburger.png","rocket.png","coin.png","box.png"]
+let vida = cantVidas - 1;
+let correctos = new Array(gift_img.length).fill(false);
 
 
-function randomLista(array){
-  let random_i =  Math.floor(Math.random() * array.length);
-  return array[random_i];
+
+// crea los corazones de la barra de salud
+for(let i=0;i < cantVidas;i++){
+  let heart = document.createElement('img');
+  heart.src = "ui/heart.png";
+  heart.classList.add("heart");
+  heart.width = 20;
+  document.querySelector(".salud").appendChild(heart);
 }
 
-imgsHell.map((src) =>{
-  let nuevaImg = document.createElement('img');
-  nuevaImg.src = `src/imgs/${src}`;
-  //nuevaImg.style.display="none";
-  nuevaImg.style.width="150px";
-  nuevaImg.classList.add("elem");
-  box.appendChild(nuevaImg);
-})
+const salud = document.querySelectorAll(".heart")
 
 
-btn_ui.map((src)=>{
-	btnUI = document.createElement('img');
+btn_ui.forEach((src, index)=>{
+	let btnUI = document.createElement('img');
 	btnUI.src = `ui/${src}.png`;
-	btnUI.style.width = "50px";
+	btnUI.width = 50;
 
-
-
-switch (src) {
-  case "plus":
-    btnUI.classList.add("plusBtn")
-    break;
-  case "reset":
+switch (index) {
+  case 0:
     btnUI.classList.add("resetBtn")
+    break;
+  case 1:
+    btnUI.classList.add("plusBtn")
     break;
   default:
     btnUI.classList.add("checkBtn")
 }
-
 	ui.appendChild(btnUI);
-
 });
 
 
-const plusBtn = document.querySelector(".plusBtn")
+
+const plusBtn  = document.querySelector(".plusBtn")
 const resetBtn = document.querySelector(".resetBtn")
 const checkBtn = document.querySelector(".checkBtn")
-const cartel = document.querySelector(".cartel")
+const cartel   = document.querySelector(".cartel")
 
 
 let ultimaImgen = 0;
 
 
+// importante la primer imagen al cargar el quiz
+box.src = `src/imgs/${gift_img[0]}.png`
+
+
+// juego terminado
+let tryAgainBtn = document.createElement('img');
+tryAgainBtn.src= "ui/reset2.png"
+tryAgainBtn.width=30;
+tryAgainBtn.classList.add("tryAgainBtn")
+
+let verScoreBtn = document.createElement('img');
+verScoreBtn.src = "ui/play.png"
+verScoreBtn.width =30;
+verScoreBtn.classList.add("verScoreBtn")
+
+tryAgainBtn.addEventListener('click', () => {window.location.href = "../quiz.html"} )
+verScoreBtn.addEventListener('click', () => {window.location.href = "../score.html"})
+
+
+
+
 checkBtn.addEventListener('click', () => {
   cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
 
+  /* impide que se haga click cuando aparece el cartel*/
   container_cartel.classList.add("cartel-on")
 
   if ( cantRepetciones[ultimaImgen] == Number(cantAp.innerHTML)) {
@@ -74,12 +88,15 @@ checkBtn.addEventListener('click', () => {
     correctos[ultimaImgen] = true;
   }else{
     document.querySelector(".cartel img").src="ui/skull.png";
-	      salud[vidaIndex].src = "ui/heart_off.png"
-	 	  if (vidaIndex == 0){
+	      salud[vida].src = "ui/heart_off.png"
+	 	  if (vida == 0){
 		       document.querySelector(".cartel img").src="ui/game-over.png";
-      game_over = true;
+      cartel.appendChild(tryAgainBtn);
+      cartel.style.transform ="scale(1.5)"
+      saludBar.style.display = "none";
+      game_end = true;
     } else{
-    vidaIndex --;
+    vida --;
    } 
   }
 
@@ -93,13 +110,12 @@ checkBtn.addEventListener('click', () => {
   }, 1200) 
 	} else {
     setTimeout( () => { 
-      if(game_over == false){
+      if(game_end == false){
         container_cartel.classList.remove("cartel-on")
         cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
       } else{
-        game_over = true
+        game_end = true
         cartel.style.opacity = "1";
-        setTimeout( () => { window.location.href = "../score.html" }, 1200)
       }
   }, 1200)
  }
@@ -136,18 +152,18 @@ box.addEventListener('click', () => {
 
   if (!siguienteEncontrado) {
       // Si todas están respondidas correctamente, terminar el juego
-      game_over = true;
-
+      game_end = true;
       document.querySelector(".cartel img").src="ui/win.png";
       cartel.style.opacity = "1";
-      setTimeout( () => { 
-        window.location.href = "../score.html";
-      }, 1500)
+      cartel.style.transform ="scale(1.5)"
+      cartel.appendChild(verScoreBtn);
+      saludBar.style.display = 'none';
 
-      
       return;
   }
 
   // Mostrar la nueva imagen
-  box.src = `src/imgs/${imgsHell[ultimaImgen]}`;
+  box.src = `src/imgs/${gift_img[ultimaImgen]}.png`;
 });
+
+
