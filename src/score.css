@@ -1,15 +1,22 @@
 @import url("index.css");
 
 
+    .header {
+        display: flex;
+        gap: 40px;
+        justify-content: left;
+        width: 100%;
+        align-items: center;
+    }
 
     .focus{
         display: block!important;
     }
 
-    h1 {
-        margin-bottom: 100px;
+    .container {
+        gap: 70px;
+        width: 400px;
     }
-
     .randbox {
         width: 100%;
         gap: 10px;
@@ -49,6 +56,9 @@
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
+        border: 1px solid green;
+        padding: 10px 15px;
+        border-radius: 2.5px;
     }
 	.ui {
 	    display: flex;

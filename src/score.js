@@ -1,22 +1,19 @@
-const body = document.querySelector("body");
-const randbox = document.querySelector(".randbox");
-const box = document.querySelector(".box");
-const gift = document.querySelector(".gift");
-const ui = document.querySelector(".ui")
+import { btn_ui, gift_img } from './config.js';
 
+
+const randbox = document.querySelector(".randbox");
+const resetBtn = document.createElement('img')
+const ui = document.querySelector(".ui")
 let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones"));
 
-imgsHell = [
-  "https://i.ibb.co/99wS9TFX/randbox.png",
-  "https://i.ibb.co/cXcpC9mh/apple.png",
-  "https://i.ibb.co/1f6QPcym/cheese.png",
-  "https://i.ibb.co/8D5HhYFp/hamburger.png",
-  "https://i.ibb.co/PsxZWmJj/rocket.png",
-  "https://i.ibb.co/jPGm2323/coin.png",
-  "https://i.ibb.co/Kj7YwTZW/box.png"
-]
 
-imgsHell.map((src, index) =>{
+
+resetBtn.src = `ui/${btn_ui[0]}.png`;
+resetBtn.width = 50;
+ui.appendChild(resetBtn);
+resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
+
+gift_img.map((src, index) =>{
   const nuevaImg = document.createElement('img');
   const imgContainer = document.createElement('div');
   const cantAp = document.createElement("h2");
@@ -26,10 +23,12 @@ imgsHell.map((src, index) =>{
   imgContainer.classList.add("imgContainer")
 
   cantAp.innerHTML = cantRepetciones[index];
-  nuevaImg.src = src;
+  nuevaImg.src = `src/imgs/${src}.png`;
   
   imgContainer.appendChild(nuevaImg);
   imgContainer.appendChild(cantAp);
 
   randbox.appendChild(imgContainer);
+
+  //localStorage.clear();
 })

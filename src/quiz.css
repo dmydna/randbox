@@ -1,5 +1,14 @@
 @import url("index.css");
 
+    .tryAgainBtn, .verScoreBtn {
+        position: absolute;
+        left: 35px;
+        background-color: white;
+        border-radius: 100%;
+        position: absolute;
+        bottom: -15px;
+    }
+
     .container {
         gap: 200px;
     }
@@ -33,6 +42,7 @@
     .cantAp {
         position: relative;
     }
+
 
     .cartel-on{
         position: absolute;

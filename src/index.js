@@ -1,32 +1,22 @@
+import { gift_img, limitClicks } from "./config.js";
+
 const box = document.querySelector(".box");
 const gift = document.querySelector(".gift");
+
 let clickEvent = 0;
+let cantRepetciones = new Array(gift_img.length).fill(0);
+let cantClicks = limitClicks;
 
-
-imgsHell = ["randbox.png","apple.png","cheese.png","hamburger.png","rocket.png","coin.png","box.png"]
-
-cantRepetciones = [0,0,0,0,0,0,0]
-
-let ultimaImgen = "";
-let cantClicks = 5;
 
 box.addEventListener('click', () => {
 
     box.classList.remove("onload");    
 
-    let random_i =  Math.floor(Math.random() * imgsHell.length);
+    let rand_index =  Math.floor(Math.random() * gift_img.length);
 
-    cantRepetciones[random_i]++;
-
-    // checkeo que las imgs sean distintas
-     let imgActual = imgsHell[random_i];
-    while(imgActual == ultimaImgen ){
-        imgActual = imgsHell[random_i];
-    }
-    ultimaImgen = imgActual;
+    cantRepetciones[rand_index]++;
     
-    
-    gift.src = `src/imgs/${imgActual}`;
+    gift.src = `src/imgs/${gift_img[rand_index]}.png`;
     
     
     if (clickEvent == 0){
@@ -51,4 +41,5 @@ box.addEventListener('click', () => {
     // console.log(imgActual);
     // console.log(cantRepetciones);
 }); 
+
 
