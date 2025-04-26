@@ -8,7 +8,7 @@ let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones"));
 
 
 
-resetBtn.src = `ui/${btn_ui[0]}.png`;
+resetBtn.src = `/ui/${btn_ui[0]}.png`;
 resetBtn.width = 50;
 ui.appendChild(resetBtn);
 resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
