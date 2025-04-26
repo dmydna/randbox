@@ -16,7 +16,7 @@ box.addEventListener('click', () => {
 
     cantRepetciones[rand_index]++;
     
-    gift.src = `src/imgs/${gift_img[rand_index]}.png`;
+    gift.src = `/imgs/${gift_img[rand_index]}.png`;
     
     
     if (clickEvent == 0){
