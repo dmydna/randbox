@@ -1,3 +1,3 @@
 # randbox
 
-![](ui/randbox.gif)
+![](public/ui/randbox.gif)
