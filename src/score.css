@@ -1,0 +1,60 @@
+@import url("index.css");
+
+
+
+    .focus{
+        display: block!important;
+    }
+
+    h1 {
+        margin-bottom: 100px;
+    }
+
+    .randbox {
+        width: 100%;
+        gap: 10px;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: normal;
+    }
+
+    .gift{
+        opacity: 1;
+        height: 50px;
+        position: relative;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        animation-name: likeHand;
+        animation-duration: 3s;      
+        animation-iteration-count: 3; 
+        animation-direction: alternate;
+    }
+
+
+    .randbox .onload {
+       animation-name: none
+    }
+
+
+
+    .box:hover{
+        cursor:pointer;
+    }
+
+
+    .imgContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+	.ui {
+	    display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+	}
+

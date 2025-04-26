@@ -1,0 +1,114 @@
+
+    :root {
+        --bg-default: #fff;
+        --bg-violeta: #9900ffc0;
+        --bg-rojo:#ff0000c0;
+        --bg-azul: #0000ffc0;
+        --bg-amarillo:#ffff00c0;
+        --bg-blanco:#fff;
+        --bg-magenta:#ff00ffc0;
+        --bg-naranja: #ffa500c0;
+    }
+    body{
+        height: 100vh;
+        background-color: var(--bg-default);
+        transition: background-color 1.5s;
+    }
+
+    body, div, p{
+        margin: 0;
+    }
+
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body, .container, .randbox{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        margin: auto;
+        max-width: 1200px;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container img:hover{
+        cursor: pointer;
+    }
+
+    .box{
+        position: relative;
+        width: 120px;
+        transition: opacity 3s;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        animation-name: defaultBox;
+        animation-duration: 3s;                                                  animation-iteration-count: initial; 
+        animation-direction: alternate;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .randbox .onload {
+        animation-name: bootloader!important;
+    }
+
+    .tirarBox{
+        animation-name: tirarBox !important;
+    }
+
+    .box:hover{
+        cursor:pointer;
+    }
+
+    .gift {
+        color: white;
+        font-size: 50px;
+        font-weight: 800;
+        position: absolute;
+        transition: opacity 4s;
+        opacity: 0;
+    }
+
+
+
+@keyframes bootloader {
+  0% {top: -100vh;}
+  50% {top: 30vh;}
+  100% {top: 0;transform: rotate(360deg);}
+}
+
+
+@keyframes defaultBox {
+  0% { top: 0; opacity:1;}
+  50% {top: -30vh; opacity: 1;}
+  100% { top: 0; transform: rotate(360deg); }
+}
+
+@keyframes tirarBox {
+  0% { top: 0; opacity:1; }
+  50% { top: -30vh; opacity: 1; }
+  100% { top: 0; transform: rotate(360deg);}
+}
+
+@keyframes likeHand {
+    0%, 25%, 55%, 85%, 100% {
+        animation-timing-function: ease-out;
+        transform: translate3d(0, 0, 0);
+    }
+    41%, 44% {
+        animation-timing-function: ease-in;
+        transform: translate3d(0, -80px, 0) scale3d(1, 1.6, 1);
+    }
+    70% {
+        animation-timing-function: ease-in;
+        transform: translate3d(0, -20px, 0);
+    }
+    90% { transform: translate3d(0, -4px, 0) }
+  }
+  

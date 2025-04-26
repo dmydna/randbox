@@ -1,0 +1,56 @@
+@import url("index.css");
+
+    .container {
+        gap: 200px;
+    }
+
+    .cantAp,.cartel {
+        text-align: center;
+        transition: opacity .7s;
+        position: absolute;
+        background-color: white;
+        z-index: 1;
+    }
+
+    .cartel{
+        opacity: 1;
+        color: green; 
+        border: 1px solid; 
+        padding: 10px; 
+        max-width: 400px;
+    }
+
+    .btnContainer,.salud {
+        flex-direction: row;
+    }
+
+
+    .salud {
+        display: flex;
+        gap: 10px;
+    }
+
+    .cantAp {
+        position: relative;
+    }
+
+    .cartel-on{
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+    }
+    .msg {
+        animation-name: likeHand;
+        animation-duration: 1s; 
+        animation-iteration-count: infinite; 
+        animation-direction: alternate;
+    }
+
+    .ui {
+        display: flex;
+        gap: 50px;
+    }
+
+
+
