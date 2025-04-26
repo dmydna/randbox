@@ -31,7 +31,7 @@ box.addEventListener('click', () => {
     cantClicks--;
 
     if (cantClicks == 0) {
-        window.location.href = "../quiz.html"
+        window.location.href = "../src/pages/quiz.html"
     }
 
     localStorage.setItem("cantRepeticiones", JSON.stringify(cantRepetciones));

@@ -23,7 +23,7 @@ gift_img.map((src, index) =>{
   imgContainer.classList.add("imgContainer")
 
   cantAp.innerHTML = cantRepetciones[index];
-  nuevaImg.src = `src/imgs/${src}.png`;
+  nuevaImg.src = `/ui/${src}.png`;
   
   imgContainer.appendChild(nuevaImg);
   imgContainer.appendChild(cantAp);
