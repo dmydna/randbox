@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css"  href="src/score.css">
-    <script src="src/score.js" defer></script>
+    <script type="module" src="src/score.js" defer></script>
 
     <title>randbox</title>
 </head>
@@ -12,13 +12,14 @@
 
 <body>
     <div class="container">
-        <h1>Respuestas:</h1>
+        <div class="header">
+            <img height="70px" src="./ui/high-score.png">
+            <h1 class="score">score: 10000</h1>
+        </div>
+
         <div class="randbox">         
         </div>
         <div class="ui">
-            <a href="index.html" class="reset_button">
-		        <img width="40px" style=" margin: auto; margin-top:50px " src="ui/reset.png">
-            </a>
 		  </div>
     </div>
 
