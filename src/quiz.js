@@ -9,6 +9,12 @@ const ui = document.querySelector(".ui")
 const container_cartel = document.getElementById("container-cartel")
 const saludBar = document.querySelector(".salud")
 
+let puntuacion = 10000;
+
+let intentos =  JSON.parse(localStorage.getItem("intentos"));
+
+console.log(intentos);
+
 let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones")) || [];
 let vida = cantVidas - 1;
 let correctos = new Array(gift_img.length).fill(false);
@@ -71,7 +77,17 @@ verScoreBtn.src = "ui/play.png"
 verScoreBtn.width =30;
 verScoreBtn.classList.add("verScoreBtn")
 
-tryAgainBtn.addEventListener('click', () => {window.location.href = "../quiz.html"} )
+tryAgainBtn.addEventListener('click', () => {
+  intentos--;
+  localStorage.setItem("intentos", JSON.stringify(intentos))
+
+  if (intentos <= 0){
+    window.location.href = "../index.html"
+  }else{
+    window.location.href = "../quiz.html"; 
+  }
+
+} )
 verScoreBtn.addEventListener('click', () => {window.location.href = "../score.html"})
 
 
@@ -86,9 +102,12 @@ checkBtn.addEventListener('click', () => {
   if ( cantRepetciones[ultimaImgen] == Number(cantAp.innerHTML)) {
     document.querySelector(".cartel img").src="ui/like.png";
     correctos[ultimaImgen] = true;
+    puntuacion += 3000;
   }else{
     document.querySelector(".cartel img").src="ui/skull.png";
 	      salud[vida].src = "ui/heart_off.png"
+    puntuacion -= 2000;
+
 	 	  if (vida == 0){
 		       document.querySelector(".cartel img").src="ui/game-over.png";
       cartel.appendChild(tryAgainBtn);
@@ -158,7 +177,7 @@ box.addEventListener('click', () => {
       cartel.style.transform ="scale(1.5)"
       cartel.appendChild(verScoreBtn);
       saludBar.style.display = 'none';
-
+      localStorage.setItem("puntuacion", JSON.stringify(puntuacion))
       return;
   }
 

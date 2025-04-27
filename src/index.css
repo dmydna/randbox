@@ -21,7 +21,13 @@
 
     * {
         -webkit-tap-highlight-color: transparent;
+         user-select: none;
+        -webkit-user-select: none; 
+        -moz-user-select: none;    
+        -ms-user-select: none;     
+        user-select: none;       
     }
+
 
     body, .container, .randbox{
         display: flex;
@@ -49,7 +55,8 @@
         left: 0;
         right: 0;
         animation-name: defaultBox;
-        animation-duration: 3s;                                                  animation-iteration-count: initial; 
+        animation-duration: 3s; 
+        animation-iteration-count: initial; 
         animation-direction: alternate;
         -webkit-tap-highlight-color: transparent;
     }
@@ -76,6 +83,31 @@
     }
 
 
+    .barraCarga {
+        position: absolute;
+        width: 20%;
+        bottom: 40px;
+        font-size: 40px;
+        border-radius: 15px;
+        padding: 15px;
+        overflow: hidden;
+        box-shadow: inset -2px 2px 5px #9e9e9e, inset 2px 2px 5px #fff;
+        opacity: .5;
+        transition: opacity 3s;
+    }
+    .carga {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0%;
+        background-color: gray;
+        transition: width 1s;
+    }
+
+    .sacudir {
+        animation: hu__hu__ infinite 2s ease-in-out; 
+    }
 
 @keyframes bootloader {
   0% {top: -100vh;}
@@ -112,3 +144,7 @@
     90% { transform: translate3d(0, -4px, 0) }
   }
   
+
+@keyframes hu__hu__ {
+    50% { transform: translateY(40px) }
+}

@@ -4,8 +4,15 @@ import { btn_ui, gift_img } from './config.js';
 const randbox = document.querySelector(".randbox");
 const resetBtn = document.createElement('img')
 const ui = document.querySelector(".ui")
+const score_container = document.querySelector(".score")
+
 let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones"));
 
+const puntuacion = JSON.parse(localStorage.getItem("puntuacion"));
+
+console.log(puntuacion);
+
+score_container.innerHTML = `score: ${puntuacion}`;
 
 
 resetBtn.src = `ui/${btn_ui[0]}.png`;

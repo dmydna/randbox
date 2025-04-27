@@ -4,7 +4,7 @@
     .header {
         display: flex;
         gap: 40px;
-        justify-content: left;
+        justify-content: space-between;
         width: 100%;
         align-items: center;
     }
@@ -16,6 +16,7 @@
     .container {
         gap: 70px;
         width: 400px;
+        margin: 20px;
     }
     .randbox {
         width: 100%;
