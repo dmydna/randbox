@@ -107,7 +107,7 @@ class JuegoQuiz {
     }
 
     haTerminado() {
-        return  this.haPerdido() || this.preguntasDisponibles == 0;
+        return  this.haPerdido() || this.preguntasDisponibles.length == 0;
     }
 
 	haPerdido(){

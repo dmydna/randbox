@@ -63,7 +63,7 @@ const cartel   = document.querySelector(".cartel")
 
 
 tryAgainBtn.addEventListener('click', () => {
-  window.location.href = "../quiz.html"; 
+  window.location.href = "../quiz.mob.html"; 
 })
 
 verScoreBtn.addEventListener('click', () => {
@@ -79,6 +79,7 @@ box.src = `src/imgs/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 checkBtn.addEventListener('click', () => {
 
+  const barra_estado = document.querySelector(".carga")
   const barraCorrazones = document.querySelector(".salud")
   const corazones = document.querySelectorAll(".heart")
   const container_cartel = document.getElementById("container-cartel")
@@ -108,6 +109,8 @@ checkBtn.addEventListener('click', () => {
     }
 
     randboxQuiz.siguientePregunta();
+
+    barra_estado.style.width =`${((randboxQuiz.quiz.cantPreguntas - randboxQuiz.preguntasDisponibles.length + 1) / randboxQuiz.quiz.cantPreguntas) * 100}%`
     
   }else{
 

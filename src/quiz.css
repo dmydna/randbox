@@ -37,6 +37,7 @@
     .salud {
         display: flex;
         gap: 10px;
+        justify-content: center;
     }
 
     .cantAp {
@@ -101,3 +102,4 @@
         margin-inline: auto;
         transition: width .7s ease-in-out;
     }
+
