@@ -177,6 +177,8 @@ plusBtn.addEventListener('click', () => {
 
 box.addEventListener('click', () => {
   
+document.querySelector(".barra-estado").style.width =`${((randboxQuiz.quiz.cantPreguntas - randboxQuiz.preguntasDisponibles.length + 1) / randboxQuiz.quiz.cantPreguntas) * 100}%`
+
   const imgGift = randboxQuiz.siguientePregunta()
 
   cartel.style.opacity = "0";

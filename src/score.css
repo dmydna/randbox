@@ -64,6 +64,7 @@
         border: 1px solid green;
         padding: 10px 15px;
         border-radius: 2.5px;
+        margin-bottom: 15px;
     }
 	.ui {
 	    display: flex;
@@ -74,6 +75,6 @@
 	}
 
 
-    .imgContainer:first-child{
+    /* .imgContainer:first-child{
         margin-top: 20px;
-    }
+    } */
