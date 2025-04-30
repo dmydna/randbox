@@ -1,28 +1,19 @@
-import { btn_ui, cantVidas, gift_img } from "./config.js";
+import { btn_ui, cantVidas} from "./config.js";
+import { JuegoQuiz } from "./randbox.js";
 
-
-let game_end = false;
 
 const box = document.querySelector(".box");
 const cantAp = document.querySelector(".cantAp")
 const ui = document.querySelector(".ui")
-const container_cartel = document.getElementById("container-cartel")
-const saludBar = document.querySelector(".salud")
-
-let puntuacion = 10000;
-
-let intentos =  JSON.parse(localStorage.getItem("intentos"));
-
-console.log(intentos);
-
-let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones")) || [];
-let vida = cantVidas - 1;
-let correctos = new Array(gift_img.length).fill(false);
 
 
+const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
+const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
 
-// crea los corazones de la barra de salud
-for(let i=0;i < cantVidas;i++){
+
+// barra de salud (corazones)
+
+for(let i=0;i < randboxQuiz.intentosRestantes ;i++){
   let heart = document.createElement('img');
   heart.src = "ui/heart.png";
   heart.classList.add("heart");
@@ -30,27 +21,39 @@ for(let i=0;i < cantVidas;i++){
   document.querySelector(".salud").appendChild(heart);
 }
 
-const salud = document.querySelectorAll(".heart")
+// botones  GameOver / Win
 
+const tryAgainBtn = document.createElement('img');
+tryAgainBtn.src= "ui/reset2.png"
+tryAgainBtn.width=30;
+tryAgainBtn.classList.add("tryAgainBtn")
+
+const verScoreBtn = document.createElement('img');
+verScoreBtn.src = "ui/play.png"
+verScoreBtn.width =30;
+verScoreBtn.classList.add("verScoreBtn")
+
+
+// botones de accion 
 
 btn_ui.forEach((src, index)=>{
-	let btnUI = document.createElement('img');
-	btnUI.src = `ui/${src}.png`;
-	btnUI.width = 50;
+  let btnUI = document.createElement('img');
+  btnUI.src = `ui/${src}.png`;
+  btnUI.width = 50;
 
-switch (index) {
-  case 0:
-    btnUI.classList.add("resetBtn")
-    break;
-  case 1:
-    btnUI.classList.add("plusBtn")
-    break;
-  default:
-    btnUI.classList.add("checkBtn")
-}
-	ui.appendChild(btnUI);
+  switch (index) {
+    case 0:
+      btnUI.classList.add("resetBtn")
+      break;
+    case 1:
+      btnUI.classList.add("plusBtn")
+      break;
+    default:
+      btnUI.classList.add("checkBtn")
+  }
+  ui.appendChild(btnUI);
+
 });
-
 
 
 const plusBtn  = document.querySelector(".plusBtn")
@@ -59,85 +62,104 @@ const checkBtn = document.querySelector(".checkBtn")
 const cartel   = document.querySelector(".cartel")
 
 
-let ultimaImgen = 0;
-
-
-// importante la primer imagen al cargar el quiz
-box.src = `src/imgs/${gift_img[0]}.png`
-
-
-// juego terminado
-let tryAgainBtn = document.createElement('img');
-tryAgainBtn.src= "ui/reset2.png"
-tryAgainBtn.width=30;
-tryAgainBtn.classList.add("tryAgainBtn")
-
-let verScoreBtn = document.createElement('img');
-verScoreBtn.src = "ui/play.png"
-verScoreBtn.width =30;
-verScoreBtn.classList.add("verScoreBtn")
-
 tryAgainBtn.addEventListener('click', () => {
-  intentos--;
-  localStorage.setItem("intentos", JSON.stringify(intentos))
+  window.location.href = "../quiz.html"; 
+})
 
-  if (intentos <= 0){
-    window.location.href = "../index.html"
-  }else{
-    window.location.href = "../quiz.html"; 
-  }
+verScoreBtn.addEventListener('click', () => {
+  window.location.href = "../score.html"
+})
 
-} )
-verScoreBtn.addEventListener('click', () => {window.location.href = "../score.html"})
 
+
+// Importante! Primera imagen de gift
+box.src = `src/imgs/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
 
 checkBtn.addEventListener('click', () => {
+
+  const barraCorrazones = document.querySelector(".salud")
+  const corazones = document.querySelectorAll(".heart")
+  const container_cartel = document.getElementById("container-cartel")
+  const puntos = document.querySelector(".puntos")
+
   cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
+  puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
 
   /* impide que se haga click cuando aparece el cartel*/
   container_cartel.classList.add("cartel-on")
 
-  if ( cantRepetciones[ultimaImgen] == Number(cantAp.innerHTML)) {
+
+  /* Responde Bien */ 
+
+  if ( randboxQuiz.verificarRespuesta(cantAp.innerHTML) ) {
+  
     document.querySelector(".cartel img").src="ui/like.png";
-    correctos[ultimaImgen] = true;
-    puntuacion += 3000;
-  }else{
-    document.querySelector(".cartel img").src="ui/skull.png";
-	      salud[vida].src = "ui/heart_off.png"
-    puntuacion -= 2000;
+    puntos.innerHTML = "+3000"
+    puntos.style.color = "green"
 
-	 	  if (vida == 0){
-		       document.querySelector(".cartel img").src="ui/game-over.png";
-      cartel.appendChild(tryAgainBtn);
-      cartel.style.transform ="scale(1.5)"
-      saludBar.style.display = "none";
-      game_end = true;
-    } else{
-    vida --;
-   } 
-  }
-
-  console.log(correctos);
-
-	//si la respuesta es correcta pasa a la sig imagen
-	if (correctos[ultimaImgen]){
-		setTimeout( () => { 
+    if(! randboxQuiz.haTerminado()){
+      setTimeout( () => { 
         box.click();
         container_cartel.classList.remove("cartel-on")
-  }, 1200) 
-	} else {
-    setTimeout( () => { 
-      if(game_end == false){
+        puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
+      }, 1200)
+    }
+
+    randboxQuiz.siguientePregunta();
+    
+  }else{
+
+    /* Responde Mal */ 
+
+    document.querySelector(".cartel img").src ="ui/skull.png";
+	      corazones[randboxQuiz.intentosRestantes].src = "ui/heart_off.png"
+    puntos.innerHTML = "-3000"
+    puntos.style.color = "red"
+
+    if (! randboxQuiz.haTerminado()){
+      setTimeout( ()=> { 
         container_cartel.classList.remove("cartel-on")
         cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
-      } else{
-        game_end = true
-        cartel.style.opacity = "1";
-      }
-  }, 1200)
- }
+        puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
+      } , 1200 )
+
+    }
+
+  }
+
+
+  /* El Juego Termino */
+
+  if(randboxQuiz.haTerminado()){
+
+    /* Pierde */
+    if (randboxQuiz.haPerdido()){
+
+      document.querySelector(".cartel img").src="ui/game-over.png";
+      puntos.style.opacity = "0";
+      cartel.style.opacity = "1";
+      cartel.style.transform ="scale(1.5)"
+      cartel.appendChild(tryAgainBtn);
+      barraCorrazones.style.display = "none";
+
+  
+    }else {
+    /*  Gana */  
+      document.querySelector(".cartel img").src="ui/win.png";
+      puntos.style.opacity = 0;
+      cartel.style.opacity = "1";
+      cartel.style.transform ="scale(1.5)"
+      cartel.appendChild(verScoreBtn);
+      barraCorrazones.style.display = 'none';
+  
+    }
+  }
+
+  localStorage.setItem("score", JSON.stringify(randboxQuiz.puntaje));
+
+
 })
 
 
@@ -151,38 +173,23 @@ plusBtn.addEventListener('click', () => {
   cartel.style.opacity = "0";
 });
 
+
+
 box.addEventListener('click', () => {
-  console.log(`Imagen actual: ${ultimaImgen}`);
+  
+  const imgGift = randboxQuiz.siguientePregunta()
 
   cartel.style.opacity = "0";
   cantAp.innerHTML = "0";
 
-  // Buscar la próxima imagen que no haya sido respondida correctamente
-  let siguienteEncontrado = false;
+  /* Si el juego termina no cambia de imagen */
 
-  for (let i = 0; i < correctos.length; i++) {
-    let index = (ultimaImgen + 1 + i) % correctos.length;
-    if (!correctos[index]) {
-      ultimaImgen = index;
-      siguienteEncontrado = true;
-      break;
-    }
+  if (! randboxQuiz.haTerminado() ){
+    box.src = `src/imgs/${imgGift}.png`
+    localStorage.setItem("score", JSON.stringify(randboxQuiz.puntaje));
   }
 
-  if (!siguienteEncontrado) {
-      // Si todas están respondidas correctamente, terminar el juego
-      game_end = true;
-      document.querySelector(".cartel img").src="ui/win.png";
-      cartel.style.opacity = "1";
-      cartel.style.transform ="scale(1.5)"
-      cartel.appendChild(verScoreBtn);
-      saludBar.style.display = 'none';
-      localStorage.setItem("puntuacion", JSON.stringify(puntuacion))
-      return;
-  }
 
-  // Mostrar la nueva imagen
-  box.src = `src/imgs/${gift_img[ultimaImgen]}.png`;
 });
 
 

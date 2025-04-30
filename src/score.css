@@ -14,16 +14,20 @@
     }
 
     .container {
-        gap: 70px;
+        gap: 40px;
         width: 400px;
         margin: 20px;
     }
     .randbox {
         width: 100%;
         gap: 10px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         flex-direction: column;
         align-items: normal;
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: block!important;
     }
 
     .gift{
@@ -69,3 +73,7 @@
         width: 100%;
 	}
 
+
+    .imgContainer:first-child{
+        margin-top: 20px;
+    }

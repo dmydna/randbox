@@ -148,3 +148,18 @@
 @keyframes hu__hu__ {
     50% { transform: translateY(40px) }
 }
+
+
+
+.bounceOutTop { animation-name: bounceOutTop;  animation-iteration-count: 1 }
+
+@keyframes bounceOutTop {
+    18%, 33%, 48% { opacity: 1}
+    18% { transform: translate3d(0, 27px, 0) }
+    33% { transform: translate3d(0, -12px, 0) }
+    48% { transform: translate3d(0, 8px, 0) }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, -300%, 0)
+    }
+}

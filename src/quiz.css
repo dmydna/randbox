@@ -63,4 +63,16 @@
     }
 
 
-
+    .puntos {
+        top: 30px;
+        position: absolute;
+        font-size: 30px;
+        z-index: 2;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+        animation-direction: alternate;
+        color: green;
+        font-weight: 700;
+        transition: opacity .5s ease-in-out;
+        z-index: 4;
+    }

@@ -1,4 +1,4 @@
-import { btn_ui, gift_img } from './config.js';
+import { btn_ui } from './config.js';
 
 
 const randbox = document.querySelector(".randbox");
@@ -6,11 +6,10 @@ const resetBtn = document.createElement('img')
 const ui = document.querySelector(".ui")
 const score_container = document.querySelector(".score")
 
-let cantRepetciones = JSON.parse(localStorage.getItem("cantRepeticiones"));
+const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz"));
+const puntuacion = JSON.parse(localStorage.getItem("score"));
 
-const puntuacion = JSON.parse(localStorage.getItem("puntuacion"));
 
-console.log(puntuacion);
 
 score_container.innerHTML = `score: ${puntuacion}`;
 
@@ -20,22 +19,31 @@ resetBtn.width = 50;
 ui.appendChild(resetBtn);
 resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
 
-gift_img.map((src, index) =>{
-  const nuevaImg = document.createElement('img');
-  const imgContainer = document.createElement('div');
-  const cantAp = document.createElement("h2");
 
-  nuevaImg.classList.add("gift")
-  cantAp.classList.add("cantAp")
-  imgContainer.classList.add("imgContainer")
+for (const clave in preguntasQuiz) {
+  if (preguntasQuiz.hasOwnProperty(clave)) { 
+    
+    const valor = preguntasQuiz[clave];
+    
+    const nuevaImg = document.createElement('img');
+    const imgContainer = document.createElement('div');
+    const cantAp = document.createElement("h2");
 
-  cantAp.innerHTML = cantRepetciones[index];
-  nuevaImg.src = `src/imgs/${src}.png`;
+    nuevaImg.classList.add("gift")
+    cantAp.classList.add("cantAp")
+    imgContainer.classList.add("imgContainer")
+
+    cantAp.innerHTML = valor;
+    nuevaImg.src = `src/imgs/${clave}.png`;
   
-  imgContainer.appendChild(nuevaImg);
-  imgContainer.appendChild(cantAp);
+    imgContainer.appendChild(nuevaImg);
+    imgContainer.appendChild(cantAp);
 
-  randbox.appendChild(imgContainer);
+    randbox.appendChild(imgContainer);
+
+  }
+}
+
+
 
   //localStorage.clear();
-})

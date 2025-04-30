@@ -1,5 +1,6 @@
 import { gift_img, limitClicks, cantidadDeIntentos } from "./config.js";
 
+
 const box = document.querySelector(".box");
 const gift = document.querySelector(".gift");
 let intentos = cantidadDeIntentos;
@@ -7,9 +8,17 @@ let intentos = cantidadDeIntentos;
 localStorage.setItem("intentos", JSON.stringify(intentos));
 
 let clickEvent = 0;
-let cantRepetciones = new Array(gift_img.length).fill(0);
+
 let cantClicks = limitClicks;
 
+
+
+
+const preguntasQuiz = {}
+gift_img.forEach( (img) => {
+     preguntasQuiz[img] = 0;
+    } 
+)
 
 
 
@@ -27,7 +36,6 @@ box.addEventListener('click', () => {
         document.querySelector(".barraCarga").style.opacity = 0;
 
         setInterval( () => {
-            //window.location.href = "../quiz.html"
 
             box.style.opacity = 0
             gift.style.visibility = "hidden"
@@ -45,7 +53,11 @@ box.addEventListener('click', () => {
 
     let rand_index =  Math.floor(Math.random() * gift_img.length);
 
-    cantRepetciones[rand_index]++;
+    let giftImgStr = gift_img[rand_index]
+
+    preguntasQuiz[giftImgStr] = preguntasQuiz[giftImgStr] ?? 0 
+    preguntasQuiz[giftImgStr] ++ 
+
     
     gift.src = `src/imgs/${gift_img[rand_index]}.png`;
     
@@ -59,16 +71,9 @@ box.addEventListener('click', () => {
         box.classList.remove("tirarBox")
     }
 
-    
 
     cantClicks--;
 
-    localStorage.setItem("cantRepeticiones", JSON.stringify(cantRepetciones));
-    
-
-    // console.log(cantClicks);
-    // console.log(imgActual);
-    // console.log(cantRepetciones);
+    localStorage.setItem("preguntasQuiz", JSON.stringify(preguntasQuiz));
 }); 
-
 
