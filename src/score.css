@@ -1,80 +1,61 @@
 @import url("index.css");
 
-
-    .header {
-        display: flex;
-        gap: 40px;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-    }
-
-    .focus{
-        display: block!important;
-    }
-
-    .container {
-        gap: 40px;
-        width: 400px;
-        margin: 20px;
-    }
-    .randbox {
-        width: 100%;
-        gap: 10px;
-        flex-wrap: nowrap;
-        flex-direction: column;
-        align-items: normal;
-        height: 400px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        display: block!important;
-    }
-
-    .gift{
-        opacity: 1;
-        height: 50px;
-        position: relative;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        right: 0;
-        animation-name: likeHand;
-        animation-duration: 3s;      
-        animation-iteration-count: 3; 
-        animation-direction: alternate;
-    }
-
-
-    .randbox .onload {
-       animation-name: none
-    }
+.focus {
+  display: block !important;
+}
 
 
 
-    .box:hover{
-        cursor:pointer;
-    }
+.randbox {
+  width: 100%;
+  gap: 10px;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: normal;
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.gift {
+  opacity: 1;
+  height: 50px;
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation-name: likeHand;
+  animation-duration: 3s;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+}
 
 
-    .imgContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        border: 1px solid green;
-        padding: 10px 15px;
-        border-radius: 2.5px;
-        margin-bottom: 15px;
-    }
-	.ui {
-	    display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-	}
+.randbox .onload {
+  animation-name: none
+}
 
 
-    /* .imgContainer:first-child{
+
+.box:hover {
+    cursor: pointer;
+}
+
+
+.imgContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border: 1px solid green;
+  padding: 10px 15px;
+  border-radius: 2.5px;
+  margin-bottom: 15px;
+}
+
+
+
+/* .imgContainer:first-child{
         margin-top: 20px;
     } */
