@@ -63,7 +63,7 @@ const cartel   = document.querySelector(".cartel")
 
 
 tryAgainBtn.addEventListener('click', () => {
-  window.location.href = "../quiz.html"; 
+  window.location.reload(true); 
 })
 
 verScoreBtn.addEventListener('click', () => {
@@ -83,6 +83,7 @@ checkBtn.addEventListener('click', () => {
   const corazones = document.querySelectorAll(".heart")
   const container_cartel = document.getElementById("container-cartel")
   const puntos = document.querySelector(".puntos")
+  const barra_estado = document.querySelector(".carga")
 
   cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
   puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
@@ -96,7 +97,7 @@ checkBtn.addEventListener('click', () => {
   if ( randboxQuiz.verificarRespuesta(cantAp.innerHTML) ) {
   
     document.querySelector(".cartel img").src="ui/like.png";
-    puntos.innerHTML = "+3000"
+    puntos.innerHTML = "+" + randboxQuiz.incPuntaje()
     puntos.style.color = "green"
 
     if(! randboxQuiz.haTerminado()){
@@ -108,6 +109,9 @@ checkBtn.addEventListener('click', () => {
     }
 
     randboxQuiz.siguientePregunta();
+
+    barra_estado.style.width =`${((randboxQuiz.quiz.cantPreguntas - randboxQuiz.preguntasDisponibles.length ) / randboxQuiz.quiz.cantPreguntas) * 100}%`
+
     
   }else{
 
@@ -115,7 +119,7 @@ checkBtn.addEventListener('click', () => {
 
     document.querySelector(".cartel img").src ="ui/skull.png";
 	      corazones[randboxQuiz.intentosRestantes].src = "ui/heart_off.png"
-    puntos.innerHTML = "-3000"
+    puntos.innerHTML = "-" + randboxQuiz.decPuntaje()
     puntos.style.color = "red"
 
     if (! randboxQuiz.haTerminado()){
@@ -140,7 +144,6 @@ checkBtn.addEventListener('click', () => {
       document.querySelector(".cartel img").src="ui/game-over.png";
       puntos.style.opacity = "0";
       cartel.style.opacity = "1";
-      cartel.style.transform ="scale(1.5)"
       cartel.appendChild(tryAgainBtn);
       barraCorrazones.style.display = "none";
 
@@ -150,7 +153,6 @@ checkBtn.addEventListener('click', () => {
       document.querySelector(".cartel img").src="ui/win.png";
       puntos.style.opacity = 0;
       cartel.style.opacity = "1";
-      cartel.style.transform ="scale(1.5)"
       cartel.appendChild(verScoreBtn);
       barraCorrazones.style.display = 'none';
   

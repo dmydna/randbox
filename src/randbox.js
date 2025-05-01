@@ -84,10 +84,11 @@ class JuegoQuiz {
 		const preguntaActualString = this.quiz.getPreguntaActual()
         if (esCorrecta) {
 			this.preguntasDisponibles = this.preguntasDisponibles.filter(elem => elem != preguntaActualString)
-			this.puntaje ++;
+			this.incPuntaje()
             console.log("¡Correcto!");
         } else {
             this.intentosRestantes--;
+			this.decPuntaje()
         }
         return esCorrecta;
     }
@@ -114,6 +115,17 @@ class JuegoQuiz {
 		return this.intentosRestantes == 0;
 	}
 
+	incPuntaje(){
+		let puntos = 3000
+		this.puntaje += puntos 
+		return puntos;
+	}
+
+	decPuntaje(){
+		let puntos = 2500
+		this.puntaje += puntos
+		return puntos;
+	}
 }
 
 
