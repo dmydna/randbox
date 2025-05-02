@@ -24,8 +24,11 @@ gift_img.forEach( (img) => {
 
 box.addEventListener('click', () => {
 
-    document.querySelector(".carga").style.width =`${((limitClicks - cantClicks + 1) / limitClicks) * 100}%`
+    const barra_carga = document.querySelector(".barraCarga")
+    const carga = document.querySelector(".carga")
 
+    carga.style.width =`${((limitClicks - cantClicks + 1) / limitClicks) * 100}%`
+    barra_carga.style.opacity = "1"
 
     if(cantClicks <= 0){
         window.location.href = "../quiz.html"

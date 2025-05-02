@@ -1,5 +1,6 @@
 
 :root {
+    --bg-primary: #fff;
     --bg-default: #fff;
     --bg-violeta: #9900ffc0;
     --bg-rojo:#ff0000c0;
@@ -8,18 +9,18 @@
     --bg-blanco:#fff;
     --bg-magenta:#ff00ffc0;
     --bg-naranja: #ffa500c0;
-    --primary: green;
+    --primary: darkorchid;
     --secondary: rgb(175, 231, 175);
-    --max-width: 500px
+    --max-width: 350px
 }
 
 body {
   height: 100vh;
   background-color: var(--bg-default);
   transition: background-color 1.5s;
-  margin-inline: 10px;
 }
 
+body,
 div,
 p {
   margin: 0;
@@ -41,6 +42,7 @@ p {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  box-sizing: border-box;
 }
 
 * {
@@ -60,7 +62,7 @@ p {
 }
 
 .container {
-  height: 100vh;
+  height: 100%;
   max-width: var(--max-width);
   margin-inline: auto;
   z-index: -1;
@@ -94,6 +96,7 @@ p {
 }
 
 .gift {
+  margin-top: 20px; /*fix*/
   color: white;
   font-size: 50px;
   font-weight: 800;
@@ -103,8 +106,9 @@ p {
 }
 
 .barraCarga {
+  box-sizing: border-box;
   position: absolute;
-  width: 100%;
+  width: var(--max-width);
   bottom: 40px;
   font-size: 40px;
   border-radius: 15px;
@@ -128,6 +132,7 @@ p {
 #container-game {
   width: 100%;
 }
+
 
 
 

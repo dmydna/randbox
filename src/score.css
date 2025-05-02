@@ -1,5 +1,10 @@
 @import url("index.css");
 
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+
 .focus {
   display: block !important;
 }
@@ -48,7 +53,7 @@
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  border: 1px solid green;
+  border: 1px solid var(--primary);
   padding: 10px 15px;
   border-radius: 2.5px;
   margin-bottom: 15px;
@@ -56,6 +61,31 @@
 
 
 
-/* .imgContainer:first-child{
-        margin-top: 20px;
-    } */
+
+.resetBtn i, .checkBtn i, .plusBtn i {
+  display: block;
+  height: 16px;
+  padding: 14px;
+  border-radius: 100%;
+  background: #d9d4d4;
+  border-radius: 100%;
+  color: var(--primary);
+  opacity: .3;
+}
+
+.resetBtn i {
+  color: white;
+  background: var(--primary);
+  scale: 1.4;
+  opacity: 1;
+}
+
+.ui {
+  padding: 15px;
+  border-top: 1px solid;
+  border-color: rgb(128 128 128 / 50%);
+}
+
+.ui i:hover{
+  cursor: pointer;
+}

@@ -36,24 +36,24 @@ verScoreBtn.classList.add("verScoreBtn")
 
 // botones de accion 
 
-btn_ui.forEach((src, index)=>{
-  let btnUI = document.createElement('img');
-  btnUI.src = `ui/${src}.png`;
-  btnUI.width = 50;
+// btn_ui.forEach((src, index)=>{
+//   let btnUI = document.createElement('img');
+//   btnUI.src = `ui/${src}.png`;
+//   btnUI.width = 50;
 
-  switch (index) {
-    case 0:
-      btnUI.classList.add("resetBtn")
-      break;
-    case 1:
-      btnUI.classList.add("plusBtn")
-      break;
-    default:
-      btnUI.classList.add("checkBtn")
-  }
-  ui.appendChild(btnUI);
+//   switch (index) {
+//     case 0:
+//       btnUI.classList.add("resetBtn")
+//       break;
+//     case 1:
+//       btnUI.classList.add("plusBtn")
+//       break;
+//     default:
+//       btnUI.classList.add("checkBtn")
+//   }
+//   ui.appendChild(btnUI);
 
-});
+// });
 
 
 const plusBtn  = document.querySelector(".plusBtn")

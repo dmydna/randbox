@@ -2,7 +2,7 @@ import { btn_ui } from './config.js';
 
 
 const randbox = document.querySelector(".randbox");
-const resetBtn = document.createElement('img')
+const resetBtn = document.querySelector('.resetBtn')
 const ui = document.querySelector(".ui")
 const score_container = document.querySelector(".score")
 
@@ -14,9 +14,6 @@ const puntuacion = JSON.parse(localStorage.getItem("score"));
 score_container.innerHTML = `score: ${puntuacion}`;
 
 
-resetBtn.src = `ui/${btn_ui[0]}.png`;
-resetBtn.width = 50;
-ui.appendChild(resetBtn);
 resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
 
 
