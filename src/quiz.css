@@ -27,8 +27,9 @@
   color: var(--primary);
   border: 1px solid;
   padding: 10px;
-  max-width: 400px;
+  min-width: 250px;
   height: 150px;
+  z-index: 1000;
 }
 
 .btnContainer,
@@ -51,12 +52,6 @@
   opacity: 0.6;
 }
 
-
-.cartel-on {
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-}
 
 .msg {
   animation-name: likeHand;
@@ -81,7 +76,6 @@
   transition: width .7s ease-in-out;
 }
 
-#container-cartel,
 .cartel,
 .puntos {
   position: absolute;
@@ -90,13 +84,26 @@
   transform: translate(-50%, -50%);
 }
 
+.overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  z-index: 999;  
+}
+
 .puntos {
   top: 30px;
   font-size: 30px;
   color: green;
   font-weight: 700;
   transition: opacity .5s ease-in-out;
-  z-index: 4;
+  z-index: 1000;
 }
 
 
@@ -118,15 +125,17 @@
 }
 
 .mobile .cantAp {
-   background-color: #80808087; 
+   /* background-color: #80808087;  */
 }
 
 .mobile .cartel {
-  width: var(--max-width);
+  width: 100%;
+  box-sizing: border-box;
   max-width: none;
 }
 
 .mobile .barraCarga {
+  padding: 10px;
   position: sticky;
   width: 100%;
   border-radius: unset;

@@ -4,13 +4,19 @@ import { JuegoQuiz, ShuffleImgsAnim} from "./randbox.js";
 
 const box = document.querySelector(".box");
 const cantAp = document.querySelector(".cantAp")
-
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
+const preguntasQuizArray = Object.keys(preguntasQuiz)
 const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
+const shuffleImgs = new ShuffleImgsAnim(preguntasQuizArray, box)
 
-const shuffleImgs = new ShuffleImgsAnim(Object.keys(preguntasQuiz), box)
 
+// Precargar Imagenes
 
+const img = new Image();
+preguntasQuizArray.map( (src, index) => {
+  img.src = `src/imgs/${src}.png`;
+  console.log(img.src)
+})
 
 
 // barra de salud (corazones)
@@ -26,7 +32,7 @@ for(let i=0;i < randboxQuiz.intentosRestantes ;i++){
 // botones  GameOver / Win
 
 const tryAgainBtn = document.createElement('img');
-tryAgainBtn.src= "ui/reset2.png"
+tryAgainBtn.src= "ui/reset.png"
 tryAgainBtn.width=30;
 tryAgainBtn.classList.add("tryAgainBtn")
 
@@ -76,7 +82,7 @@ checkBtn.addEventListener('click', (e) => {
 
   const barraCorrazones = document.querySelector(".salud")
   const corazones = document.querySelectorAll(".heart")
-  const container_cartel = document.getElementById("container-cartel")
+  const cartel_container = document.querySelector(".cartel-container")
   const puntos = document.querySelector(".puntos")
   const barra_estado = document.querySelector(".carga")
 
@@ -84,7 +90,7 @@ checkBtn.addEventListener('click', (e) => {
   puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
 
   /* impide que se haga click cuando aparece el cartel*/
-  container_cartel.classList.add("cartel-on")
+  cartel_container.classList.add("overlay")
 
 
   /* Responde Bien */ 
@@ -98,17 +104,10 @@ checkBtn.addEventListener('click', (e) => {
     if(! randboxQuiz.haTerminado()){
       setTimeout( () => { 
         box.click();
-        container_cartel.classList.remove("cartel-on")
+        cartel_container.classList.remove("overlay")
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
-        setTimeout (()=>{
-          shuffleImgs.iniciarAnimacionSecuencial();
-        }, 100 )
-
       }, 1200)
-
- 
-
-
+      shuffleImgs.iniciarAnimacionSecuencial();
     }
 
 
@@ -128,7 +127,7 @@ checkBtn.addEventListener('click', (e) => {
 
     if (! randboxQuiz.haTerminado()){
       setTimeout( ()=> { 
-        container_cartel.classList.remove("cartel-on")
+        cartel_container.classList.remove("overlay")
         cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
       } , 1200 )
