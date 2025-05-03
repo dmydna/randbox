@@ -1,14 +1,16 @@
-import { btn_ui, cantVidas} from "./config.js";
-import { JuegoQuiz } from "./randbox.js";
+import { cantVidas } from "./config.js";
+import { JuegoQuiz, ShuffleImgsAnim} from "./randbox.js";
 
 
 const box = document.querySelector(".box");
 const cantAp = document.querySelector(".cantAp")
-const ui = document.querySelector(".ui")
-
 
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
 const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
+
+const shuffleImgs = new ShuffleImgsAnim(Object.keys(preguntasQuiz), box)
+
+
 
 
 // barra de salud (corazones)
@@ -34,27 +36,6 @@ verScoreBtn.width =30;
 verScoreBtn.classList.add("verScoreBtn")
 
 
-// botones de accion 
-
-// btn_ui.forEach((src, index)=>{
-//   let btnUI = document.createElement('img');
-//   btnUI.src = `ui/${src}.png`;
-//   btnUI.width = 50;
-
-//   switch (index) {
-//     case 0:
-//       btnUI.classList.add("resetBtn")
-//       break;
-//     case 1:
-//       btnUI.classList.add("plusBtn")
-//       break;
-//     default:
-//       btnUI.classList.add("checkBtn")
-//   }
-//   ui.appendChild(btnUI);
-
-// });
-
 
 const plusBtn  = document.querySelector(".plusBtn")
 const resetBtn = document.querySelector(".resetBtn")
@@ -72,12 +53,26 @@ verScoreBtn.addEventListener('click', () => {
 
 
 
+
+
 // Importante! Primera imagen de gift
 box.src = `src/imgs/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
 
-checkBtn.addEventListener('click', () => {
+document.querySelector(".container").addEventListener('click', (e)=>{ 
+  cantAp.innerHTML ++; 
+  e.stopPropagation();
+});
+
+
+document.querySelector(".ui").addEventListener('click',(e) =>  {
+  e.stopPropagation()
+} )
+
+checkBtn.addEventListener('click', (e) => {
+
+  e.stopPropagation()
 
   const barraCorrazones = document.querySelector(".salud")
   const corazones = document.querySelectorAll(".heart")
@@ -105,8 +100,17 @@ checkBtn.addEventListener('click', () => {
         box.click();
         container_cartel.classList.remove("cartel-on")
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
+        setTimeout (()=>{
+          shuffleImgs.iniciarAnimacionSecuencial();
+        }, 100 )
+
       }, 1200)
+
+ 
+
+
     }
+
 
     randboxQuiz.siguientePregunta();
 
@@ -165,20 +169,21 @@ checkBtn.addEventListener('click', () => {
 })
 
 
-resetBtn.addEventListener('click', () => { 
-  cartel.style.opacity = "0";
+resetBtn.addEventListener('click', (e) => { 
+  e.stopPropagation();
   cantAp.innerHTML="0";
 })
 
 plusBtn.addEventListener('click', () => {
   cantAp.innerHTML ++;
-  cartel.style.opacity = "0";
 });
 
 
 
-box.addEventListener('click', () => {
-  
+box.addEventListener('click', (e) => {
+
+  e.stopPropagation();
+
   const imgGift = randboxQuiz.siguientePregunta()
 
   cartel.style.opacity = "0";

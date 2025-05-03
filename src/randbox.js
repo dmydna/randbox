@@ -129,5 +129,58 @@ class JuegoQuiz {
 }
 
 
-export { JuegoQuiz };
+
+/* hace un random imgs con una animacion*/
+
+class ShuffleImgsAnim {
+	constructor(imagenesArray, elem) {
+	  this.imagen = elem;
+	  this.imgs = imagenesArray;
+	  this.tiempoDeCambio = 100; // Milisegundos entre cada cambio de imagen
+	  this.duracionTotal = 2000; // Milisegundos de duración total del efecto
+	  this.indiceActual = 0;
+	  this.intervalo = null; // Inicializamos a null
+	  this.timeoutFinal = null; // Inicializamos a null
+	}
+  
+	animarCambioImagen = () => {
+
+	/* al finalizar la funcion la imagen es img[0]*/
+	  if (this.imagen) {
+		this.imagen.src = "src/imgs/" + this.imgs[this.indiceActual] + ".png";
+		this.indiceActual = (this.indiceActual + 1) % this.imgs.length;
+	  }
+	}
+  
+	finalizarAnimacionAleatoria = () => {
+
+	  this.detenerAnimacionSecuencial()
+	  
+	  /* Controla ultima imagen y devuelve un random img*/
+	  if (this.imagen && this.imgs.length > 0) {
+		const indiceAleatorio = Math.floor(Math.random() * this.imgs.length);
+		this.imagen.src = "src/imgs/" + this.imgs[indiceAleatorio] + ".png";
+	  }
+	}
+  
+	iniciarAnimacionSecuencial = () => {
+	  this.indiceActual = 0; 
+	  this.intervalo = setInterval(this.animarCambioImagen, this.tiempoDeCambio);
+	  this.timeoutFinal = setTimeout(this.finalizarAnimacionAleatoria, this.duracionTotal);
+	}
+  
+	detenerAnimacionSecuencial = () => {
+	  if (this.intervalo) {
+		clearInterval(this.intervalo);
+		this.intervalo = null;
+	  }
+	  if (this.timeoutFinal) {
+		clearTimeout(this.timeoutFinal);
+		this.timeoutFinal = null;
+	  }
+	}
+  }
+
+
+export { JuegoQuiz, ShuffleImgsAnim };
 
