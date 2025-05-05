@@ -1,44 +1,50 @@
-import { cantVidas } from "./config.js";
-import { JuegoQuiz, ShuffleImgsAnim} from "./randbox.js";
+import { cantVidas } from "../../config.js";
+import { JuegoQuiz, ShuffleImgsAnim } from "./randbox.js";
 
 
 const box = document.querySelector(".box");
 const cantAp = document.querySelector(".cantAp")
+const ui = document.querySelector(".ui")
+const container = document.querySelector(".container")
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
 const preguntasQuizArray = Object.keys(preguntasQuiz)
 const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
-const shuffleImgs = new ShuffleImgsAnim(preguntasQuizArray, box)
+
+const shuffleImgs = new ShuffleImgsAnim( preguntasQuizArray, box)
+
 
 
 // Precargar Imagenes
 
-const img = new Image();
+
 preguntasQuizArray.map( (src, index) => {
-  img.src = `src/imgs/${src}.png`;
-  console.log(img.src)
+  let img = new Image();
+  img.src = `src/img/objetos/${src}.png`;
 })
+
 
 
 // barra de salud (corazones)
 
 for(let i=0;i < randboxQuiz.intentosRestantes ;i++){
-  let heart = document.createElement('img');
-  heart.src = "ui/heart.png";
-  heart.classList.add("heart");
-  heart.width = 20;
+  let heart = document.createElement('i');
+  heart.classList.add("fi");
+  heart.classList.add("fi-ss-heart");
+  heart.style.fontSize = "20px";
+  heart.style.color = "red"
   document.querySelector(".salud").appendChild(heart);
 }
 
 // botones  GameOver / Win
 
-const tryAgainBtn = document.createElement('img');
-tryAgainBtn.src= "ui/reset.png"
-tryAgainBtn.width=30;
+const tryAgainBtn = document.createElement('i');
+tryAgainBtn.classList.add("fi")
+tryAgainBtn.classList.add("fi-rr-rotate-left")
 tryAgainBtn.classList.add("tryAgainBtn")
 
-const verScoreBtn = document.createElement('img');
-verScoreBtn.src = "ui/play.png"
-verScoreBtn.width =30;
+const verScoreBtn = document.createElement('i');
+verScoreBtn.classList.add("fi")
+verScoreBtn.classList.add("fi-rr-play-circle")
 verScoreBtn.classList.add("verScoreBtn")
 
 
@@ -62,7 +68,7 @@ verScoreBtn.addEventListener('click', () => {
 
 
 // Importante! Primera imagen de gift
-box.src = `src/imgs/${randboxQuiz.obtenerPreguntaActual()}.png`
+box.src = `src/img/objetos/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
 
@@ -81,7 +87,7 @@ checkBtn.addEventListener('click', (e) => {
   e.stopPropagation()
 
   const barraCorrazones = document.querySelector(".salud")
-  const corazones = document.querySelectorAll(".heart")
+  const corazones = document.querySelectorAll(".salud .fi")
   const cartel_container = document.querySelector(".cartel-container")
   const puntos = document.querySelector(".puntos")
   const barra_estado = document.querySelector(".carga")
@@ -92,12 +98,11 @@ checkBtn.addEventListener('click', (e) => {
   /* impide que se haga click cuando aparece el cartel*/
   cartel_container.classList.add("overlay")
 
-
   /* Responde Bien */ 
 
   if ( randboxQuiz.verificarRespuesta(cantAp.innerHTML) ) {
   
-    document.querySelector(".cartel img").src="ui/like.png";
+    document.querySelector(".cartel img").src="src/img/ui/like.png";
     puntos.innerHTML = "+" + randboxQuiz.incPuntaje()
     puntos.style.color = "green"
 
@@ -105,29 +110,32 @@ checkBtn.addEventListener('click', (e) => {
       setTimeout( () => { 
         box.click();
         cartel_container.classList.remove("overlay")
+
+        // if(shuffleImgs){
+        //   document.body.style.pointerEvents = 'none'
+        // }
+
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
       }, 1200)
-      shuffleImgs.iniciarAnimacionSecuencial();
     }
 
-
-    randboxQuiz.siguientePregunta();
-
-    barra_estado.style.width =`${((randboxQuiz.quiz.cantPreguntas - randboxQuiz.preguntasDisponibles.length ) / randboxQuiz.quiz.cantPreguntas) * 100}%`
+    barra_estado.style.width =`${randboxQuiz.getProgreso()}%`
 
     
   }else{
 
     /* Responde Mal */ 
 
-    document.querySelector(".cartel img").src ="ui/skull.png";
-	      corazones[randboxQuiz.intentosRestantes].src = "ui/heart_off.png"
+    document.querySelector(".cartel img").src ="src/img/ui/skull.png";
+    corazones[randboxQuiz.intentosRestantes].classList.remove("fi-ss-heart")
+	      corazones[randboxQuiz.intentosRestantes].classList.add("fi-rr-heart")
     puntos.innerHTML = "-" + randboxQuiz.decPuntaje()
     puntos.style.color = "red"
 
     if (! randboxQuiz.haTerminado()){
       setTimeout( ()=> { 
         cartel_container.classList.remove("overlay")
+
         cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
       } , 1200 )
@@ -144,7 +152,7 @@ checkBtn.addEventListener('click', (e) => {
     /* Pierde */
     if (randboxQuiz.haPerdido()){
 
-      document.querySelector(".cartel img").src="ui/game-over.png";
+      document.querySelector(".cartel img").src="src/img/ui/game-over.png";
       puntos.style.opacity = "0";
       cartel.style.opacity = "1";
       cartel.appendChild(tryAgainBtn);
@@ -153,7 +161,7 @@ checkBtn.addEventListener('click', (e) => {
   
     }else {
     /*  Gana */  
-      document.querySelector(".cartel img").src="ui/win.png";
+      document.querySelector(".cartel img").src="src/img/ui/win.png";
       puntos.style.opacity = 0;
       cartel.style.opacity = "1";
       cartel.appendChild(verScoreBtn);
@@ -183,15 +191,30 @@ box.addEventListener('click', (e) => {
 
   e.stopPropagation();
 
-  const imgGift = randboxQuiz.siguientePregunta()
-
   cartel.style.opacity = "0";
   cantAp.innerHTML = "0";
 
   /* Si el juego termina no cambia de imagen */
 
   if (! randboxQuiz.haTerminado() ){
-    box.src = `src/imgs/${imgGift}.png`
+
+    /* Si la animacion esta activa*/
+
+    if(shuffleImgs){
+      document.body.style.pointerEvents = 'none'
+      // incia la animacion y ejecuta una funcion handler al finalizar
+      shuffleImgs.shuffleAnimate( (imagen, index) => { 
+        document.body.style.pointerEvents = 'auto';
+        return randboxQuiz.siguientePregunta()
+      })
+
+    }else{
+
+     /* por default*/
+      const imgGift = randboxQuiz.siguientePregunta()
+      box.src = `src/img/objetos/${imgGift}.png`
+    }
+
     localStorage.setItem("score", JSON.stringify(randboxQuiz.puntaje));
   }
 

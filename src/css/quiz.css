@@ -1,6 +1,11 @@
 @import url("index.css");
 @import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 
+
+.header{
+  margin-bottom: calc(10vh + var(--bar-height));
+}
 
 .tryAgainBtn,
 .verScoreBtn {
@@ -9,8 +14,9 @@
   border-radius: 100%;
   bottom: -15px;
   left: calc(50% - 35px);
-  width: 70px;
-  bottom: -30px;
+  width: 80px;
+  bottom: -40px;
+  font-size: 60px;
 }
 
 .cantAp,
@@ -22,13 +28,15 @@
 }
 
 .cartel {
+  box-sizing: border-box;
   position: absolute;
   opacity: 1;
   color: var(--primary);
-  border: 1px solid;
+  border: 2px solid;
+  border-radius: 15px;
   padding: 10px;
   min-width: 250px;
-  height: 150px;
+  height: 180px;
   z-index: 1000;
 }
 
@@ -92,10 +100,11 @@
   height: 100%;
   pointer-events: auto;
   box-sizing: border-box;
+  z-index: 999;  
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(2px);
-  z-index: 999;  
 }
+
 
 .puntos {
   top: 30px;
@@ -116,32 +125,32 @@
 }
 
 
-.barraCarga {
+/* .barraCarga {
   display: none;
-}
+} */
 
 .mobile .barraCarga {
   display: block !important;
-}
-
-.mobile .cantAp {
-   /* background-color: #80808087;  */
 }
 
 .mobile .cartel {
   width: 100%;
   box-sizing: border-box;
   max-width: none;
+  border-radius: 0;
 }
 
-.mobile .barraCarga {
-  padding: 10px;
-  position: sticky;
+.barraCarga {
+  padding: var(--bar-height);
+  position: absolute;
   width: 100%;
   border-radius: unset;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
 }
 
-.mobile .carga {
+.carga {
   background-color: green;
 }
 

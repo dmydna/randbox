@@ -1,14 +1,12 @@
-import { gift_img, limitClicks, cantidadDeIntentos } from "./config.js";
+import { gift_img, limitClicks } from "../../config.js";
 
 
 const box = document.querySelector(".box");
 const gift = document.querySelector(".gift");
-let intentos = cantidadDeIntentos;
 
-localStorage.setItem("intentos", JSON.stringify(intentos));
+
 
 let clickEvent = 0;
-
 let cantClicks = limitClicks;
 
 
@@ -19,6 +17,17 @@ gift_img.forEach( (img) => {
      preguntasQuiz[img] = 0;
     } 
 )
+
+const preguntasQuizArray = Object.keys(preguntasQuiz)
+
+// Precargar Imagenes
+
+
+preguntasQuizArray.map( (src, index) => {
+  let img = new Image();
+  img.src = `src/img/objetos/${src}.png`;
+})
+
 
 
 
@@ -42,7 +51,7 @@ box.addEventListener('click', () => {
 
             box.style.opacity = 0
             gift.style.visibility = "hidden"
-            box.src = "ui/play.png";
+            box.src = "src/img/ui/play.png";
             box.onload =  () => {
                 box.style.opacity = "1";
                 box.classList.add("sacudir");
@@ -62,7 +71,7 @@ box.addEventListener('click', () => {
     preguntasQuiz[giftImgStr] ++ 
 
     
-    gift.src = `src/imgs/${gift_img[rand_index]}.png`;
+    gift.src = `src/img/objetos/${gift_img[rand_index]}.png`;
     
     
     if (clickEvent == 0){

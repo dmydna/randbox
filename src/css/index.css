@@ -11,7 +11,8 @@
     --bg-naranja: #ffa500c0;
     --primary: darkorchid;
     --secondary: rgb(175, 231, 175);
-    --max-width: 1200px
+    --max-width: 1200px;
+    --bar-height: 5px;
 }
 
 body {
@@ -134,6 +135,21 @@ p {
 }
 
 
+.custom-shape-divider-top {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+
+@media (max-width: 1200px ) {
+  .container {
+    margin-inline: 5px;
+  }
+}
 
 
 @keyframes bootloader {

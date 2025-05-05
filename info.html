@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css"  href="src/css/score.css">
-    <script type="module" src="src/js/score.js" defer></script>
+    <link rel="prerender" href="/score.html" as="document">
+    <script type="module" src="src/js/info.js" defer></script>
+ 
 
     <title>randbox</title>
 </head>
+
+<style>
+    .randbox{
+        text-align: center;
+        justify-content: center;
+    }
+    .randbox i{
+        font-size: 40vw;
+        opacity: .6;
+    }
+</style>
 
 <body>
     <div class="container">
@@ -15,11 +28,11 @@
 
 
         <div class="header">
-            <img height="70px" src="src/img/ui/high-score.png">
-            <h1 class="score">...</h1>
         </div>
         <div id="container-game">
-            <div class="randbox"></div>
+            <div class="randbox">
+                <i class="fi fi-rr-info"></i>
+            </div>
         </div>
 
         <div class="ui">

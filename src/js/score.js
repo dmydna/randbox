@@ -1,8 +1,9 @@
-import { btn_ui } from './config.js';
-
 
 const randbox = document.querySelector(".randbox");
 const resetBtn = document.querySelector('.resetBtn')
+const plusBtn = document.querySelector('.plusBtn')
+const checkBtn = document.querySelector('.checkBtn')
+
 const ui = document.querySelector(".ui")
 const score_container = document.querySelector(".score")
 
@@ -11,11 +12,13 @@ const puntuacion = JSON.parse(localStorage.getItem("score"));
 
 
 
+
 score_container.innerHTML = `score: ${puntuacion}`;
 
 
 resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
-
+plusBtn.addEventListener('click', () => { window.location.href = "../quiz.html" } )
+checkBtn.addEventListener('click', () => { window.location.href = "../info.html" } )
 
 for (const clave in preguntasQuiz) {
   if (preguntasQuiz.hasOwnProperty(clave)) { 
@@ -31,7 +34,7 @@ for (const clave in preguntasQuiz) {
     imgContainer.classList.add("imgContainer")
 
     cantAp.innerHTML = valor;
-    nuevaImg.src = `src/imgs/${clave}.png`;
+    nuevaImg.src = `src/img/objetos/${clave}.png`;
   
     imgContainer.appendChild(nuevaImg);
     imgContainer.appendChild(cantAp);
