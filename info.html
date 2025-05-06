@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css"  href="src/css/score.css">
+    <link rel="stylesheet" type="text/css"  href="src/css/info.css">
     <link rel="prerender" href="/score.html" as="document">
     <script type="module" src="src/js/info.js" defer></script>
  
@@ -12,14 +12,7 @@
 </head>
 
 <style>
-    .randbox{
-        text-align: center;
-        justify-content: center;
-    }
-    .randbox i{
-        font-size: 40vw;
-        opacity: .6;
-    }
+
 </style>
 
 <body>
@@ -29,15 +22,25 @@
 
         <div class="header">
         </div>
+ 
+
         <div id="container-game">
             <div class="randbox">
-                <i class="fi fi-rr-info"></i>
+                <img class="box bounce-in-top" src="./src/img/ui/open-box.png">
+                <h1 class="title">randbox</h1>
+                <div class="descrip">
+                   Un juego simple de preguntas y respuestas que explora la frecuencia de aparición.
+                </div>
+                <div class="social">
+                    <i class="fi fi-brands-github"></i>
+                </div>
+
             </div>
         </div>
 
         <div class="ui">
             <div class="plusBtn">
-                <i class="fi fi-br-angle-left"></i>
+                <i class="fi fi-rr-angle-left"></i>
             </div>
             <div class="resetBtn">
                 <i class="fi fi-rr-home"></i>
