@@ -16,15 +16,7 @@ const puntuacion = JSON.parse(localStorage.getItem("score"));
 score_container.innerHTML = `score: ${puntuacion}`;
 
 
-plusBtn.addEventListener('click', () => {
-  document.body.classList.add('slide-out-right')
-
-  document.body.addEventListener('animationend', () => {
-    window.location.href = "../quiz.html"
-  })
-  
-  
-})
+plusBtn.addEventListener('click', () => {window.location.href = "../quiz.html"  })
 
 
 resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )

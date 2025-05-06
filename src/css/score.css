@@ -36,6 +36,7 @@
   animation-direction: alternate;
   -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
   animation: heartbeat 1.5s ease-in-out infinite both;
+  margin-top: 0;
 }
 
 

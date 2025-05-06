@@ -14,10 +14,16 @@
   background-color: white;
   border-radius: 100%;
   bottom: -15px;
-  left: calc(50% - 35px);
+  left: calc(50% - 40px);
   width: 80px;
   bottom: -40px;
   font-size: 60px;
+  transition: scale .3s;
+}
+
+.tryAgainBtn:hover, .verScoreBtn:hover{
+  cursor: pointer;
+  scale: 1.1;
 }
 
 .cantAp,

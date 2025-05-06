@@ -79,11 +79,6 @@ verScoreBtn.addEventListener('click', () => {
 
 
 
-
-
-
-
-
 // Importante! Primera imagen de gift
 
 box.src = `src/img/objetos/${randboxQuiz.obtenerPreguntaActual()}.png`
@@ -239,8 +234,6 @@ box.addEventListener('click', (e) => {
 });
 
 
-
-
 /*animaciones css */
 
 box.addEventListener('mouseover', ()=> {
@@ -251,6 +244,4 @@ box.addEventListener('mouseover', ()=> {
 box.addEventListener('mouseout',() =>{
   box.style.animationName = "none"
 })
-
-
 

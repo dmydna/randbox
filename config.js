@@ -11,9 +11,7 @@ const shuffleArr =  (array) => {
 
 const gift_img = shuffleArr(["apple"])
 const cantVidas = 3;
-const limitClicks = 1;
-// const cantidadDeIntentos = 5; 
-
+const limitClicks = 2 * gift_img.length;
 
 
 export { cantVidas, gift_img, limitClicks };

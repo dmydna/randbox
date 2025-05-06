@@ -8,7 +8,6 @@ let clickEvent = 0;
 let cantClicks = limitClicks;
 
 
-
 const preguntasQuiz = {}
 gift_img.forEach( (img) => {
      preguntasQuiz[img] = 0;
@@ -26,11 +25,7 @@ preguntasQuizArray.map( (src, index) => {
 })
 
 
-
-
-
 box.addEventListener('animationend', ()=>{
-
 
     
     if(cantClicks == 0){
@@ -63,9 +58,6 @@ box.addEventListener('click', () => {
 
     carga.style.width =`${((limitClicks - cantClicks + 1) / limitClicks) * 100}%`
 
-
-
-
     box.classList.remove("onload");    
 
     let rand_index =  Math.floor(Math.random() * gift_img.length);
@@ -82,5 +74,4 @@ box.addEventListener('click', () => {
 
     localStorage.setItem("preguntasQuiz", JSON.stringify(preguntasQuiz));
 }); 
-
 
