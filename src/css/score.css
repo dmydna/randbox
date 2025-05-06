@@ -1,15 +1,14 @@
 @import url("index.css");
 
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css');
+/* @import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'); */
 @import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css');
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css');
+@import url("../assets/animalista.css");
+
 
 .focus {
   display: block !important;
 }
-
-
 
 .randbox {
   width: 100%;
@@ -20,6 +19,7 @@
   height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+  justify-content: center;
 }
 
 .gift {
@@ -34,11 +34,13 @@
   animation-duration: 3s;
   animation-iteration-count: 3;
   animation-direction: alternate;
+  -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+  animation: heartbeat 1.5s ease-in-out infinite both;
 }
 
 
 .randbox .onload {
-  animation-name: none
+  animation-name: none;
 }
 
 
@@ -51,13 +53,14 @@
 .imgContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
   border: 1px solid var(--primary);
   padding: 10px 15px;
   border-radius: 2.5px;
   margin-bottom: 15px;
+  justify-content: space-between;
 }
+
 
 
 

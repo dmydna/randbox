@@ -10,6 +10,8 @@ const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
 const preguntasQuizArray = Object.keys(preguntasQuiz)
 const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
 
+
+
 const shuffleImgs = new ShuffleImgsAnim( preguntasQuizArray, box)
 
 
@@ -22,6 +24,12 @@ preguntasQuizArray.map( (src, index) => {
   img.src = `src/img/objetos/${src}.png`;
 })
 
+const ui_imgs =["like", "skull", "game-over","win"];
+
+ui_imgs.map( (src, index) => {
+  let img = new Image();
+  img.src = `src/img/ui/${src}.png`;
+})
 
 
 // barra de salud (corazones)
@@ -60,14 +68,24 @@ tryAgainBtn.addEventListener('click', () => {
 })
 
 verScoreBtn.addEventListener('click', () => {
-  window.location.href = "../score.html"
+  document.body.classList.add('slide-out-left')
+
+  document.body.addEventListener('animationend', () => {
+    window.location.href = "../score.html"
+  })
+  
+  
 })
 
 
 
 
 
+
+
+
 // Importante! Primera imagen de gift
+
 box.src = `src/img/objetos/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
@@ -186,7 +204,6 @@ plusBtn.addEventListener('click', () => {
 });
 
 
-
 box.addEventListener('click', (e) => {
 
   e.stopPropagation();
@@ -220,5 +237,20 @@ box.addEventListener('click', (e) => {
 
 
 });
+
+
+
+
+/*animaciones css */
+
+box.addEventListener('mouseover', ()=> {
+  box.classList.remove("focus")
+  box.style.animationName = "vibrate-3"
+})
+
+box.addEventListener('mouseout',() =>{
+  box.style.animationName = "none"
+})
+
 
 

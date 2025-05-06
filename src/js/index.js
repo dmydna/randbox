@@ -4,11 +4,8 @@ import { gift_img, limitClicks } from "../../config.js";
 const box = document.querySelector(".box");
 const gift = document.querySelector(".gift");
 
-
-
 let clickEvent = 0;
 let cantClicks = limitClicks;
-
 
 
 
@@ -31,33 +28,41 @@ preguntasQuizArray.map( (src, index) => {
 
 
 
+
+box.addEventListener('animationend', ()=>{
+
+
+    
+    if(cantClicks == 0){
+        document.querySelector(".barraCarga").style.opacity = "0";
+        box.style.animationDuration = '0.5s'
+        box.style.animationName = 'scale-out-center'
+        gift.style.visibility = "hidden"
+        cantClicks --
+    }
+    if( cantClicks < 0){
+        box.style.opacity = "0"
+        setTimeout( ()=>{window.location.href = "../quiz.html"}, 500 ) 
+    }
+
+});
+
+
+
+
 box.addEventListener('click', () => {
 
-    const barra_carga = document.querySelector(".barraCarga")
+    const barraCarga = document.querySelector('.barraCarga')
     const carga = document.querySelector(".carga")
 
+    box.style.animationName =  box.style.animationName == 'lanzar-box-1' ? 'lanzar-box-2' : 'lanzar-box-1'
+    gift.style.opacity = (gift.style.opacity == '0') ? '1' : '0'
+    barraCarga.style.opacity = barraCarga.style.opacity == "0" ? ".5" : "0"
+
+
+
     carga.style.width =`${((limitClicks - cantClicks + 1) / limitClicks) * 100}%`
-    barra_carga.style.opacity = ".5"
 
-    if(cantClicks <= 0){
-        window.location.href = "../quiz.html"
-        return
-    }
-
-    if (cantClicks == 1) {
-        document.querySelector(".barraCarga").style.opacity = 0;
-
-        setInterval( () => {
-
-            box.style.opacity = 0
-            gift.style.visibility = "hidden"
-            box.src = "src/img/ui/play.png";
-            box.onload =  () => {
-                box.style.opacity = "1";
-                box.classList.add("sacudir");
-            }
-        }, 3000)
-    }
 
 
 
@@ -70,22 +75,12 @@ box.addEventListener('click', () => {
     preguntasQuiz[giftImgStr] = preguntasQuiz[giftImgStr] ?? 0 
     preguntasQuiz[giftImgStr] ++ 
 
-    
     gift.src = `src/img/objetos/${gift_img[rand_index]}.png`;
-    
-    
-    if (clickEvent == 0){
-        clickEvent=1;
-        box.classList.add("tirarBox")
-        gift.style.opacity="1";
-    }else{
-        clickEvent=0;
-        box.classList.remove("tirarBox")
-    }
 
-
+  
     cantClicks--;
 
     localStorage.setItem("preguntasQuiz", JSON.stringify(preguntasQuiz));
 }); 
+
 
