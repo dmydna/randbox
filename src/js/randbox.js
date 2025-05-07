@@ -67,6 +67,9 @@ class JuegoQuiz {
 	// intentosRestantes es Int
 	// puntaje es Int
 	// preguntasDisponibles es Array[String]
+	// data { Dict, Int }
+
+	#data
 
     constructor(preguntas, intentosIniciales = 3) {
         this.quiz = new Quiz(preguntas);
@@ -74,11 +77,25 @@ class JuegoQuiz {
         this.puntaje = 0;
 		this.preguntasDisponibles = Object.keys(preguntas);
 		this.progreso = 0;
+		this.#data = { "preguntas": preguntas, "intentos": intentosIniciales} // guarda los datos inciales
     }
 
     obtenerPreguntaActual() {
         return this.quiz.getPreguntaActual();
     }
+
+	intentarDeNuevo(){
+
+		let preguntas = this.#data["preguntas"]
+		let intentos = this.#data["intentos"]
+
+		this.quiz = new Quiz(preguntas)
+		this.puntaje = 0;
+		this.progreso = 0;
+		this.preguntasDisponibles = Object.keys(preguntas)
+		this.intentosRestantes = intentos
+		this.preguntas = preguntas
+	}
 
     verificarRespuesta(respuestaUsuario) {
         const esCorrecta = this.quiz.verificarRespuesta(respuestaUsuario);
@@ -112,12 +129,9 @@ class JuegoQuiz {
 
 	shufflePreguntas(){
 
-		const largo = this.quiz.cantPreguntas;
-
-		for (let i = largo - 1; i > 0; i--) {
-			// Genera un índice aleatorio entre 0 y el índice actual (inclusive)
+		const longitud = this.quiz.cantPreguntas;
+		for (let i = longitud - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			// Intercambia el elemento actual (en el índice i) con el elemento aleatorio (en el índice j)
 			[this.quiz.preguntas[i], this.quiz.preguntas[j]] = [this.quiz.preguntas[j], this.quiz.preguntas[i]];
 		}
 
