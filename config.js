@@ -9,7 +9,7 @@ const shuffleArr =  (array) => {
 }
 
 
-const gift_img = shuffleArr(["apple"])
+const gift_img = shuffleArr(["apple","cheese","coin","hamburger"])
 const cantVidas = 3;
 const limitClicks = 2 * gift_img.length;
 

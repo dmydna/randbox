@@ -58,8 +58,8 @@
   border: 1px solid var(--primary);
   padding: 10px 15px;
   border-radius: 2.5px;
-  margin-bottom: 15px;
   justify-content: space-between;
+  align-items: center;
 }
 
 

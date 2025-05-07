@@ -1,8 +1,10 @@
 
 const randbox = document.querySelector(".randbox");
-const resetBtn = document.querySelector('.resetBtn')
-const plusBtn = document.querySelector('.plusBtn')
-const checkBtn = document.querySelector('.checkBtn')
+
+
+const backBtn = document.querySelector('.ltBtn')
+const homeBtn = document.querySelector('.midBtn')
+const infoBtn = document.querySelector('.rtBtn')
 
 const ui = document.querySelector(".ui")
 const score_container = document.querySelector(".score")
@@ -10,17 +12,14 @@ const score_container = document.querySelector(".score")
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz"));
 const puntuacion = JSON.parse(localStorage.getItem("score"));
 
-
-
-
 score_container.innerHTML = `score: ${puntuacion}`;
 
 
-plusBtn.addEventListener('click', () => {window.location.href = "../quiz.html"  })
+backBtn.addEventListener('click', () => {window.location.href = "../quiz.html"  })
 
 
-resetBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
-checkBtn.addEventListener('click', () => { window.location.href = "../info.html" } )
+homeBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
+infoBtn.addEventListener('click', () => { window.location.href = "../info.html" } )
 
 for (const clave in preguntasQuiz) {
   if (preguntasQuiz.hasOwnProperty(clave)) { 

@@ -2,18 +2,23 @@ import { cantVidas } from "../../config.js";
 import { JuegoQuiz, ShuffleImgsAnim } from "./randbox.js";
 
 
-const box = document.querySelector(".box");
+const box = document.querySelector(".box")
 const cantAp = document.querySelector(".cantAp")
 const ui = document.querySelector(".ui")
 const container = document.querySelector(".container")
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
 const preguntasQuizArray = Object.keys(preguntasQuiz)
 const randboxQuiz = new JuegoQuiz(preguntasQuiz, cantVidas)
-
-
-
 const shuffleImgs = new ShuffleImgsAnim( preguntasQuizArray, box)
 
+
+
+const resetBtn = document.querySelector(".ltBtn")
+const checkBtn = document.querySelector(".midBtn")
+const plusBtn  = document.querySelector(".rtBtn")
+
+
+const cartel   = document.querySelector(".popup")
 
 
 // Precargar Imagenes
@@ -24,12 +29,18 @@ preguntasQuizArray.map( (src, index) => {
   img.src = `src/img/objetos/${src}.png`;
 })
 
-const ui_imgs =["like", "skull", "game-over","win"];
+const ui_imgs =["like", "skull", "game-over","win","open-box"];
 
 ui_imgs.map( (src, index) => {
   let img = new Image();
   img.src = `src/img/ui/${src}.png`;
 })
+
+
+// box.onload = () => {   
+//   box.style.opacity = "1";
+//  }
+// box.onerror = () => {   box.src = 'src/img/ui/open-box.png'; }
 
 
 // barra de salud (corazones)
@@ -57,14 +68,44 @@ verScoreBtn.classList.add("verScoreBtn")
 
 
 
-const plusBtn  = document.querySelector(".plusBtn")
-const resetBtn = document.querySelector(".resetBtn")
-const checkBtn = document.querySelector(".checkBtn")
-const cartel   = document.querySelector(".cartel")
-
-
 tryAgainBtn.addEventListener('click', () => {
-  window.location.reload(true); 
+
+  /* Resetea juego */
+
+  const popup_container = document.querySelector(".popup-container")
+  const corazones = document.querySelectorAll(".salud .fi")
+  const barraCorrazones = document.querySelector(".salud")
+  const barra_estado = document.querySelector(".carga")
+
+  document.querySelector(".popup img").src ="src/img/ui/again.png";
+
+  /* Resetea el Objeto Quiz */
+  randboxQuiz.intentarDeNuevo();
+  tryAgainBtn.remove();
+  verScoreBtn.remove();
+
+  /* resetea corazones */
+  barraCorrazones.style.display = "flex"
+  let i = 0
+  setInterval( ()=> {
+    corazones[i].classList.remove("fi-rr-heart")
+    corazones[i].classList.add("fi-ss-heart")
+    i++
+  },500 )
+
+
+  shuffleImgs.shuffleAnimate( ()=>{
+    let img = randboxQuiz.obtenerPreguntaActual()
+
+    /*Resetea todo despues de la animacion shuffle */
+    barra_estado.style.width =`${randboxQuiz.getProgreso()}%`;
+    box.src = `src/img/objetos/${img}.png`
+    popup_container.classList.remove("overlay")
+    cartel.style.opacity = "0"
+    cantAp.innerHTML = "0";
+    return img
+  })
+  
 })
 
 verScoreBtn.addEventListener('click', () => {
@@ -85,23 +126,26 @@ box.src = `src/img/objetos/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
 
-document.querySelector(".container").addEventListener('click', (e)=>{ 
+container.addEventListener('click', (e)=>{ 
   cantAp.innerHTML ++; 
   e.stopPropagation();
 });
 
 
-document.querySelector(".ui").addEventListener('click',(e) =>  {
+ui.addEventListener('click',(e) =>  {
   e.stopPropagation()
-} )
+})
 
-checkBtn.addEventListener('click', (e) => {
+
+/* Click Handlers */
+
+const checkBtnClickHandler = (e) => {
 
   e.stopPropagation()
 
   const barraCorrazones = document.querySelector(".salud")
   const corazones = document.querySelectorAll(".salud .fi")
-  const cartel_container = document.querySelector(".cartel-container")
+  const popup_container = document.querySelector(".popup-container")
   const puntos = document.querySelector(".puntos")
   const barra_estado = document.querySelector(".carga")
 
@@ -109,20 +153,20 @@ checkBtn.addEventListener('click', (e) => {
   puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
 
   /* impide que se haga click cuando aparece el cartel*/
-  cartel_container.classList.add("overlay")
+  popup_container.classList.add("overlay")
 
   /* Responde Bien */ 
 
   if ( randboxQuiz.verificarRespuesta(cantAp.innerHTML) ) {
   
-    document.querySelector(".cartel img").src="src/img/ui/like.png";
+    document.querySelector(".popup img").src="src/img/ui/like.png";
     puntos.innerHTML = "+" + randboxQuiz.incPuntaje()
     puntos.style.color = "green"
 
     if(! randboxQuiz.haTerminado()){
       setTimeout( () => { 
         box.click();
-        cartel_container.classList.remove("overlay")
+        popup_container.classList.remove("overlay")
 
         // if(shuffleImgs){
         //   document.body.style.pointerEvents = 'none'
@@ -139,7 +183,7 @@ checkBtn.addEventListener('click', (e) => {
 
     /* Responde Mal */ 
 
-    document.querySelector(".cartel img").src ="src/img/ui/skull.png";
+    document.querySelector(".popup img").src ="src/img/ui/skull.png";
     corazones[randboxQuiz.intentosRestantes].classList.remove("fi-ss-heart")
 	      corazones[randboxQuiz.intentosRestantes].classList.add("fi-rr-heart")
     puntos.innerHTML = "-" + randboxQuiz.decPuntaje()
@@ -147,7 +191,7 @@ checkBtn.addEventListener('click', (e) => {
 
     if (! randboxQuiz.haTerminado()){
       setTimeout( ()=> { 
-        cartel_container.classList.remove("overlay")
+        popup_container.classList.remove("overlay")
 
         cartel.style.opacity = cartel.style.opacity === "1" ? "0" : "1";
         puntos.style.opacity = puntos.style.opacity === "1" ? "0" : "1";
@@ -165,7 +209,7 @@ checkBtn.addEventListener('click', (e) => {
     /* Pierde */
     if (randboxQuiz.haPerdido()){
 
-      document.querySelector(".cartel img").src="src/img/ui/game-over.png";
+      document.querySelector(".popup img").src="src/img/ui/game-over.png";
       puntos.style.opacity = "0";
       cartel.style.opacity = "1";
       cartel.appendChild(tryAgainBtn);
@@ -174,32 +218,20 @@ checkBtn.addEventListener('click', (e) => {
   
     }else {
     /*  Gana */  
-      document.querySelector(".cartel img").src="src/img/ui/win.png";
+      document.querySelector(".popup img").src="src/img/ui/win.png";
       puntos.style.opacity = 0;
       cartel.style.opacity = "1";
       cartel.appendChild(verScoreBtn);
-      barraCorrazones.style.display = 'none';
-  
+      barraCorrazones.style.display = 'none';  
     }
   }
 
   localStorage.setItem("score", JSON.stringify(randboxQuiz.puntaje));
 
 
-})
+}
 
-
-resetBtn.addEventListener('click', (e) => { 
-  e.stopPropagation();
-  cantAp.innerHTML="0";
-})
-
-plusBtn.addEventListener('click', () => {
-  cantAp.innerHTML ++;
-});
-
-
-box.addEventListener('click', (e) => {
+const boxClickHandler = (e) => {
 
   e.stopPropagation();
 
@@ -231,10 +263,29 @@ box.addEventListener('click', (e) => {
   }
 
 
+}
+
+
+/* Eventos */
+
+box.addEventListener('click', boxClickHandler);
+
+checkBtn.addEventListener('click', checkBtnClickHandler )
+
+resetBtn.addEventListener('click', (e) => { 
+  e.stopPropagation();
+  cantAp.innerHTML="0";
+})
+
+plusBtn.addEventListener('click', () => {
+  cantAp.innerHTML ++;
 });
 
 
-/*animaciones css */
+
+
+
+/*animaciones */
 
 box.addEventListener('mouseover', ()=> {
   box.classList.remove("focus")
@@ -243,5 +294,18 @@ box.addEventListener('mouseover', ()=> {
 
 box.addEventListener('mouseout',() =>{
   box.style.animationName = "none"
+})
+
+
+
+checkBtn.addEventListener('mouseover', () => {
+  checkBtn.children[0].classList.remove('fi-rr-social-network')
+  checkBtn.children[0].classList.add('fi-ss-social-network')
+  
+} )
+
+checkBtn.addEventListener('mouseout',() =>{
+  checkBtn.children[0].classList.remove('fi-ss-social-network')
+  checkBtn.children[0].classList.add('fi-rr-social-network')
 })
 

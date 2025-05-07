@@ -15,6 +15,8 @@
     --secondary: rgb(175, 231, 175);
     --max-width: 1200px;
     --bar-height: 5px;
+    --popup-btn-width: 80px;
+    --popup-width: 250px;
 }
 
 body {
@@ -25,11 +27,13 @@ body {
 
 body,
 div,
-p {
+p{
   margin: 0;
 }
 
-
+img{
+  margin: 0;
+}
 
 .header {
   display: flex;
@@ -75,6 +79,7 @@ p {
 .box {
   position: relative;
   width: 120px;
+  height: 120px;
   z-index: 1;
   top: 0;
   left: 0;
@@ -84,6 +89,8 @@ p {
   animation-iteration-count: initial;
   animation-direction: alternate;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  border: none;
 }
 
 .randbox .onload {
@@ -154,6 +161,30 @@ p {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
+
+.ltBtn i, .midBtn i, .rtBtn i {
+  display: block;
+  height: 45px;
+  width: 45px;
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 100%;
+  background: #d9d4d4;
+  border-radius: 100%;
+  color: var(--primary);
+  transition: transform 1s;
+}
+
+.midBtn i {
+  color: white;
+  background: var(--primary);
+  scale: 1.4;
+}
+
+.ltBtn i:hover, .rtBtn i:hover {
+  transform: rotate(180deg);
+  cursor: pointer;
+}
 
 @media (max-width: 1200px ) {
   .container {
