@@ -169,6 +169,7 @@ class JuegoQuiz {
 /* hace un shuffle imgs con una animacion*/
 
 class ShuffleImgsAnim {
+
 	constructor(imagenesArray, img_elem) {
 	  this.imagen = img_elem;
 	  this.srcInicial =  img_elem.src;
@@ -197,17 +198,24 @@ class ShuffleImgsAnim {
 	  /* Controla el srcFinal final de la imagen */
 	  if (this.imagen && this.datos.length > 0) {
 
-		    // por defecto vuelve al srcFinal inicial la imagen
-			this.imagen.src = this.srcInicial;
-
 		   const index = this.indiceActual; 
 
 		   if(typeof(this.srcFinal) == 'function'){
-		   	this.imagen.src = "src/img/objetos/" + this.srcFinal(this.datos[index], index) + ".png";  
+			// ejecuta la funcion que tiene que devolver una imagen
+			let imagenFinal = this.srcFinal(this.datos[index], index)
+			this.imagen.src = "src/img/objetos/" + imagenFinal + ".png";
+			if(imagenFinal){ return }  
+				console.log("shuffleImgAnim -> callback void function!")
 		   }
 		   if(typeof(this.srcFinal) == 'string'){
-		     this.imagen.src = "src/img/objetos/" + this.srcFinal + ".png";
+			 let imagenFinal = this.srcFinal
+		     this.imagen.src = "src/img/objetos/" + imagenFinal + ".png";
+			 if(imagenFinal){ return } 
+			 	console.log("shuffleImgAnim -> string Img NULL!")
 		   }
+
+		   	// por defecto el srcFinal vuelve a su estado inicial
+			this.imagen.src = this.srcInicial;
 	  }
 	}
   

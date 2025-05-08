@@ -40,6 +40,7 @@ box.addEventListener('animationend', ()=>{
     }
     if( cantClicks < 0){
         box.style.opacity = "0"
+        document.querySelector(".barraCarga").style.opacity = "0";
         setTimeout( ()=>{window.location.href = "../quiz.html"}, 500 ) 
     }
 

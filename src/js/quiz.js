@@ -87,11 +87,12 @@ tryAgainBtn.addEventListener('click', () => {
   /* resetea corazones */
   barraCorrazones.style.display = "flex"
   let i = 0
-  setInterval( ()=> {
+  let relife =  setInterval( ()=> {
     corazones[i].classList.remove("fi-rr-heart")
     corazones[i].classList.add("fi-ss-heart")
     i++
   },500 )
+
 
 
   shuffleImgs.shuffleAnimate( ()=>{
@@ -103,7 +104,9 @@ tryAgainBtn.addEventListener('click', () => {
     popup_container.classList.remove("overlay")
     cartel.style.opacity = "0"
     cantAp.innerHTML = "0";
-    return img
+    clearInterval(relife)
+
+    return // importante
   })
   
 })
@@ -126,15 +129,7 @@ box.src = `src/img/objetos/${randboxQuiz.obtenerPreguntaActual()}.png`
 
 
 
-container.addEventListener('click', (e)=>{ 
-  cantAp.innerHTML ++; 
-  e.stopPropagation();
-});
 
-
-ui.addEventListener('click',(e) =>  {
-  e.stopPropagation()
-})
 
 
 /* Click Handlers */
@@ -282,7 +277,19 @@ plusBtn.addEventListener('click', () => {
 });
 
 
+container.addEventListener('click', (e)=>{ 
+  // fix
+  if(! document.querySelector(".overlay")){
+    cantAp.innerHTML ++;
+  }
+  e.stopPropagation();
+});
 
+
+ui.addEventListener('click',(e) =>  {
+  // fix 
+  e.stopPropagation()
+})
 
 
 /*animaciones */

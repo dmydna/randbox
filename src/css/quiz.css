@@ -84,19 +84,6 @@
   z-index: initial;
 }
 
-
-.box:before {
-  content: '';
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #d9d4d4;
-  position: absolute;
-  bottom: 0;
-  border-radius: 10%;
-  visibility: visible;
-}
-
 .barra-estado {
   height: 0.5px;
   background-color: var(--secondary);
