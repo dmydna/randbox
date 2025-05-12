@@ -14,5 +14,6 @@ const cantVidas = 3;
 const limitClicks = 2 * gift_img.length;
 
 
+
 export { cantVidas, gift_img, limitClicks };
 

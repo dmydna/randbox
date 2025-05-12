@@ -1,248 +1,248 @@
-/*  Quiz es un tad que recibe preguntas y respuestas. 
-Dada la respuesta del user notifica si la respuesta es correcta. 
-Quiz es circular y no tiene ninguna limitacion en intentos  */
+import { JuegoQuiz, ShuffleImgsAnim } from "./class.js";
 
-class Quiz {
+// Maneja la interfaz del juego
+// JuegoQuizUI -> JuegoQuiz -> Quiz
 
-	#datos;
-	#preguntaActual;
+class JuegoQuizUI {
+  constructor(preguntas, cantVidas) {
+    this.estado = null;
+    this.juego = new JuegoQuiz(preguntas, cantVidas);
+    this.respuestaActual = 0;
+    this.nuevojuego(preguntas);
+  }
 
-	// preguntas es dic(String, Int)
-	// preguntaActual es {str: String, index: Int}
-	// cantPreguntas es Int
-	// preguntasDisponibles es Array[Int]
+  nuevojuego(preguntas) {
+    this.box = document.querySelector(".box");
+    this.shuffleImgs = new ShuffleImgsAnim(Object.keys(preguntas), this.box);
+    this.puntos = document.querySelector(".puntos");
+    this.popup = document.querySelector(".popup");
+    this.popupImg = document.querySelector(".popup-ico");
+    this.popupBtn = document.querySelector(".popup-btn");
+    this.barraCorrazones = document.querySelector(".heart-bar");
+    this.barraProgreso = document.querySelector(".progress-bar");
+    this.corrazones = document.querySelectorAll(".heart-bar .fi");
+    this.cantidadApariciones = document.querySelector(".cantAp");
+    this.corazones = this.crearCorazones();
+  }
 
-	constructor(preguntas){;
-		this.#datos = preguntas;
-		this.preguntas = Object.keys(preguntas);
-		this.#preguntaActual = {str:`${this.preguntas[0]}`,index: 0};
-		this.cantPreguntas = this.preguntas.length;
-	}
-	
-	getPreguntaActual(){
-		const res = this.#preguntaActual.str 
-		return res;
-	}
+  iniciarJuego() {
+    const checkBtn = document.querySelector(".midBtn");
+    const resetBtn = document.querySelector(".ltBtn")
+    const plusBtn = document.querySelector(".rtBtn")
+    const cantAp = document.querySelector(".cantAp")
 
-	getIndex(){
-		return this.#preguntaActual.index;
-	}
+    // incializa la primer pregunta
+    this.box.src = `src/img/objetos/${this.juego.obtenerPreguntaActual()}.png`;
 
-	siguientePregunta(){
-		let preguntaActualIndex  = this.#preguntaActual.index
-		let preguntaActualString = this.#preguntaActual.str
-		preguntaActualIndex ++
-		preguntaActualIndex %= this.cantPreguntas;
-		preguntaActualString = this.preguntas[preguntaActualIndex]
+    /* navFooter eventos  */
+    checkBtn.addEventListener("click", this.manejarRespuestaUsuario);
+    resetBtn.addEventListener('click', (e) => {  cantAp.innerHTML="0";})
+    plusBtn.addEventListener('click', (e) => { e.stopPropagation(); cantAp.innerHTML ++;});
 
-		this.#preguntaActual.str = preguntaActualString;
-		this.#preguntaActual.index = preguntaActualIndex;
+    /* randbox eventos */
+    cantAp.addEventListener('click', (e)=>{ cantAp.innerHTML ++; });
+    this.box.addEventListener("click", this.avanzarJuego);
 
-		return preguntaActualString;
-	}
+    /* popup eventos */
+    this.popupBtn.addEventListener("click", () => {
+      if (this.estado == "userPierde") {
+        /* Reiniciar juego */
+        this.jugarOtraVez();
+      } 
+      if( this.estado == "userGana"){
+        /* ver score */
+        document.body.classList.add("slide-out-left");
+        document.body.addEventListener("animationend", () => {
+          window.location.href = "../score.html";
+        });
+      }
+    });
+  }
 
-	verificarRespuesta(respuestaUsuario){
+  // eliminarEventos() {
+  //   this.checkBtn.removeEventListener('click' , this.manejarRespuestaUsuario )
+  //   this.box.removeEventListener('click', this.avanzarJuego );
+  // }
 
-		if(respuestaUsuario == this.#datos[this.#preguntaActual.str] ){
-			console.log("Responde Bien");
-			return true
-		}else{
-			console.log("Responde Mal")
-			return false
-		}
-	}
+  jugarOtraVez() {
+    document.body.classList.remove(this.estado);
+    this.estado = "userReiniciaPartida";
+    document.body.classList.add(this.estado);
+    this.juego.intentarDeNuevo();
+    this.actualizarPopup();
+    // se ejecutan dos animaciones y se actualiza la ui al finalizar
+    this.animacionResetearJuego(this.heartUpAnim());
+  }
+
+  actualizarPopup() {
+    let estado = this.estado;
+    switch (estado) {
+      case "userGana":
+        this.popupImg.src = "src/img/ui/win.png";
+        this.popupBtn.classList.add("fi", "fi-rr-play-circle", "verScoreBtn");
+        break;
+      case "userPierde":
+        this.popupImg.src = "src/img/ui/game-over.png";
+        this.popupBtn.classList.add("fi","fi-rr-rotate-left","tryAgainBtn");
+        break;
+      case "userRespondeBien":
+        this.popupImg.src = "src/img/ui/like.png";
+        break;
+      case "userRespondeMal":
+        this.popupImg.src = "src/img/ui/skull.png";
+        break;
+      case "userReiniciaPartida":
+        this.popupBtn.classList.remove("fi","fi-rr-rotate-left","tryAgainBtn");
+        this.popupImg.src = "src/img/ui/again.png";
+        break;
+    }
+  }
+
+  userPierde() {
+    // elimina estado anterior y actualiza
+    document.body.classList.remove(this.estado);
+    document.body.classList.add("userPierde");
+    this.estado = "userPierde";
+  }
+
+  userGana() {
+    // elimina estado anterior y actualiza
+    document.body.classList.remove(this.estado);
+    document.body.classList.add("userGana");
+    this.estado = "userGana";
+  }
+
+  userRespondeBien() {
+    // el setTimeOut asociado elimina el estado anterior
+    this.puntos.innerHTML = `+ ${this.juego.incPuntaje()}`;
+    this.barraProgreso.style.width = `${this.juego.getProgreso()}%`;
+    this.estado = "userRespondeBien";
+    document.body.classList.add(this.estado);
+
+    this.userRespondeBienTimeout();
+  }
+
+  userRespondeMal() {
+    // el setTimeOut asociado elimina el estado anterior
+	      const index = this.juego.intentosRestantes 
+    setTimeout( ()=>{ this.corazones[index].classList.remove("fi-ss-heart"); } ,800)
+
+    this.corazones[index].classList.add("fi-rr-heart") 
+    this.puntos.innerHTML = `- ${this.juego.decPuntaje()}`;
+    this.estado = "userRespondeMal";
+    document.body.classList.add(this.estado);
+
+    this.userRespondeMalTimeout();
+  }
+
+  crearCorazones() {
+    for (let i = 0; i < this.juego.intentosRestantes; i++) {
+      let heart = document.createElement("i");
+      heart.classList.add("fi", "fi-ss-heart");
+      this.barraCorrazones.appendChild(heart);
+    }
+    return this.barraCorrazones.children;
+  }
+
+  heartUpAnim() {
+    let i = 0;
+    i = i % this.corazones.length
+    let anim = setInterval(() => {
+      this.corazones[i].classList.remove("fi-rr-heart");
+      this.corazones[i].classList.add("fi-ss-heart");
+      i++;
+    }, 500);
+    return anim;
+  }
+
+  animacionResetearJuego(intervalo) {
+    // ejecuta callback despues del shuffle
+
+    this.shuffleImgs.shuffleAnimate(() => {
+      clearInterval(intervalo);
+      this.barraProgreso.style.width = `${this.juego.getProgreso()}%`;
+      this.cantidadApariciones.innerHTML = "0";
+      document.body.classList.remove("userReiniciaPartida");
+      return this.juego.obtenerPreguntaActual(); //importante
+    });
+  }
+
+  verificarRespuestaUsuario() {
+    return this.juego.verificarRespuesta(this.respuestaActual);
+  }
+
+  userRespondeMalTimeout() {
+    setTimeout(() => {
+      document.body.classList.remove("userRespondeMal");
+    }, 1200);
+  }
+
+  userRespondeBienTimeout = () => {
+    setTimeout(() => {
+      document.body.classList.remove("userRespondeBien");
+    }, 1200);
+  };
+
+  avanzarJuego = () => {
+    const shuffleImgs = this.shuffleImgs;
+    this.cantidadApariciones.innerHTML = "0"; // cantAp
+    if (this.juego.haTerminado()) {
+      /* Si el juego termina no cambia de pregunta */
+      return false;
+    }
+    /* Pasa a la sig pregunta con una animacion shuffle*/
+    if (shuffleImgs) {
+      console.log("aca");
+      document.body.style.pointerEvents = "none";
+      // incia la animacion y ejecuta una funcion handler al finalizar
+      shuffleImgs.shuffleAnimate((img, index) => {
+        document.body.style.pointerEvents = "auto";
+        return this.juego.siguientePregunta(); //importante
+      });
+    } else {
+      /* por default pasa a la sig pregunta */
+      this.box.src = `src/img/objetos/${this.juego.siguientePregunta()}.png`;
+    }
+    localStorage.setItem("score", JSON.stringify(this.juego.puntaje));
+    return true;
+  };
+
+
+  manejarRespuestaUsuario = () => {
+    this.respuestaActual = this.cantidadApariciones.innerHTML;
+
+    if (this.verificarRespuestaUsuario()) {
+      if (!this.juego.haTerminado()) {
+        this.userRespondeBien(); //cambia el estado
+        this.avanzarJuego();
+      } else {
+        this.finDelJuego(); // cambia el estado
+      }
+    } else {
+      if (!this.juego.haTerminado()) {
+        this.userRespondeMal(); //cambia el estado
+        this.userRespondeMalTimeout();
+      } else {
+        this.finDelJuego(); // cambia el estado
+      }
+    }
+    this.actualizarPopup(); // importante
+  };
+
+
+  finDelJuego() {
+    if (this.juego.haPerdido()) {
+      this.userPierde(); // cambia estado
+    } else {
+      this.userGana(); // cambia estado
+    }
+    localStorage.setItem("score", JSON.stringify(this.juego.puntaje));
+  }
+
 
 
 }
-
-
-
-/* Dado un quiz, JuegoQuiz limita los intentos, agrega un sistema de puntaje, 
-agrega la capacidad de saltar preguntas del quiz
-*/
-
-class JuegoQuiz {
-
-	// quiz es Quiz
-	// intentosRestantes es Int
-	// puntaje es Int
-	// preguntasDisponibles es Array[String]
-	// data { Dict, Int }
-
-	#data
-
-    constructor(preguntas, intentosIniciales = 3) {
-        this.quiz = new Quiz(preguntas);
-        this.intentosRestantes = intentosIniciales; // Vida del user
-        this.puntaje = 0;
-		this.preguntasDisponibles = Object.keys(preguntas);
-		this.progreso = 0;
-		this.#data = { "preguntas": preguntas, "intentos": intentosIniciales} // guarda los datos inciales
-    }
-
-    obtenerPreguntaActual() {
-        return this.quiz.getPreguntaActual();
-    }
-
-	intentarDeNuevo(){
-
-		let preguntas = this.#data["preguntas"]
-		let intentos = this.#data["intentos"]
-
-		this.quiz = new Quiz(preguntas)
-		this.puntaje = 0;
-		this.progreso = 0;
-		this.preguntasDisponibles = Object.keys(preguntas)
-		this.intentosRestantes = intentos
-		this.preguntas = preguntas
-	}
-
-    verificarRespuesta(respuestaUsuario) {
-        const esCorrecta = this.quiz.verificarRespuesta(respuestaUsuario);
-		const preguntaActualString = this.quiz.getPreguntaActual()
-        if (esCorrecta) {
-			this.preguntasDisponibles = this.preguntasDisponibles.filter(elem => elem != preguntaActualString)
-			this.incPuntaje()
-            console.log("¡Correcto!");
-        } else {
-            this.intentosRestantes--;
-			this.decPuntaje()
-        }
-        return esCorrecta;
-    }
-
-    siguientePregunta() {
-
-		const preguntasDisponibles     = this.preguntasDisponibles
-		let   siguientePreguntaString  = this.quiz.siguientePregunta()
-
-		if(this.haTerminado()){ return null }
-		
-		this.shufflePreguntas()
-
-		while( ! preguntasDisponibles.includes(siguientePreguntaString) ) {
-			siguientePreguntaString = this.quiz.siguientePregunta()
-		}
-
-        return siguientePreguntaString;
-    }
-
-	shufflePreguntas(){
-
-		const longitud = this.quiz.cantPreguntas;
-		for (let i = longitud - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[this.quiz.preguntas[i], this.quiz.preguntas[j]] = [this.quiz.preguntas[j], this.quiz.preguntas[i]];
-		}
-
-	}
-
-    haTerminado() {
-        return  this.haPerdido() || this.preguntasDisponibles.length == 0;
-    }
-
-	haPerdido(){
-		return this.intentosRestantes == 0;
-	}
-
-	incPuntaje(){
-		let puntos = 3000
-		this.puntaje += puntos 
-		return puntos;
-	}
-
-	decPuntaje(){
-		let puntos = 2500
-		this.puntaje += puntos
-		return puntos;
-	}
-
-	getProgreso(){
-		this.progreso = (((this.quiz.cantPreguntas - this.preguntasDisponibles.length )
-		 / this.quiz.cantPreguntas) * 100)
-		return this.progreso;
-	}
-}
-
-
-
-/* hace un shuffle imgs con una animacion*/
-
-class ShuffleImgsAnim {
-
-	constructor(imagenesArray, img_elem) {
-	  this.imagen = img_elem;
-	  this.srcInicial =  img_elem.src;
-	  this.srcFinal = null;
-	  this.datos = imagenesArray;
-	  this.tiempoDeCambio = 100; // ms entre cada cambio de imagen
-	  this.duracionTotal = 2000; // ms de duración total del efecto
-	  this.intervalo = null;
-	  this.timeout = null;
-	  this.indiceActual = 0;
-	}
   
-	animarCambioImagen = () => {
 
-	  if (this.imagen) {
-		this.imagen.src = "src/img/objetos/" + this.datos[this.indiceActual] + ".png";
-		this.indiceActual = (this.indiceActual + 1) % this.datos.length;
-
-		}
-	}
-  
-	finalizarAnimacionAleatoria = () => {
-
-	  this.detenerAnimacion()
-	  
-	  /* Controla el srcFinal final de la imagen */
-	  if (this.imagen && this.datos.length > 0) {
-
-		   const index = this.indiceActual; 
-
-		   if(typeof(this.srcFinal) == 'function'){
-			// ejecuta la funcion que tiene que devolver una imagen
-			let imagenFinal = this.srcFinal(this.datos[index], index)
-			this.imagen.src = "src/img/objetos/" + imagenFinal + ".png";
-			if(imagenFinal){ return }  
-				console.log("shuffleImgAnim -> callback void function!")
-		   }
-		   if(typeof(this.srcFinal) == 'string'){
-			 let imagenFinal = this.srcFinal
-		     this.imagen.src = "src/img/objetos/" + imagenFinal + ".png";
-			 if(imagenFinal){ return } 
-			 	console.log("shuffleImgAnim -> string Img NULL!")
-		   }
-
-		   	// por defecto el srcFinal vuelve a su estado inicial
-			this.imagen.src = this.srcInicial;
-	  }
-	}
-  
-	iniciarAnimacion = () => {
-	  this.srcInicial = this.imagen.src;
-	  this.indiceActual = 0; 
-	  this.intervalo = setInterval(this.animarCambioImagen, this.tiempoDeCambio);
-	  this.timeout = setTimeout(this.finalizarAnimacionAleatoria, this.duracionTotal);
-	}
-  
-	detenerAnimacion = () => {
-	  if (this.intervalo) {
-		clearInterval(this.intervalo);
-		this.intervalo = null;
-	  }
-	  if (this.timeout) {
-		clearTimeout(this.timeout);
-		this.timeout = null;
-	  }
-	}
-
-	shuffleAnimate = (funcion) =>{
-		this.srcFinal = funcion
-		this.iniciarAnimacion()
-	} 
-}
-
-
-export { JuegoQuiz, ShuffleImgsAnim };
+export { JuegoQuizUI };
 

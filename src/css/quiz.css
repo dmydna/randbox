@@ -8,8 +8,14 @@
   margin-bottom: calc(10vh + var(--bar-height));
 }
 
+.popupBtn{
+  opacity: 0;
+}
+
 .tryAgainBtn,
 .verScoreBtn {
+  opacity: 1;
+  display: block;
   position: absolute;
   background-color: white;
   border-radius: 100%;
@@ -35,9 +41,9 @@
 }
 
 .popup {
+  opacity: 0;
   box-sizing: border-box;
   position: absolute;
-  opacity: 1;
   color: var(--primary);
   border: 4px solid;
   border-radius: 15px;
@@ -49,14 +55,16 @@
 }
 
 .btnContainer,
-.salud {
+.heart-bar {
   flex-direction: row;
 }
 
-.salud {
+.heart-bar {
   display: flex;
   gap: 10px;
   justify-content: center;
+  color: red;
+  transition: color 4s;
 }
 
 .cantAp {
@@ -75,6 +83,7 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;
   width: 100px;
+  height: 100px;
 }
 
 .box {
@@ -84,14 +93,6 @@
   z-index: initial;
 }
 
-.barra-estado {
-  height: 0.5px;
-  background-color: var(--secondary);
-  opacity: .6;
-  width: 0%;
-  margin-inline: auto;
-  transition: width .7s ease-in-out;
-}
 
 .popup,
 .puntos {
@@ -103,9 +104,9 @@
 
 
 .puntos {
+  opacity: 0;
   top: 30px;
   font-size: 30px;
-  color: green;
   font-weight: 700;
   transition: opacity .5s ease-in-out;
   z-index: 1000;
@@ -118,22 +119,8 @@
 }
 
 
-/* .barraCarga {
-  display: none;
-} */
 
-.mobile .barraCarga {
-  display: block !important;
-}
-
-.mobile .popup {
-  width: 100%;
-  box-sizing: border-box;
-  max-width: none;
-  border-radius: 0;
-}
-
-.barraCarga {
+.progress {
   padding: var(--bar-height);
   position: absolute;
   width: 100%;
@@ -143,23 +130,20 @@
   left: 0;
 }
 
-.carga {
+.progress-bar {
   background-color: green;
+  width: 0;
 }
 
 
 
-#container-game:hover {
+#game-container:hover {
   cursor: pointer;
 }
 
-.ui {
-  padding: 15px;
-  border-top: 1px solid;
-  border-color: rgb(128 128 128 / 50%);
-}
 
-.ui i:hover{
+
+.nav-footer i:hover{
   cursor: pointer;
 }
 
@@ -168,5 +152,110 @@
 .box {
   -webkit-animation: bounce-in-fwd 1.1s both;
   animation: bounce-in-fwd 1.1s both;
+}
+
+
+.userReiniciaPartida .popup,
+.userReiniciaPartida .heart-bar {
+  opacity: 1!important;
+}
+
+.userReiniciaPartida .popup-btn,
+.userReiniciaPartida .puntos {
+  opacity: 0!important;
+}
+
+
+
+.userGana .progress-bar {
+  width: 100%!important;
+}
+
+
+/**/
+
+
+.cantAp {
+  z-index: 1001;
+  transition: z-index 1s;
+}
+
+.box {
+  margin-inline: auto;
+}
+
+.box-container, .cantAp{
+  width: 100%;
+}
+
+/**/
+
+.userPierde .cantAp,
+.userGana .cantAp,
+.userRespondeBien .cantAp,
+.userRespondeMal .cantAp,
+.userReiniciaPartida .cantAp {
+  z-index: 1;
+}
+
+.userPierde .popup-container,
+.userGana .popup-container,
+.userRespondeBien .popup-container,
+.userRespondeMal .popup-container,
+.userReiniciaPartida .popup-container {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 999;  
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.userPierde .puntos,  
+.userPierde .heart-bar, 
+.userGana .heart-bar,
+.userGana .puntos {
+  opacity: 0;
+}
+
+.userPierde .popup, 
+.userGana .popup {
+  opacity: 1;
+}
+
+.userRespondeBien .puntos {
+  color: green;
+  opacity: 1;
+}
+
+.userRespondeBien .popup, 
+.userRespondeMal .popup {
+  opacity: 1;
+}
+
+.userRespondeBien .popup, 
+.userRespondeMal .popup {
+  opacity: 1;
+}
+
+
+.userRespondeMal .puntos {
+  color: red;
+  opacity: 1;
+}
+
+.userRespondeMal .heart-bar {
+  color: black;
+}
+
+
+
+#game-container {
+  width: 100%;
+  height: 70vh;
+  overflow: overlay;
 }
 

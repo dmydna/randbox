@@ -24,23 +24,29 @@ preguntasQuizArray.map( (src, index) => {
 
 
 box.addEventListener('animationstart' , ()=> {
-     gift.style.opacity =  "1"
+    if(cantClicks <= -1){
+        gift.style.opacity =  "0"
+    }else{
+        gift.style.opacity =  "1"
+    }
+
 } )
 
 
 box.addEventListener('animationend', ()=>{
 
-    gift.style.opacity =  "0"
+
 
     if(cantClicks == 0){
-        document.querySelector(".barraCarga").style.opacity = "0";
+
+        document.querySelector(".progress").style.opacity = "0";
         box.style.animationDuration = '0.5s'
         box.style.animationName = 'scale-out-center'
         cantClicks --
     }
-    if( cantClicks < 0){
+    if( cantClicks <= 0){
         box.style.opacity = "0"
-        document.querySelector(".barraCarga").style.opacity = "0";
+        document.querySelector(".progress").style.opacity = "0";
         setTimeout( ()=>{window.location.href = "../quiz.html"}, 500 ) 
     }
 
@@ -53,13 +59,15 @@ box.addEventListener('click', (e) => {
 
     e.stopPropagation()
 
-    const barraCarga = document.querySelector('.barraCarga')
-    const carga = document.querySelector(".carga")
+    gift.style.opacity = gift.style.opacity == '1' ? '0' : '1'
+
+    const barraCarga = document.querySelector('.progress')
+    const carga = document.querySelector(".progress-bar")
 
     box.style.animationName =  box.style.animationName == 'lanzar-box-1' ? 'lanzar-box-2' : 'lanzar-box-1'
     box.classList.remove("onload"); 
 
-    gift.style.opacity = (gift.style.opacity == '0') ? '1' : '0'
+
     barraCarga.style.opacity =  ".5"
     carga.style.width =`${((limitClicks - cantClicks + 1) / limitClicks) * 100}%`
 
@@ -71,6 +79,34 @@ box.addEventListener('click', (e) => {
     gift.src = `src/img/objetos/${gift_img[rand_index]}.png`;
   
     cantClicks--;
+
+    if(cantClicks <= -1){
+        gift.style.opacity =  "0"
+    }
+
     localStorage.setItem("preguntasQuiz", JSON.stringify(preguntasQuiz));
 }); 
 
+
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'p') {
+      document.body.style.pointerEvents="none"
+      const auto = setInterval( ()=>{
+        box.click(); 
+        cantClicks--
+        if(cantClicks == 0){
+            clearInterval(auto)
+        }
+    }, 1000)
+    }
+  });
+
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === ' ') {
+      document.body.style.pointerEvents="none"
+      box.click()
+    }
+  });

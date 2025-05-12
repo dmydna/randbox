@@ -32,7 +32,7 @@ for (const clave in preguntasQuiz) {
 
     nuevaImg.classList.add("gift")
     cantAp.classList.add("cantAp")
-    imgContainer.classList.add("imgContainer")
+    imgContainer.classList.add("gift-container")
 
     cantAp.innerHTML = valor;
     nuevaImg.src = `src/img/objetos/${clave}.png`;
