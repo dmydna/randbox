@@ -140,11 +140,14 @@ class JuegoQuiz {
 	}
 
     haTerminado() {
-        return  this.haPerdido() || this.preguntasDisponibles.length == 0;
+        return  this.haPerdido() || this.haGanado();
     }
 
 	haPerdido(){
 		return this.intentosRestantes == 0;
+	}
+	haGanado(){
+		return this.preguntasDisponibles.length == 0
 	}
 
 	incPuntaje(){

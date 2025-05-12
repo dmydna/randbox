@@ -71,7 +71,8 @@ class JuegoQuizUI {
     this.juego.intentarDeNuevo();
     this.actualizarPopup();
     // se ejecutan dos animaciones y se actualiza la ui al finalizar
-    this.animacionResetearJuego(this.heartUpAnim());
+    this.heartUpAnim()
+    this.animacionResetearJuego();
   }
 
   actualizarPopup() {
@@ -151,15 +152,15 @@ class JuegoQuizUI {
       this.corazones[i].classList.remove("fi-rr-heart");
       this.corazones[i].classList.add("fi-ss-heart");
       i++;
+      if(i==this.corazones.length){
+        clearInterval(anim)
+      }
     }, 500);
-    return anim;
   }
 
-  animacionResetearJuego(intervalo) {
+  animacionResetearJuego() {
     // ejecuta callback despues del shuffle
-
     this.shuffleImgs.shuffleAnimate(() => {
-      clearInterval(intervalo);
       this.barraProgreso.style.width = `${this.juego.getProgreso()}%`;
       this.cantidadApariciones.innerHTML = "0";
       document.body.classList.remove("userReiniciaPartida");
