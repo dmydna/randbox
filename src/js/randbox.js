@@ -72,6 +72,7 @@ class JuegoQuiz {
 	#data
 
     constructor(preguntas, intentosIniciales = 3) {
+		this.estado = ""
         this.quiz = new Quiz(preguntas);
         this.intentosRestantes = intentosIniciales; // Vida del user
         this.puntaje = 0;
