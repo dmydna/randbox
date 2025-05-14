@@ -43,7 +43,7 @@ img{
   align-items: center;
 }
 
-.ui {
+.nav-footer {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -51,6 +51,7 @@ img{
   width: 100%;
   box-sizing: border-box;
   gap: 40px;
+  gap:10%;
 }
 
 * {
@@ -69,6 +70,12 @@ img{
   justify-content: space-between;
 }
 
+.randbox {
+  height: auto;
+  height: -webkit-fill-available;
+  justify-content: center;
+}
+
 .container {
   height: 100%;
   max-width: var(--max-width);
@@ -85,7 +92,7 @@ img{
   left: 0;
   right: 0;
   animation-name: defaultBox;
-  animation-duration: 3s;
+  animation-duration: 2.3s;
   animation-iteration-count: initial;
   animation-direction: alternate;
   -webkit-tap-highlight-color: transparent;
@@ -111,7 +118,7 @@ img{
   opacity: 0;
 }
 
-.barraCarga {
+.progress {
   box-sizing: border-box;
   position: sticky;
   width: 300px;
@@ -124,7 +131,7 @@ img{
   border-radius: 10px;
 }
 
-.carga {
+.progress-bar{
   position: absolute;
   top: 0;
   left: 0;
@@ -134,9 +141,6 @@ img{
   transition: width 1s;
 }
 
-#container-game {
-  width: 100%;
-}
 
 
 .custom-shape-divider-top {
@@ -185,6 +189,13 @@ img{
   transform: rotate(180deg);
   cursor: pointer;
 }
+
+.nav-footer {
+  padding: 15px;
+  border-top: 1px solid;
+  border-color: rgb(128 128 128 / 50%);
+}
+
 
 @media (max-width: 1200px ) {
   .container {

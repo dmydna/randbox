@@ -3,8 +3,18 @@
 @import url('../assets/animalista.css');
 
 
+#game-container{
+    width: 100%;
+    height: auto; /*70vh*/
+    min-height: auto;
+    overflow: visible;
+}
+
+
+
 .randbox {
     align-items: center;
+    /* height: auto; */
 }
 
 .title {
@@ -25,4 +35,10 @@
     width: 200px;
     text-align: center;
     margin-bottom: 60px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
