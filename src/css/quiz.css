@@ -1,0 +1,262 @@
+@import url("index.css");
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('../assets/animalista.css');
+
+
+.header{
+  margin-bottom: calc(10vh + var(--bar-height));
+}
+
+
+.tryAgainBtn,
+.verScoreBtn {
+  opacity: 1;
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-radius: 100%;
+  bottom: -15px;
+  left: calc(50% - var(--popup-btn-width)/2);
+  width: var(--popup-btn-width);
+  bottom: -40px;
+  font-size: 60px;
+  transition: scale .3s;
+}
+
+.tryAgainBtn:hover, .verScoreBtn:hover{
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.user-reply,
+.popup {
+  text-align: center;
+  transition: opacity .7s;
+  background-color: white;
+  z-index: 1;
+}
+
+.popup {
+  opacity: 0;
+  box-sizing: border-box;
+  position: absolute;
+  color: var(--primary);
+  border: 4px solid;
+  border-radius: 15px;
+  padding: 10px;
+  min-width: var(--popup-width);
+  height: 180px;
+  width: 180px;
+  z-index: 1000;
+}
+
+.btnContainer,
+.heart-bar {
+  flex-direction: row;
+}
+
+.heart-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  color: red;
+  transition: color 4s;
+}
+
+.user-reply {
+  margin-top: 56px;
+  border-radius: 100px;
+  width: 125px;
+  position: relative;
+  font-size: 100px;
+  opacity: 0.6;
+}
+
+
+.popup-ico {
+  animation-name: likeHand;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  width: 100px;
+  height: 100px;
+}
+
+.box {
+  height: 120px;
+  width: 120px;
+  display: block;
+  z-index: initial;
+}
+
+
+.popup,
+.points {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.points {
+  opacity: 0;
+  top: 30px;
+  font-size: 30px;
+  font-weight: 700;
+  transition: opacity .5s ease-in-out;
+  z-index: 1000;
+}
+
+
+
+.heart {
+  width: 30px;
+}
+
+
+
+.progress {
+  padding: var(--bar-height);
+  position: absolute;
+  width: 100%;
+  border-radius: unset;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+}
+
+.progress-bar {
+  background-color: green;
+  width: 0;
+}
+
+
+
+#game-container:hover {
+  cursor: pointer;
+}
+
+
+
+.nav-footer i:hover{
+  cursor: pointer;
+}
+
+
+
+.box {
+  -webkit-animation: bounce-in-fwd 1.1s both;
+  animation: bounce-in-fwd 1.1s both;
+}
+
+
+/**/
+
+
+.user-reply {
+  z-index: 1001;
+  transition: z-index 3s;
+}
+
+.box {
+  margin-inline: auto;
+}
+
+.box-container, .user-reply{
+  width: 100%;
+}
+
+/**/
+
+
+
+
+.user-restart-game .popup,
+.user-restart-game .heart-bar {
+  opacity: 1!important;
+}
+
+.user-restart-game .popup-btn,
+.user-restart-game .points,
+.user-restart-game .user-reply {
+  opacity: 0!important;
+}
+
+
+
+.user-wins .progress-bar {
+  width: 100%!important;
+}
+
+
+.user-loses .user-reply,
+.user-wins .user-reply,
+.user-reply-succeeded .user-reply,
+.user-reply-failed .user-reply,
+.user-resets .user-reply {
+  z-index: 1;
+}
+
+.user-loses .popup-container,
+.user-wins .popup-container,
+.user-reply-succeeded .popup-container,
+.user-reply-failed .popup-container,
+.user-restart-game .popup-container {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 999;  
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-loses .points,  
+.user-loses .heart-bar, 
+.user-wins .heart-bar,
+.user-wins .points {
+  opacity: 0;
+}
+
+.user-loses .popup, 
+.user-wins .popup {
+  opacity: 1;
+}
+
+.user-reply-succeeded .points {
+  color: green;
+  opacity: 1;
+}
+
+.user-reply-succeeded .popup, 
+.user-reply-failed .popup {
+  opacity: 1;
+}
+
+.user-reply-succeeded .popup, 
+.user-reply-failed .popup {
+  opacity: 1;
+}
+
+
+.user-reply-failed .points {
+  color: red;
+  opacity: 1;
+}
+
+.user-reply-failed .heart-bar {
+  color: black;
+}
+
+
+
+#game-container {
+  width: 100%;
+  height: 70vh;
+  overflow: overlay;
+}
+

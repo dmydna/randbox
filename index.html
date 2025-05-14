@@ -3,22 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/style.css">
-	 <script src="src/script.js" defer></script>
+    <link rel="stylesheet"  href="src/css/index.css">
+    <link rel="prerender" href="/quiz.html" as="document">
+	<script type="module" src="src/js/index.js" defer></script>
 
     <title>randbox</title>
 </head>
 
 
 <body>
+    
     <div class="container">
-        <div class="randbox">
-            <img class="randbox_img onload" src="https://i.ibb.co/MbLsP4j/open-box.png">
-            <img class="randbox_msg" width="80px" src="#" alt="">                   
+        <div class="header"></div>    
+        <div id="game-container">
+            <div class="randbox">
+                <img class="box onload" src="/src/img/ui/open-box.png" />
+                <img style="opacity: 0;" class="gift" width="80px" src="#" alt="" />     
+            </div>
+        </div>   
+        <div class="ui">
+            <div class="progress" style="opacity: 0;"><div class="progress-bar"></div></div>
         </div>
     </div>
+    
 
-</div>
 
 </body>
 </html>
