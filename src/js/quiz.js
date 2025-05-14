@@ -16,6 +16,8 @@ const shuffleImgs = new ShuffleImgsAnim( preguntasQuizArray, box)
 
 
 
+document.onload = cargarTest(test)
+
 // Precargar Imagenes
 
 
@@ -286,6 +288,11 @@ checkBtn.addEventListener('mouseout',() =>{
 
 
 
+function cargarTest (test) { 
+  if(test){ 
+    import('./test.js') 
+  }
+}
 
 
 
