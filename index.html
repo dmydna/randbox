@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="src/css/index.css">
     <link rel="prerender" href="/quiz.html" as="document">
-	<script type="module" src="src/js/index.js" defer></script>
+	<script type="module" src="src/js/indexPage.js" defer></script>
 
+    <link rel="stylesheet" type="text/css"  href="src/css/index.css">
     <title>randbox</title>
 </head>
 
@@ -17,12 +17,103 @@
         <div class="header"></div>    
         <div id="game-container">
             <div class="randbox">
-                <img class="box onload" src="/src/img/ui/open-box.png" />
-                <img style="opacity: 0;" class="gift" width="80px" src="#" alt="" />     
+                <img class="box" src="/src/img/ui/open-box.png" />
+                <img class="gift" src="#" alt="" />     
             </div>
         </div>   
-        <div class="ui">
-            <div class="progress" style="opacity: 0;"><div class="progress-bar"></div></div>
+        <div class="progress"><div class="progress-bar"></div></div>
+
+        <div style="width: auto;" class="popup">
+            <section class="main-menu">
+                <img class="popup-ico" src="/src/img/popup/menu-game.png" height="100px">
+                <ul class="menu">
+                    <li> <i class="fi fi-rr-play"></i>PLAY</li>
+                    <li> <i class="fi fi-rr-settings"></i>OPTIONS</li>
+                    <li><i class="fi fi-rr-info"></i>HELP</li>
+                </ul>
+            </section>
+            <section class="controls-submenu">
+                <ul class="menu">
+                    <li> <p>menu</p> 
+                        <div style="display: flex; gap: 10px;">  
+                            <img src="./src/img/keyboard/m.png">
+                        </div>
+                    </li>
+                    <li> <p>atras/reset</p> 
+                        <div style="display: flex; gap: 10px;"> 
+                            <img src="./src/img/keyboard/back.png">  
+                        </div>
+                    </li>
+                    <li> <p>saltar/inc</p> 
+                        <div style="display: flex; gap: 10px;"> 
+                            <img src="./src/img/keyboard/space.png">  
+                        </div>
+                    </li>
+                    <li> <p>confirmar</p> 
+                        <div style="display: flex; gap: 10px;"> 
+                            <img src="./src/img/keyboard/enter.png">  
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <section class="options-menu">
+                <ul class="menu">
+                    <li> <p>menu</p> <div style="display: flex; gap: 10px;">  <p class="interuptor menu">ON</p> </div></li>
+                    <li> <p>teclado</p> <div style="display: flex; gap: 10px;">  <p class="interuptor teclado">OFF</p> </div></li>
+                    <li> <p>progreso</p> <div style="display: flex; gap: 10px;">   <p class="interuptor progreso">ON</p> </div></li>
+                    <li>dificultad  
+                        <div class="range">
+                            <input class="dificultad" type="range" min="0" max="15" value="5">
+                        </div> 
+                    </li>
+                    <li>vidas 
+                        <div class="range">
+                            <input class="vidas" type="range" min="1" max="7" value="3"> 
+                        </div>
+                    </li>
+                    <li>velocidad  
+                        <div class="range">
+                            <input class="velocidad" type="range" min="1" max="5" value="2">
+                        </div> 
+                    </li>
+                </ul>
+            </section>
+            <section  class="help-menu">
+                <ul class="menu">
+                    <li> <i class="fi fi-rr-play"></i>como jugar?</li>
+                    <li> <i class="fi fi-rr-settings"></i>ver controles</li>
+                </ul>
+            </section>
+            <section  class="resumen-submenu">
+                <ul class="menu">
+                    <p style="width: 100%; margin-inline: auto;">
+                        Haz click en la caja para lanzarla, cuenta las apariciones 
+                        de los objetos que se dejan ver y
+                        responde el <b>quiz</b>.
+                    </p>
+                </ul>
+            </section>
+            <section class="go-menu">
+                <div class="menu">
+                    GO!
+                </div>
+            </section>
+        </div>
+
+
+        <div class="nav-footer">
+
+            <div class="ltBtn">
+                <i class="fi fi-rr-up"></i>
+            </div>
+            <div class="midBtn">
+                <i class="fi fi-rr-settings-sliders"></i>
+            </div>
+            <div class="rtBtn">
+                <i class="plusBtn fi fi-br-info"></i>
+            </div>
+
+
         </div>
     </div>
     

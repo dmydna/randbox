@@ -7,7 +7,7 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel="prerender" href="/score.html" as="document">
-	<script type="module" src="src/js/quiz.js" defer></script>
+	<script type="module" src="src/js/quizPage.js" defer></script>
     <title>quiz</title>
 </head>
 
@@ -19,18 +19,20 @@
             <div class="progress"><div class="progress-bar"></div> </div>
         </div>  
         <div id="game-container">
-            <div class="puntos bounce-in-top" ></div>
+            <div class="points"></div>
             <div class="randbox">
-                <div class="box-container">
-                    <img class="box" width="180px" height="180" />
-                    <h1 class="cantAp">0</h1> 
+                <div style="margin-top: 20px;"  class="box-container">
+                    <img class="box" src="./src/img/ui/mystery.png"/>
+                    <h1 class="user-reply">0</h1> 
                 </div>
             </div> 
             <div class="popup-container">
                 <div class="popup">
                     <img class="popup-ico">
                     <div class="heart-bar"></div>  
-                    <i class="popup-btn"></i> 
+                    <div class="popup-btn">
+                        <i class="fi"></i> 
+                    </div>
             </div>
             </div>
 

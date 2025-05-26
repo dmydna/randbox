@@ -1,14 +1,4 @@
-@import url("score.css");
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css');
-@import url('../assets/animalista.css');
-
-
-#game-container{
-    width: 100%;
-    height: auto; /*70vh*/
-    min-height: auto;
-    overflow: visible;
-}
+@import url("main.css");
 
 
 
@@ -42,3 +32,5 @@
     flex-direction: column;
     align-items: center;
 }
+
+

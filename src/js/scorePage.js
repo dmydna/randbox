@@ -1,3 +1,5 @@
+import { } from './main.js'
+import { hoverClassToggle } from './Modules/navbar.js';
 
 const randbox = document.querySelector(".randbox");
 
@@ -6,7 +8,6 @@ const backBtn = document.querySelector('.ltBtn')
 const homeBtn = document.querySelector('.midBtn')
 const infoBtn = document.querySelector('.rtBtn')
 
-const ui = document.querySelector(".ui")
 const score_container = document.querySelector(".score")
 
 const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz"));
@@ -16,8 +17,6 @@ score_container.innerHTML = `score: ${puntuacion}`;
 
 
 backBtn.addEventListener('click', () => {window.location.href = "../quiz.html"  })
-
-
 homeBtn.addEventListener('click', () => { window.location.href = "../index.html" } )
 infoBtn.addEventListener('click', () => { window.location.href = "../info.html" } )
 
@@ -45,6 +44,8 @@ for (const clave in preguntasQuiz) {
   }
 }
 
+
+hoverClassToggle(homeBtn , 'fi-sr-home')
 
 
   //localStorage.clear();
