@@ -79,7 +79,7 @@ class MiniJuegoApp {
       this.index = Math.floor(Math.random() * this.preguntas.length);
       const body = document.body;
       body.classList.add("box-anim");
-      this.gift.src = `src/img/objetos/${this.preguntas[this.index]}.png`;
+      this.gift.src = `src/img/objects/${this.preguntas[this.index]}.png`;
       localStorage.setItem("preguntasQuiz", JSON.stringify(this.data));
       this.barra.style.width = `${this.progreso()}%`;
       this.intentosRestantes--;

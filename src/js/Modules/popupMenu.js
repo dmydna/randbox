@@ -58,22 +58,23 @@ playBtn.addEventListener('click', ()=>{
     cantidadItentos = GameConfig['dificultad']
 
     document.body.classList.remove('main-menu-active')
-    document.body.classList.add('go-menu-active')
+    // document.body.classList.add('go-menu-active')
 
-
+    document.body.classList.remove('popup-active')
+    document.querySelector(".box").style.opacity = "0"
 
     setTimeout(()=>{
         document.body.classList.remove('go-menu-active','popup-active')
         popup.style.display = 'none'
         document.body.classList.add('onStartGame')
-
+        document.querySelector(".box").style.opacity = "1"
         const minijuego = new MiniJuegoApp(gift_img, cantidadItentos);
         minijuego.jugar();
     },800) 
 
+
     document.querySelector('.box').addEventListener('animationend', ()=>{ 
         document.body.classList.remove('onStartGame') 
-        console.log('DADAD')
     }, {once:true})
 })
 

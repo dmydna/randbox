@@ -87,7 +87,7 @@ class QuizApp {
   resetearJuego() {
     this.barraProgreso.style.width = `${this.juego.getProgreso()}%`;
     this.cantidadApariciones.innerHTML = "0";
-    this.box.src = `src/img/objetos/${this.juego.obtenerPreguntaActual()}.png`;
+    this.box.src = `src/img/objects/${this.juego.obtenerPreguntaActual()}.png`;
     document.body.classList.remove("user-restart-game");
     document.body.classList.remove("popup-active")
   }
@@ -169,7 +169,7 @@ class QuizApp {
       },2000); /*importante shuffleImg es infinito por default*/
     } else {
       /* por default pasa a la sig pregunta */
-      this.box.src = `src/img/objetos/${this.juego.siguientePregunta()}.png`;
+      this.box.src = `src/img/objects/${this.juego.siguientePregunta()}.png`;
     }
     localStorage.setItem("score", JSON.stringify(this.juego.puntaje));
     return true;

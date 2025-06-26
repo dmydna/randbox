@@ -34,7 +34,7 @@ for (const clave in preguntasQuiz) {
     imgContainer.classList.add("gift-container")
 
     cantAp.innerHTML = valor;
-    nuevaImg.src = `src/img/objetos/${clave}.png`;
+    nuevaImg.src = `src/img/objects/${clave}.png`;
   
     imgContainer.appendChild(nuevaImg);
     imgContainer.appendChild(cantAp);
