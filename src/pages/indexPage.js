@@ -1,21 +1,13 @@
-
-
 import IntroGameApp from '../Games/IntroGame/App.js'
-import {gift_img} from '../main.js'
 import renderBar from './render/renderBar.js';
 import renderQuiz from './render/renderQuiz.js';
-
-
-const config = JSON.parse(localStorage.getItem("GameConfig")) || {}
-
+import { juegoDefault } from '../main.js';
+import memoria from '../Games/Memory.js';
+import { _updCssVars } from '../Menu/sections/utils.js';
 
 
 function indexPage(App){
-
     document.body.className = ""
-
-    // cargarEstilos(false, true)
-
     const template = document.createElement("template");
 
     template.innerHTML = `
@@ -36,6 +28,15 @@ function indexPage(App){
     progressContainer.appendChild(ProgressBar)
     gameContainer.appendChild(Quiz)
 
+    // Animacion Inicial
+    const box = container.querySelector('.box')
+
+    document.body.classList.add("onload")
+    box.addEventListener('animationend', ()=>{
+        document.body.classList.remove('onload')
+    },{once:true})
+    
+
     const userResp = container.querySelector('.user-reply')
     const img = document.createElement('img')
     img.className = 'gift'
@@ -44,7 +45,14 @@ function indexPage(App){
     const boxContainer = container.querySelector('.box-container')
     boxContainer.classList.add('center-fix')
 
-    const Game = new IntroGameApp(gift_img, config.vidas, gameContainer)
+ 
+    const partida = memoria._getMemory("partida")
+    const config = memoria._getMemory("opciones")
+
+    // Actualiza css Vars
+    _updCssVars(config)
+
+    const Game = new IntroGameApp(Object.keys(partida), config.vidas, gameContainer)
     Game.barra = progressContainer.querySelector('.progress-bar')
 
     Game.jugar()

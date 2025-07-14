@@ -1,12 +1,6 @@
 // TODO:
 import EventManager from "../Games/Events.js";
-
-import menuControls from './sections/controls.js';
-import menuHelp from './sections/help.js';
-import menuMain from './sections/main.js';
-import menuOptions from './sections/options.js';
-import menuTutorial from './sections/tutorial.js';
-import Nav from '../Componentes/Nav.js'
+import { _updCssVars } from "./sections/utils.js";
 
 
 
@@ -14,7 +8,7 @@ import Nav from '../Componentes/Nav.js'
 class MenuItem {
 
 
-  constructor(data, name=null,render=null) {
+  constructor(name, data ,render) {
     this.name = name;
     this.data = data;
     this.render = render
@@ -35,7 +29,6 @@ class MenuItem {
     for (let child of this.children) {
       const found = child.findChild(name);
       if (found !== null) {
-        console.log(found)
         return found;
       }
     }
@@ -52,6 +45,23 @@ class Menu extends EventManager {
     this.root;
     this.menuActual;
     this.menuAtras;
+  }
+
+
+
+  _createNode = (nodeData) => {
+    const node = new MenuItem( 
+      nodeData.name, 
+      nodeData.estado, 
+      nodeData.render
+    );  
+    if (nodeData.children) {
+      nodeData.children.forEach(childData => {
+        const childNode = this._createNode(childData);
+        node.addChild(childNode);
+      });
+    }
+    return node;
   }
 
   _siguiente = (name) => {
@@ -85,47 +95,26 @@ class MenuApp extends Menu{
     this.estado = 'hidden'
   }
 
-  _init() {
-    // ndde -> {estado, name, render}
-    this.root = new MenuItem('main-menu-active', 'main-menu', menuMain);
-    // root -> menus
-    const root_continue = new MenuItem('continue-menu-active','continue');
-    const root_play     = new MenuItem('play-game', 'play');
-    const root_options  = new MenuItem('options-menu-active', 'options', menuOptions);
-    const root_help     = new MenuItem('help-menu-active', 'help', menuHelp);
-    // root -> help -> menus
-    const _help_tutorial = new MenuItem('resumen-submenu-active' , 'tutorial', menuTutorial);
-    const _help_controls = new MenuItem('controls-submenu-active', 'controls', menuControls);
 
-    root_help.addChild(_help_tutorial);
-    root_help.addChild(_help_controls);
+  _createMenu = (menuData) => {
+    this.root = new MenuItem('root')
 
-    this.root.addChild(root_continue);
-    this.root.addChild(root_play);
-    this.root.addChild(root_options);
-    this.root.addChild(root_help);
+    this.root = this._createNode(menuData)
 
     this.menuActual = this.root;
     this.menuAtras = this.root;
 
-    
-
-
-    // Barra de Navegacion 
-
-    this.nav._btnEvent('Left','click', this.atras)
-    this.nav._btnEvent('Middle','click', this.home)
-    this.nav._btnEvent('Right','click', this._siguiente)
-    this.nav._addIcons(['fi-rr-angle-left','fi-rr-home','fi-rr-info'])
-
-    console.log(this.menuActual)
+    const navContent = [
+      {id: 1, ico : 'fi-rr-angle-left', handler: this.atras},
+      {id: 2, ico : 'fi-rr-home',       handler: this.home},
+      {id: 3, ico : 'fi-rr-info',       handler: this._siguiente}
+    ]
+    this.nav._createNav(navContent)
     
     if(this.estado == 'visible'){
       this.renderMenu()
     }
-
   }
-
 
   killmenu(){
     document.body.classList = ""
@@ -196,18 +185,12 @@ class MenuApp extends Menu{
 
  _aplicarConfiguracionDelJuego(){
 
-  const config  =  JSON.parse(localStorage.getItem("GameConfig")) || {}
+  const game  = this._loadMemory()
+  const config = game.opciones
+  _updCssVars(config)
 
-  const html =  document.documentElement
-
-  html.style.setProperty('--progress-enable',  config.progreso * 0.5)
-  html.style.setProperty('--menu-enable', config.menu)
-  html.style.setProperty('--animation-time', (-1) * config.velocidad + 5.5 + 's' )
-  html.style.setProperty('--hearts', config.vidas)
-  html.style.setProperty('--continue-game', (config.memoria == 0) ? 'none' : 'flex')
 
   if(document.querySelector('.continue-btn') && config.memoria != {}){
-    console.log("Se activa")
     if(config.memoria == 0){
       document.querySelector('.continue-btn').style.display = 'none'
     }else{
@@ -221,7 +204,7 @@ class MenuApp extends Menu{
     this.estado = 'visible'
     return
   }
-  if(config['menu'] == 0 && document.querySelector('.onload')){
+  if(game.opciones['menu'] == 0 && document.querySelector('.onload')){
     // incia el juego sin menu
     // const introGame = new introGame(gift_img, config['vidas']);
     this.estado = 'hidden'

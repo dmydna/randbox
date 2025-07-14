@@ -24,7 +24,6 @@ class pageItem {
       for (let child of this.children) {
         const found = child.findChild(name);
         if (found !== null) {
-          console.log(found)
           return found;
         }
       }
@@ -81,17 +80,18 @@ class pageItem {
 
     renderPage = () => {
         const container = this.elem
+        document.body.className = ''
         const func = this.pageActual.render
-        console.log(func)
         container.appendChild(func(this))
       }
 
     fastRender(name){
       const container = this.elem
       container.innerHTML = '' 
+      document.body.className = ''
+      document.documentElement.className = name
       const node = this.root.findChild(name)
       const func = node.render
-      console.log('RENDER EXITOSO')
       container.appendChild(func(this))
     }
   

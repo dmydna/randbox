@@ -36,7 +36,6 @@ function hoverClassToggle(elem, hoverClass, targetElem ){
 
 
 function hoverFlatIcon(elem,type=null){
-  console.log(elem)
   const child = elem.children[0]
   let classHover = child.classList[1]
   if(type!=null){

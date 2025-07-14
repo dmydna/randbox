@@ -48,7 +48,7 @@ class ShuffleImgsAnim {
 				console.log("shuffleImgAnim -> callback void function!")
 				return
 			 }  
-			console.log(imagenFinal)
+
 
 			this.imagen.src = src_obj + imagenFinal + ".png"
 			return
@@ -77,7 +77,6 @@ class ShuffleImgsAnim {
 	}
   
 	detenerAnimacion = () => {
-		console.log("detenerAnimacion")
 	  if (this.intervalo) {
 		clearInterval(this.intervalo);
 		this.intervalo = null;

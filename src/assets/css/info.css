@@ -1,33 +1,30 @@
-@import url("main.css");
 
 
-
-.randbox {
+.info .randbox {
     align-items: center;
-    /* height: auto; */
 }
 
-.title {
+.info .title {
     opacity: .8;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.social {
+.info .social {
     font-size: 40px;
 }
 
-.social:hover{
+.info .social:hover{
     cursor: pointer;
 }
 
-.descrip {
+.info .descrip {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     width: 200px;
     text-align: center;
     margin-bottom: 60px;
 }
 
-.info {
+.info .info-container {
     display: flex;
     flex-direction: column;
     align-items: center;

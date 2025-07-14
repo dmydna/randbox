@@ -101,7 +101,6 @@ function _interuptorMenuInit(interruptors){
 function _optionMenuInit(){
     const ranges = document.querySelectorAll('.range');
     const interruptors = document.querySelectorAll('.interuptor')
-    console.log("SE EJECUTA")
     _rangeMenuInit(ranges)
     _interuptorMenuInit(interruptors)
 }
@@ -114,7 +113,21 @@ function _continueGameInit(){
             window.location.href = "../quiz.html"
         })
     }else{
-        console.log(config)
         continueBtn.remove()
     }
 }
+
+
+
+
+function _updCssVars(config){
+    const html =  document.documentElement
+    html.style.setProperty('--progress-enable',  config.progreso * 0.5)
+    html.style.setProperty('--menu-enable', config.menu)
+    html.style.setProperty('--animation-time', (-1) * config.velocidad + 4.5 + 's' )
+    html.style.setProperty('--hearts', config.vidas)
+    html.style.setProperty('--continue-game', (config.memoria == 0) ? 'none' : 'flex')
+}
+
+
+export {_updCssVars}

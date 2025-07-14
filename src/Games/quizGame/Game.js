@@ -45,10 +45,8 @@ class Quiz {
 	verificarRespuesta(respuestaUsuario){
 
 		if(respuestaUsuario == this.#datos[this.#preguntaActual.str] ){
-			console.log("Responde Bien");
 			return true
 		}else{
-			console.log("Responde Mal")
 			return false
 		}
 	}
@@ -122,7 +120,6 @@ class JuegoQuiz {
         if (esCorrecta) {
 			this.preguntasDisponibles = this.preguntasDisponibles.filter(elem => elem != preguntaActualString)
 			this.incPuntaje()
-            console.log("¡Correcto!");
         } else {
             if(!this.intentosRestantes <= 0){
                 this.intentosRestantes--;
@@ -144,7 +141,7 @@ class JuegoQuiz {
 		while( ! preguntasDisponibles.includes(siguientePreguntaString) ) {
 			siguientePreguntaString = this.quiz.siguientePregunta()
 		}
-		console.log("loop cierra!")
+
 
         return siguientePreguntaString;
     }

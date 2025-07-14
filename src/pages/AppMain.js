@@ -6,6 +6,8 @@ import indexPage from './indexPage.js';
 import infoPage from './infoPage.js'
 import page from 'https://cdn.skypack.dev/page';
 
+
+
 const App = new AppManger(document.body)
 
 App.router = page
@@ -20,5 +22,17 @@ const AppContent = [
 
 
 App._createApp(AppContent)
+
+
+document.addEventListener("keydown", function (event) {
+    if (event.key == 'm') {
+        App.router('/menu')
+    }
+});
+
+
+
+
+
 
 export default App

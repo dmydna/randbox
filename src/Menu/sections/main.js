@@ -1,6 +1,8 @@
 import App from "../../pages/AppMain.js";
+import {hoverFlatIcon}  from './../../Componentes/navbar.js';
 
-const config  =  JSON.parse(localStorage.getItem("GameConfig"))
+
+
 
 
 function _playNewGame(game,cantidadItentos){
@@ -9,16 +11,6 @@ function _playNewGame(game,cantidadItentos){
   return
 }
 
-function _memoryReset(){
-  localStorage.setItem("memoria", JSON.stringify({
-      preguntasDisponibles : [],
-      intentosDisponibles : config.vidas,
-      progreso:0,
-      puntaje:0,
-      estado:"_",
-      respuesta: 0
-  }));
-}
 
 
 function menuMain(menu) {
@@ -33,7 +25,6 @@ function menuMain(menu) {
 
   const container = document.createElement("section");
   container.classList.add("main-menu");
-
   const img = document.createElement('img')
 
   img.src = '/src/assets/img/popup/menu-game.png'
@@ -72,7 +63,7 @@ function _continueGameHandler(){
  
 
 function _playMenuHandler(menu){
-    const cantidadItentos = config['dificultad']
+
 
     document.querySelector(".box").style.opacity = "0"
 
@@ -80,14 +71,14 @@ function _playMenuHandler(menu){
         menu.showMenu(false)
         document.body.classList.add('onStartGame')
         document.querySelector(".box").style.opacity = "1"
-        App.fastRender('intro')
+        App.router('/intro')
     },800) 
 
     document.querySelector('.box').addEventListener('animationend', ()=>{ 
         document.body.classList.remove('onStartGame') 
     }, {once:true})
 
-    _memoryReset()
+    menu._memoryReset(true)
 }
 
 // Auxiliares
@@ -106,6 +97,9 @@ function createMainItem(prop) {
 
     li.appendChild(i)
     li.appendChild(span)
+
+    hoverFlatIcon(li)
+
     return li;
 }
   

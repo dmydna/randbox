@@ -1,5 +1,3 @@
-import { cargarEstilos } from "../main.js";
-
 import { hoverClassToggle, hoverFlatIcon, navbar } from "../Componentes/navbar.js";
 import QuizApp from "../Games/quizGame/App.js";
 // import { } from "../Componentes/test.js";
@@ -16,6 +14,7 @@ import renderQuiz from './render/renderQuiz.js';
 import ShuffleImgs from "../Games/quizGame/ShuffleImgs.js";
 import PopupClass from "../Games/quizGame/Popup.js";
 import Navbar from "../Componentes/Nav.js";
+import memory from "../Games/Memory.js";
 
 // Inicializa Estructuras
 // const box = document.querySelector(".box")
@@ -30,8 +29,6 @@ import Navbar from "../Componentes/Nav.js";
 function quizPage(App){
 
      document.body.className = ""
-     document.documentElement.className = ""
-     document.documentElement.classList.add('quiz');  
 
     const template = document.createElement("template");
 
@@ -64,17 +61,21 @@ function quizPage(App){
     navContainer.appendChild(Nav)
 
 
-    const config = JSON.parse(localStorage.getItem("GameConfig")) || {}
-    const memoria = JSON.parse(localStorage.getItem("memoria")) || {}
-    const preguntasQuiz = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
+    const config =   memory._getMemory("opciones")
+    const memoria =  memory._getMemory("memoria")
+    const preguntasQuiz = memory._getMemory("partida")
 
     // Incializo Quiz
-    const QuizGame =   new QuizApp(preguntasQuiz, config.vidas, gameContainer)
-    QuizGame._animations =  new ShuffleImgs()
-    QuizGame._controlls  =  new Navbar(navContainer) 
-    QuizGame._popup      =  new PopupClass(popupContainer) 
-    QuizGame._progress   =  headerContainer.querySelector('.progress-bar')
 
+    const QuizContent = {}
+    QuizContent['_animations'] = new ShuffleImgs()
+    QuizContent['_controls']   = new Navbar(navContainer)
+    QuizContent['_popup']      = new PopupClass(popupContainer)
+    QuizContent['_progress']   = headerContainer.querySelector('.progress-bar')
+
+    const QuizGame =   new QuizApp(preguntasQuiz, config.vidas, gameContainer)
+
+    QuizGame.createApp(QuizContent)
     // Comienza Quiz
     container.onload = QuizGame._init()
     QuizGame.iniciarJuego()

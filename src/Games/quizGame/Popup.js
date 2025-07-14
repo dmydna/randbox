@@ -12,7 +12,6 @@ class Popup{
   
 	_init =  (contexto) => {
 		this.contexto  = contexto
-		console.log(contexto)
 		this.img =   this.elem.querySelector(".popup-ico")
 		this.btn =   this.elem.querySelector(".popup-btn")
 		this.crearCorazones()
@@ -86,7 +85,6 @@ class Popup{
 		}
 
 	  setTimeout( ()=>{ 
-		console.log("test: " + this.corazones[index-1])
 	  	this.corazones[index].classList.remove("fi-ss-heart");
 	   } ,800)
 	  this.corazones[index].classList.add("fi-rr-heart") 

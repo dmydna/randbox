@@ -12,6 +12,23 @@ class Navbar extends EventManager {
     }
   
 
+    _createNav = (btns) => {
+      btns.forEach(({id, ico , handler})=>{
+        switch(id){
+          case 3: 
+           this._addEvent(this.rt_btn, 'click', handler) ; 
+           this.rt_btn.firstElementChild.classList.add(ico); break;
+          case 2: 
+           this._addEvent(this.mid_btn, 'click', handler) ;
+           this.mid_btn.firstElementChild.classList.add(ico); break;          
+          case 1: 
+           this._addEvent(this.lt_btn, 'click', handler) ;
+           this.lt_btn.firstElementChild.classList.add(ico); break;  
+        }
+      })
+    }
+
+
     _addEvent_Left(handler, event=null){
       if(event == null){
         this._addEvent(this.lt_btn ,'click', handler)

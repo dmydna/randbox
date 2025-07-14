@@ -22,7 +22,6 @@ class introGameApp extends EventManager{
     this.gift = this.tablero.querySelector(".gift");
     this.index = 0;    
     this.preguntas.forEach(src => { this.data[src] = 0} );
-
   }
 
   jugar() {
@@ -33,10 +32,10 @@ class introGameApp extends EventManager{
   }
 
   endGame() {
-    this.cambiarEstado({"endgame": true});
-    this.box.addEventListener('animationend', ()=>{
-      App.router('/quiz')
-    }, {once: true} )
+      this.cambiarEstado({"endgame": true});
+      this.box.addEventListener('animationend', ()=>{
+        App.router('/quiz')
+      }, {once: true} )
   }
   
   cambiarEstado(States){
@@ -57,37 +56,46 @@ class introGameApp extends EventManager{
   }
 
   boxAnimationStart = () => {
-    this.cambiarEstado({'box-up' : true, 'box-down': false})
+    this.cambiarEstado({ 
+      'box-up' : true, 
+      'box-down': false,
+      'box-anim': true
+    })
   };
 
   boxAnimationEnd = () => {
-    this.cambiarEstado({'box-dow': true, 'box-up' : false, 'box-anim': false })
+    this.cambiarEstado({
+      'box-up' :  false,
+      'box-down': true,
+      'box-anim': false
+    })
+    if(this.intentosRestantes == 0){
+      this.endGame()
+    }
   };
 
   actualizarData() {
     const giftImgStr = this.preguntas[this.index];
     this.data[giftImgStr] = this.data[giftImgStr] ?? 0;
     this.data[giftImgStr]++;
-    localStorage.setItem("preguntasQuiz", JSON.stringify(this.data));
-    let memoria = JSON.parse(localStorage.getItem("memoria")) || {}
-    localStorage.setItem("memoria", JSON.stringify({...memoria, preguntasDisponibles : this.preguntas}))
+
+    this._setMemory("partida", this.data)
+    let memoria = this._loadMemory()
+    this._setMemory("memoria", {...memoria, preguntasDisponibles : this.preguntas} )
   }
 
   manejarRespuestaUsuario = () => {
+    if(this.intentosRestantes == 0){
+      this._removeAllEvents()
+      return
+    }
     this.cambiarEstado({'playGame' : true})
     this.avanzarJuego();
     this.actualizarData();
-    if (this.intentosRestantes == 0){
-      this.salirAnimationEnd()
-    }
+
   }
 
-  salirAnimationEnd(){
-    this._removeAllEvents()
-    this.box.addEventListener("animationend", () =>  {
-      setTimeout(()=>{ this.endGame() }, 500)
-    },{once:true})
-  }
+
 
 
   progreso(){
@@ -101,11 +109,11 @@ class introGameApp extends EventManager{
   avanzarJuego = () => {
     if (!this.tablero.querySelector(".box-up")) {
       this.index = Math.floor(Math.random() * this.preguntas.length);
-      this.cambiarEstado({"box-anim":true});
+      this.cambiarEstado({"box-anim":true, "box-down":false});
       this.gift.src = `src/assets/img/objects/${this.preguntas[this.index]}.png`;
-      localStorage.setItem("preguntasQuiz", JSON.stringify(this.data));
       this.barra.style.width = `${this.progreso()}%`;
       this.intentosRestantes--;
+      this._setMemory("partida", this.data)
     }
   };
 }

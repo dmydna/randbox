@@ -9,6 +9,7 @@
   animation-direction: alternate;
 }
 
+
 .intro .box:hover {   cursor: pointer;
 }
 
@@ -16,9 +17,14 @@
   animation-name: lanzar-box-1;
 }
 
+
+
 .intro .onload .box {
-  animation-name: caida-randbox;
-  animation-duration: var(--animation-time);
+  animation: bounce-in-top 1.1s both;
+}
+
+.menu .onload .box {
+  animation: caida-randbox var(--animation-time) !important;
 }
 
 .intro .progress{

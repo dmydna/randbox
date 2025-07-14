@@ -6,6 +6,7 @@ import EventManager from "../Events.js";
 import Navbar from "../../Componentes/Nav.js";
 import Popup from "./Popup.js";
 import App from "../../pages/AppMain.js";
+import memory from "../Memory.js";
 
 
 
@@ -22,12 +23,13 @@ class QuizApp extends EventManager{
     this.resumen = false
     this._tablero = gameElem
 
-    // Dependencia Necesarias
-    this._animations =  null  // clase
-    this._popup =       null  // clase
-    this._controlls =   null  // clase
-    this._progress =    null  // Node
+  }
 
+  createApp(Componentes){
+    this._animations =  Componentes['_animations'] 
+    this._controlls  =  Componentes['_controls']  
+    this._popup      =  Componentes['_popup']      
+    this._progress   =  Componentes['_progress']   
   }
 
   _init(){
@@ -40,11 +42,14 @@ class QuizApp extends EventManager{
   }
 
   iniciarJuego() {
-    // this.cambiarEstado("play");
-    this._controlls._addEvent_Left(this.AnswerReset)
-    this._controlls._addEvent_Middle(this.manejarRespuestaUsuario)
-    this._controlls._addEvent_Right(this.AnswerInc)
-    this._controlls._addIcons(['fi-rr-angle-left','fi-rr-home','fi-rr-info'])
+
+    const navContent = [
+      {id: 1, ico : 'fi-br-refresh', handler: this.AnswerReset},
+      {id: 2, ico : 'fi-rr-social-network', handler: this.manejarRespuestaUsuario},
+      {id: 3, ico : 'fi-br-plus', handler: this.AnswerInc}
+    ]
+    
+    this._controlls._createNav(navContent)
     // incializa la primer pregunta
     this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
     this._addEvent(this.respUser, "click", this.AnswerInc);
@@ -73,13 +78,14 @@ class QuizApp extends EventManager{
 
   recordar = () => {
     
-    let memoria = this.juego.recordar()
-    console.log(memoria) 
-    localStorage.setItem("memoria", JSON.stringify({
-        ...memoria,
-        respuesta: this.respUser.innerHTML,
-        estado: this.estado 
-    }));
+    let memoriaJuego = this.juego.recordar()
+
+    memory._setMemory("memoria", {
+      ...memoriaJuego,
+      respuesta: this.respUser.innerHTML,
+      estado: this.estado 
+    })
+    
   }
 
   async cambiarEstado(newState) {
@@ -142,7 +148,7 @@ class QuizApp extends EventManager{
         this._popup.quitarCorazones()
       }
       
-      const preguntaActual = this.juego.obtenerPreguntaActual() 
+      let preguntaActual = this.juego.obtenerPreguntaActual() 
       if(!preguntaActual){
         preguntaActual = this.juego.siguientePregunta() 
       }  
@@ -267,7 +273,7 @@ class QuizApp extends EventManager{
     this.guardarScore()
   }
   guardarScore(){
-    localStorage.setItem("score", JSON.stringify(this.juego.puntaje));
+    memory._setMemory("score", this.juego.puntaje)
   }
 }
 

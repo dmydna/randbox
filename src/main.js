@@ -1,25 +1,47 @@
-import { cantVidas, devMode, gift_img, limitClicks } from "../config.js";
+const shuffleArr =  (array) => {
+  
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const preguntasDefault =  ["apple","cheese","hamburger","rocket","coin","box","dado"]
 
 
+const memoriaDefault = {
+  preguntasDisponibles:[],
+  intentosDisponibles:3,
+  progreso:0,
+  puntaje:0,
+  estado:"_",
+  respuesta:0
+}
 const configDefault = {
-  "menu":1,
-  "progreso":1
-  ,"vidas":3,
-  "dificultad":4,
-  "teclado":1,
-  "velocidad":3,
-  "memoria":1
+  menu :1,
+  progreso :1,
+  vidas :3,
+  dificultad :4,
+  teclado :1,
+  velocidad :4,
+  memoria :0
 }
 
 
+const objectsImgs = shuffleArr(preguntasDefault.slice(0, configDefault.vidas))
+const partidaDefault = {}
 
-const config  =  JSON.parse(localStorage.getItem("GameConfig")) || configDefault
+objectsImgs.forEach(element => {
+  partidaDefault[element] = 0
+});
 
-function cargarEstilos(css1, css2){
-  const link1 = document.querySelector('#theme-index')
-  const link2 = document.querySelector('#theme-quiz')
-  link1.disabled = css1
-  link2.disabled = css2
+
+const juegoDefault = {
+  preguntas : preguntasDefault,
+  opciones :  configDefault ,
+  memoria:    memoriaDefault,
+  partida:    partidaDefault
 }
 
 
@@ -28,17 +50,14 @@ function cargarEstilos(css1, css2){
 
 // Precargar Imagenes
 
-const pageStates = ['HOME', 'QUIZ', 'SCORE' ,'INFO']
-let pageView = 'HOME'
-
 const src_obj = "src/assets/img/objects/"
 const src_pop = "src/assets/img/popup/"
 const src_ui = "src/assets/img/ui/"
 
 
-gift_img.map((src) => {
-    let img = new Image();
-    img.src = src_obj +`${src}.png`;
+objectsImgs.map((src) => {
+  let img = new Image();
+  img.src = src_obj +`${src}.png`;
 });
 
 // (quizPage)
@@ -50,17 +69,9 @@ ui_imgs.map( (src, index) => {
   img.src = src_pop + `${src}.png`;
 })
 
-export { 
-   cantVidas, 
-   devMode, 
-   gift_img, 
-   limitClicks, 
+export {  
    src_obj, 
    src_pop, 
    src_ui, 
-   pageView, 
-   pageStates,
-   configDefault,
-   config,
-   cargarEstilos
+   juegoDefault
 };

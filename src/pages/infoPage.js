@@ -8,9 +8,7 @@ import Navbar from "../Componentes/Nav.js";
 
 function infoPage(App){
 
-    document.body.className = ""
-    document.documentElement.className = ""
-    document.documentElement.classList.add('info');  
+   document.body.className = ""
 
    const template = document.createElement("template");
 
@@ -19,8 +17,8 @@ function infoPage(App){
        <div class="header"></div>
        <div id="game-container">
             <div class="randbox">
-                <img class="box bounce-in-top" src="./src/img/ui/open-box.png">
-                <div class="info">
+                <img class="box bounce-in-top" src="/src/assets/img/ui/open-box.png">
+                <div class="info-container">
                     <h1 class="title">randbox</h1>
                     <div class="descrip">
                        Un juego simple de preguntas y respuestas que explora la frecuencia de aparición.
@@ -49,17 +47,19 @@ function infoPage(App){
    const backBtn = container.querySelector('.ltBtn')
    const socialBtn =container.querySelector(".social")
 
+   const GIT = "https://github.com/dmydna/randbox"
 
+   const nav = new Navbar(navContainer)
+
+   nav._createNav([
+        {id: 1, ico : 'fi-rr-angle-left', handler: () => App.router('/score')},
+        {id: 2, ico : 'fi-rr-home',       handler: () => App.router('/menu')},
+        {id: 3, ico : 'fi-rr-info',       handler: () => window.open( GIT ,'_blank') }
+    ])
 
    document.body.onload = document.body.classList.add("onload")
 
    box.addEventListener('animationend', ()=>{ document.body.classList.remove("onload") })
-
-   homeBtn.addEventListener('click', () => { App.fastRender('menu') } )
-   backBtn.addEventListener('click', () => { App.fastRender('score') } )
-
-   socialBtn.addEventListener('click', ()=>{  window.open( "https://github.com/dmydna/randbox", '_blank')  })
-
 
 
    return container

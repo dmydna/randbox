@@ -3,8 +3,11 @@ import Navbar  from './../Componentes/Nav.js'
 import App from "./AppMain.js";
 import renderBar from './render/renderBar.js';
 import renderNav from './render/renderNav.js';
+import MemoryManger from '../Games/Memory.js';
+import memory from '../Games/Memory.js';
 
-const preguntas = JSON.parse(localStorage.getItem("preguntasQuiz")) || {}
+
+
 
 
 function createScoreBoardElem(pregunta, respuesta){
@@ -67,8 +70,11 @@ function scorePage(){
   const nav = new Navbar(navContainer)
   nav._addIcons(['fi-rr-angle-left','fi-rr-home','fi-rr-info'])
   
+  const partida = memory._getMemory("partida")
+    
+
   createNavfooter(nav)
-  createScoreBoard(gameContainer, preguntas)
+  createScoreBoard(gameContainer, partida)
 
   return container
 }
