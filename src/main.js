@@ -24,7 +24,7 @@ const configDefault = {
   vidas :3,
   dificultad :4,
   teclado :1,
-  velocidad :4,
+  velocidad :5,
   memoria :0
 }
 
@@ -68,6 +68,17 @@ ui_imgs.map( (src, index) => {
   let img = new Image();
   img.src = src_pop + `${src}.png`;
 })
+
+
+
+
+
+
+
+
+
+
+
 
 export {  
    src_obj, 

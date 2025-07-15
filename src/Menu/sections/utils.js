@@ -1,3 +1,5 @@
+import memory from "../../Games/Memory"
+
 function _playMenuHandler(){
     const cantidadItentos = config['dificultad']
    
@@ -120,11 +122,12 @@ function _continueGameInit(){
 
 
 
-function _updCssVars(config){
+function _updCssVars(){
+    const config = memory._getMemory('opciones')
     const html =  document.documentElement
     html.style.setProperty('--progress-enable',  config.progreso * 0.5)
     html.style.setProperty('--menu-enable', config.menu)
-    html.style.setProperty('--animation-time', (-1) * config.velocidad + 4.5 + 's' )
+    html.style.setProperty('--animation-time', (-1) * config.velocidad + 5.5 + 's' )
     html.style.setProperty('--hearts', config.vidas)
     html.style.setProperty('--continue-game', (config.memoria == 0) ? 'none' : 'flex')
 }

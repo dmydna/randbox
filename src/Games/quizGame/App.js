@@ -77,11 +77,9 @@ class QuizApp extends EventManager{
   }
 
   recordar = () => {
-    
-    let memoriaJuego = this.juego.recordar()
 
     memory._setMemory("memoria", {
-      ...memoriaJuego,
+      ...this.juego.recordar(),
       respuesta: this.respUser.innerHTML,
       estado: this.estado 
     })
@@ -115,17 +113,19 @@ class QuizApp extends EventManager{
 
   salir(){
     /* salir a pagina de score */
-    document.body.classList.add("slide-out-left");
+    // document.body.classList.add("slide-out-left");
+    document.body.classList.add("animate__animated","animate__fadeOutLeft");
     document.body.addEventListener(
       "animationend",
       () => {
+        this.cambiarEstado()
+        this._popup.show(false)
+        this.kill()
         App.router('/score')
       },
       { once: true }
     );
-    this.cambiarEstado()
-    this._popup.show(false)
-    this.kill()
+ 
   }
 
   reanudarPartida(memoria){

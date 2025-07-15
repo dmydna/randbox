@@ -1,5 +1,6 @@
 // TODO:
 import EventManager from "../Games/Events.js";
+import memory from "../Games/Memory.js";
 import { _updCssVars } from "./sections/utils.js";
 
 
@@ -44,10 +45,11 @@ class Menu extends EventManager {
     super()
     this.root;
     this.menuActual;
-    this.menuAtras;
   }
 
+  _createMenu(name){
 
+  }
 
   _createNode = (nodeData) => {
     const node = new MenuItem( 
@@ -64,22 +66,16 @@ class Menu extends EventManager {
     return node;
   }
 
-  _siguiente = (name) => {
+  _cambiarMenu = (name) => {
     const menu = this.root.findChild(name)
     this.menuActual = menu
-    this.menuAtras =  menu.parent
-
   }
 
   _atras = () => {
-    const menuAtras = this.menuAtras
-    const menuActual = this.menuActual
-    this.menuActual = menuAtras
-    if(this.menuActual == this.root){
-      this.menuAtras = this.root
-      return
+    if(this.menuActual.parent){
+      this.menuActual = this.menuActual.parent
     }
-    this.menuAtras =  menuAtras.parent
+    
   }
 
 
@@ -97,13 +93,10 @@ class MenuApp extends Menu{
 
 
   _createMenu = (menuData) => {
-    this.root = new MenuItem('root')
 
     this.root = this._createNode(menuData)
-
     this.menuActual = this.root;
-    this.menuAtras = this.root;
-
+    
     const navContent = [
       {id: 1, ico : 'fi-rr-angle-left', handler: this.atras},
       {id: 2, ico : 'fi-rr-home',       handler: this.home},
@@ -111,9 +104,7 @@ class MenuApp extends Menu{
     ]
     this.nav._createNav(navContent)
     
-    if(this.estado == 'visible'){
-      this.renderMenu()
-    }
+    this.renderMenu()
   }
 
   killmenu(){
@@ -125,26 +116,36 @@ class MenuApp extends Menu{
   }
 
   cambiarMenu = (name) => {
-    this._siguiente(name)
-    const oldState = this.menuAtras.data
-    const newState = this.menuActual.data
-    document.body.classList.remove(oldState)
-    document.body.classList.add(newState)
+    this._cambiarMenu(name)
+
+  
+    const newMenu = this.menuActual.data
+    if(this.menuActual !=  this.root){
+      const oldMenu = this.menuActual.parent.data
+      document.body.classList.remove(oldMenu)
+    }
+    document.body.classList.add(newMenu)
+
+
+ 
     // this.menuActual.render
     this.renderMenu()  
   }
   atras = () => {
-    const newMenu =  this.menuAtras.data
-    const oldMenu = this.menuActual.data
-    document.body.classList.add(newMenu)
-    if(newMenu != oldMenu){
-      document.body.classList.remove(oldMenu)
-    }
-    if(this.menuActual == this.root){
-      this._aplicarConfiguracionDelJuego()
+
+    if(this.menuActual.parent){
+      const newMenu =  this.menuActual.parent.data
+      const oldMenu = this.menuActual.data
+      document.body.classList.add(newMenu)
+      if(newMenu != oldMenu){
+        document.body.classList.remove(oldMenu)
+      }
     }
     this._atras() // actualizo struct
     this.renderMenu()
+    if(this.menuActual == this.root){
+      this._aplicarConfiguracionDelJuego()
+    }
 
 
   }
@@ -185,40 +186,24 @@ class MenuApp extends Menu{
 
  _aplicarConfiguracionDelJuego(){
 
-  const game  = this._loadMemory()
-  const config = game.opciones
-  _updCssVars(config)
-
-
-  if(document.querySelector('.continue-btn') && config.memoria != {}){
-    if(config.memoria == 0){
-      document.querySelector('.continue-btn').style.display = 'none'
-    }else{
-      document.querySelector('.continue-btn').style.display = 'flex'
-    }
-  }
-
-
-  if(document.querySelector('.main-menu-active')){
-    // this.renderMenu()
+  const config  = memory._getMemory('opciones')
+  _updCssVars()
+  if(document.querySelector('.popup-active')){
     this.estado = 'visible'
+      if(config.memoria == 0){
+        document.querySelector('.continue-btn').style.display = 'none'
+      }else{
+        document.querySelector('.continue-btn').style.display = 'flex'
+      }
     return
   }
-  if(game.opciones['menu'] == 0 && document.querySelector('.onload')){
-    // incia el juego sin menu
-    // const introGame = new introGame(gift_img, config['vidas']);
+
+  if(config.menu == 0 && document.querySelector('.onload')){
     this.estado = 'hidden'
     return true
-    // Game.jugar()
   }else 
    if(document.querySelector('.onload')){
-    // incia menu
-    // el Menu inicia el juego
     this.estado = 'visible'
-    // this.renderMenu()
-    // this.showMenu(true)
-
-
     } 
     return false
   }

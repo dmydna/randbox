@@ -16,14 +16,6 @@ import PopupClass from "../Games/quizGame/Popup.js";
 import Navbar from "../Componentes/Nav.js";
 import memory from "../Games/Memory.js";
 
-// Inicializa Estructuras
-// const box = document.querySelector(".box")
-
-
-
-// animaciones
-// hoverFlatIcon(navbar.middle,'ss')
-// hoverClassToggle(box,'vibrate-3')
 
 
 function quizPage(App){
@@ -61,21 +53,23 @@ function quizPage(App){
     navContainer.appendChild(Nav)
 
 
+
     const config =   memory._getMemory("opciones")
     const memoria =  memory._getMemory("memoria")
     const preguntasQuiz = memory._getMemory("partida")
 
     // Incializo Quiz
 
-    const QuizContent = {}
-    QuizContent['_animations'] = new ShuffleImgs()
-    QuizContent['_controls']   = new Navbar(navContainer)
-    QuizContent['_popup']      = new PopupClass(popupContainer)
-    QuizContent['_progress']   = headerContainer.querySelector('.progress-bar')
 
     const QuizGame =   new QuizApp(preguntasQuiz, config.vidas, gameContainer)
 
-    QuizGame.createApp(QuizContent)
+    QuizGame.createApp({
+        _animations: new ShuffleImgs(),
+        _controls: new Navbar(navContainer),
+        _popup: new PopupClass(popupContainer),
+        _progress: headerContainer.querySelector('.progress-bar')
+    })
+
     // Comienza Quiz
     container.onload = QuizGame._init()
     QuizGame.iniciarJuego()
@@ -91,7 +85,10 @@ function quizPage(App){
     }
 
     // Animaciones
-    hoverClassToggle(container,'vibrate-3')
+    const box = container.querySelector('.box')
+    box.classList.add('shake-little')
+    const repUser = container.querySelector('.user-reply')
+    repUser.classList.add('shake-little')
 
 
     return container

@@ -52,7 +52,7 @@ function scorePage(){
      <div class="container">
      <div class="header">
         <img height="70px" src="src/assets/img/ui/high-score.png">
-        <h1 class="score">...</h1>
+        <h1 class="score">${memory._getMemory('score')}</h1>
       </div>
       <div id="game-container">
         <div class="randbox"></div>

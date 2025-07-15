@@ -1,6 +1,7 @@
 import EventManager from "../Events.js";
 import {introKeyboard} from "../../Componentes/keyboard.js"
 import App from "../../pages/AppMain.js";
+import memory from "../Memory.js";
 
 
 class introGameApp extends EventManager{
@@ -34,6 +35,7 @@ class introGameApp extends EventManager{
   endGame() {
       this.cambiarEstado({"endgame": true});
       this.box.addEventListener('animationend', ()=>{
+        console.log('render quiz')
         App.router('/quiz')
       }, {once: true} )
   }
@@ -79,12 +81,15 @@ class introGameApp extends EventManager{
     this.data[giftImgStr] = this.data[giftImgStr] ?? 0;
     this.data[giftImgStr]++;
 
-    this._setMemory("partida", this.data)
-    let memoria = this._loadMemory()
-    this._setMemory("memoria", {...memoria, preguntasDisponibles : this.preguntas} )
+    memory._setMemory("partida", this.data)
+    memory._setMemory("memoria", {
+      ...memory._getMemory('memoria'), 
+      preguntasDisponibles : this.preguntas
+    } )
   }
 
   manejarRespuestaUsuario = () => {
+    console.log(this.intentosRestantes)
     if(this.intentosRestantes == 0){
       this._removeAllEvents()
       return
@@ -113,7 +118,7 @@ class introGameApp extends EventManager{
       this.gift.src = `src/assets/img/objects/${this.preguntas[this.index]}.png`;
       this.barra.style.width = `${this.progreso()}%`;
       this.intentosRestantes--;
-      this._setMemory("partida", this.data)
+      memory._setMemory("partida", this.data)
     }
   };
 }

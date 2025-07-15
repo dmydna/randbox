@@ -49,8 +49,8 @@ function indexPage(App){
     const partida = memoria._getMemory("partida")
     const config = memoria._getMemory("opciones")
 
-    // Actualiza css Vars
-    _updCssVars(config)
+    _updCssVars()
+
 
     const Game = new IntroGameApp(Object.keys(partida), config.vidas, gameContainer)
     Game.barra = progressContainer.querySelector('.progress-bar')

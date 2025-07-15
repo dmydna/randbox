@@ -34,7 +34,7 @@ class Popup{
 			this.quitarCorazones()
 			break;
 		  case "user-restart-game":
-			this.btn.classList.remove("fi-rr-rotate-left","tryAgainBtn");
+			this.btn.classList.remove("fi-rr-rotate-left");
 			this.img.src = src_pop + "again.png";
 		}
 	  }

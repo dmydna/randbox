@@ -1,3 +1,4 @@
+import memory from "../../Games/Memory.js";
 import App from "../../pages/AppMain.js";
 import {hoverFlatIcon}  from './../../Componentes/navbar.js';
 
@@ -78,7 +79,7 @@ function _playMenuHandler(menu){
         document.body.classList.remove('onStartGame') 
     }, {once:true})
 
-    menu._memoryReset(true)
+    memory._memoryReset('memoria')
 }
 
 // Auxiliares

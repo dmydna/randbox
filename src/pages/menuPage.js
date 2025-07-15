@@ -9,6 +9,7 @@ import menuControls from '../Menu/sections/controls.js';
 import menuHelp from '../Menu/sections/help.js';
 import menuMain from '../Menu/sections/main.js';
 import menuTutorial from '../Menu/sections/tutorial.js';
+import memory from '../Games/Memory.js';
 
 
 
@@ -60,12 +61,15 @@ function menuPage(App){
 
     document.onload = document.body.classList.add("onload");
 
+    const config = memory._getMemory('opciones')
+
     container.querySelector('.box').addEventListener('animationend', ()=>{
-        Menu._aplicarConfiguracionDelJuego()
-        if( Menu.estado != 'visible' ){
+
+        if( config.menu == 0 ){
             App.router('/intro')
         }else{
             Menu._createMenu(menuContent)
+            Menu._aplicarConfiguracionDelJuego()
             Menu.showMenu(true)
         }
         document.body.classList.remove('onload')

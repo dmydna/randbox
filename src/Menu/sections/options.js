@@ -7,7 +7,7 @@ function menuOptions() {
       {id: 'memoria',    title: 'guarda partida', value : 0,   type: 'setter' },
       {id: 'teclado',    title: 'teclado',        value : 0,   type: 'setter' },
       {id: 'menu',       title: 'menu',           value : 0,   type: 'setter' },
-      {id: 'velocidad',  title: 'velocidad',      value : 3,   type: 'range' , max: 6},
+      {id: 'velocidad',  title: 'velocidad',      value : 3,   type: 'range' , min: 2,max: 5},
       {id: 'dificultad', title: 'dificultad',     value : 5,   type: 'range' , max: 12},
       {id: 'vidas',      title: 'vidas',          value : 3,   type: 'range' , max: 12},
     ];

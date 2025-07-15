@@ -41,11 +41,15 @@ class MemoryManager {
     return this._Data[name];
   }
 
-  _memoryReset(bool) {
-    if (bool) {
-      this._Data = JSON.parse(JSON.stringify(this._Default));
-      this._saveMemory();
-    }
+  _memoryReset(name) {
+    this._setMemory(name, this._Default[name])
+  }
+
+  
+  _memoryFullReset(){
+    this._Data = JSON.parse(JSON.stringify(this._Default));
+    this._saveMemory();
+
   }
 }
 
