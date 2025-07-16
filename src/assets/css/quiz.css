@@ -1,0 +1,260 @@
+
+
+.quiz
+.popup-btn {
+  opacity: 1;
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 100%;
+  bottom: -15px;
+  left: calc(50% - var(--popup-btn-width)/2);
+  width: var(--popup-btn-width);
+  height: var(--popup-btn-width);
+  bottom: -40px;
+  font-size: 60px;
+  transition: scale .3s;
+  opacity: 0;
+}
+
+.quiz
+.popup-btn:hover{
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.quiz
+.user-reply,
+.popup {
+  text-align: center;
+  transition: opacity .7s;
+  z-index: 1;
+}
+
+.quiz
+.btnContainer,
+.heart-bar {
+  flex-direction: row;
+}
+
+.quiz
+.heart-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  color: red;
+  transition: color 4s;
+}
+
+.quiz
+.user-reply {
+  margin-top: 56px;
+  border-radius: 100px;
+  width: 125px;
+  position: relative;
+  font-size: 100px;
+  opacity: 0.6;
+  margin-bottom: 165px;
+}
+
+.quiz
+.popup-ico {
+  animation-name: likeHand;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  width: 100px;
+  height: 100px;
+}
+
+.quiz
+.box {
+  display: block;
+  z-index: initial;
+  margin-inline: auto;
+}
+
+
+
+.quiz
+.points {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  top: 30px;
+  font-size: 30px;
+  font-weight: 700;
+  transition: opacity .5s ease-in-out;
+  z-index: 1000;
+}
+
+
+.quiz
+.heart {
+  width: 30px;
+}
+
+
+.quiz
+.progress {
+  padding: var(--bar-height);
+  position: absolute;
+  width: 100%;
+  border-radius: unset;
+  top: 0;
+  left: 0;
+}
+
+.quiz
+.progress-bar {
+  background-color: green;
+  width: var(--progress-width);
+}
+
+
+.quiz
+#game-container:hover {
+  cursor: pointer;
+}
+
+
+
+
+/**/
+
+.quiz
+.user-reply {
+  z-index: 1001;
+  transition: z-index 3s;
+}
+
+.quiz 
+.box-container, 
+.quiz 
+.user-reply{
+  width: 100%;
+}
+
+/**/
+
+.quiz
+.onload .box {
+  -webkit-animation: bounce-in-fwd 1.1s both;
+  animation: bounce-in-fwd 1.1s both;
+}
+
+.quiz
+.user-wins .popup-btn, 
+.quiz
+.user-loses .popup-btn{
+  opacity: 1;
+}
+
+.quiz
+.user-restart-game .heart-bar {
+  opacity: 1!important;
+}
+
+.quiz
+.user-restart-game .popup-btn,
+.quiz
+.user-restart-game .points,
+.quiz
+.user-restart-game .user-reply {
+  opacity: 0!important;
+}
+
+
+.quiz
+.user-wins .progress-bar {
+  width: 100%!important;
+}
+
+.quiz
+.popup-active .user-reply {
+  z-index: 1;
+}
+
+.quiz
+.popup-active .popup-ico {
+  animation-iteration-count: infinite;
+  transition: animation-iteration-count .5s;
+}
+
+
+.quiz .popup-container{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.quiz
+.popup-active .popup-container {
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 999;  
+  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+.quiz
+.user-loses .points,  
+.quiz
+.user-loses .heart-bar, 
+.quiz
+.user-wins .heart-bar,
+.quiz
+.user-wins .points {
+  opacity: 0;
+}
+.quiz
+.user-loses .popup, 
+.quiz
+.user-wins .popup {
+  opacity: 1;
+}
+
+.quiz
+.user-reply-succeeded .points {
+  color: green;
+  opacity: 1;
+}
+
+.quiz
+.user-reply-succeeded .popup, 
+.quiz
+.user-reply-failed .popup {
+  opacity: 1;
+}
+
+.quiz
+.user-reply-succeeded .popup, 
+.quiz
+.user-reply-failed .popup {
+  opacity: 1;
+}
+
+.quiz
+.user-reply-failed .points {
+  color: red;
+  opacity: 1;
+}
+
+.quiz
+.user-reply-failed .heart-bar {
+  color: black;
+}
+
+.quiz
+.user-restart-game .popup {
+  opacity: 1;
+}

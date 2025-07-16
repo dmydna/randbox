@@ -1,0 +1,216 @@
+.intro .box {   position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation-name: defaultBox;
+  animation-duration: var(--animation-time);
+  animation-iteration-count: initial;
+  animation-direction: alternate;
+}
+
+
+.intro .box:hover {   cursor: pointer;
+}
+
+.intro .box-anim .box {
+  animation-name: lanzar-box-1;
+}
+
+
+
+.intro .onload .box {
+  animation: bounce-in-top 1.1s both;
+}
+
+.menu .onload .box {
+  animation: caida-randbox var(--animation-time) !important;
+}
+
+.intro .progress{
+  position: sticky;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+.intro .playGame .progress{
+  opacity: var(--progress-enable);
+}
+
+.intro .gift {
+  width: 80px;
+  height: 80px;
+  margin-top: 20px; /*fix*/
+  visibility: hidden;
+}
+
+.intro .popup-active .progress,
+.intro .onload .progress, 
+.intro .endgame .progress, 
+.intro .endgame .box  {
+  opacity: 0;
+}
+
+.intro .onload .gift{
+  visibility: hidden!important
+}
+
+.intro .endgame .gift {
+  visibility: hidden!important;
+}
+
+
+.intro .endgame .box {
+  animation-duration : .5s;
+  animation-name : scale-out-center!important;
+}
+
+.intro .box-up .gift {
+  visibility: visible;
+}
+
+
+.intro .box-down .gift {
+  visibility: hidden;
+}
+
+
+.intro .box-up #game-container{
+  overflow: visible;
+}
+
+.intro .box-up .randbox {
+  height: 100%;
+}
+
+.intro .onload .nav-footer {
+  opacity: 0;
+}
+
+.intro .onStartGame .box {
+  -webkit-animation: bounce-in-top 1.1s both;
+  animation: bounce-in-top 1.1s both;
+}
+
+.intro .range span {
+  width: 25px;
+  display: inline-block;
+}
+
+.intro .popup-active .box {
+  display: none;
+}
+
+.intro .onStartGame .gift {
+  display: none!important;
+}
+
+.intro .onload .menu{
+  opacity: 0;
+}
+
+.intro .controls-submenu img{
+  height: 32px;
+  width: 32px;
+}
+
+.intro .controls-submenu img{
+  scale: 1.7;
+}
+
+.intro .main-menu,
+.intro .options-menu,
+.intro .help-menu, 
+.intro .controls-submenu,
+.intro .resumen-submenu,
+.intro .go-menu {
+  display: none;
+}
+
+.intro .controls-submenu, 
+.intro .options-menu,
+.intro .resumen-submenu {
+  width: 340px;
+}
+
+.intro .nav-footer{
+  opacity: 0;
+}
+
+.intro .main-menu-active .main-menu,
+.intro .options-menu-active .options-menu,
+.intro .help-menu-active .help-menu,
+.intro .resumen-submenu-active .resumen-submenu,
+.intro .controls-submenu-active .controls-submenu,
+.intro .go-menu-active .go-menu{
+  display: block;
+}
+
+.intro .popup-active .nav-footer{
+  opacity: 1;
+}
+
+.intro .main-menu-active .nav-footer,
+.go-menu-active .nav-footer{
+  opacity: 0!important;
+}
+
+.intro .menu {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.intro .menu li{
+  list-style: none;
+  font-size: 20px;
+  margin: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.intro .menu li:hover{
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.intro .menu .fi {
+  margin-right: 10px;
+}
+
+.intro .popup{
+  text-align: center;
+  height: fit-content;
+}
+
+.intro .main-menu .menu li{
+  justify-content: center!important;
+  text-align: center;
+}
+
+.intro .go-menu {
+  font-size: 80px;
+}
+
+.intro .resumen-active .popup {
+  top: 70vh;
+} 
+
+.intro .continue-btn{
+  display: var(--continue-game)!important;
+}
+
+.intro .menu-options-item{
+  display: flex; gap: 10px;
+}
+
+.intro .popup {
+  width: auto;
+}
+
+.intro .center-fix {
+  /*intro game*/
+  display: flex;
+  justify-content: center;
+}
