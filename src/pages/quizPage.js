@@ -10,8 +10,8 @@ import renderPopup from '../componentes/renderPopup.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 
 // Clases
-import Navbar from "../componentes/Nav.js";
-import memory from "../games/Memory.js";
+import Navbar from "../managers/Nav.js";
+import memory from "../managers/Memory.js";
 import PopupClass from "../games/quizGame/Popup.js";
 import ShuffleImgs from "../games/quizGame/ShuffleImgs.js";
 

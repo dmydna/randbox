@@ -1,7 +1,7 @@
-import { src_obj } from "../../main.js";
-import App from "../../pages/AppMain.js";
-import EventManager from "../Events.js";
-import memory from "../Memory.js";
+import { src_obj } from "../../utils/default.js";
+import App from "../../AppMain.js";
+import EventManager from "../../managers/Events.js";
+import memory from "../../managers/Memory.js";
 import JuegoQuiz from "./Game.js";
 
 
@@ -109,8 +109,8 @@ class QuizApp extends EventManager{
 
   salir(){
     /* salir a pagina de score */
-    // document.body.classList.add("slide-out-left");
-    document.body.classList.add("animate__animated","animate__fadeOutLeft");
+    document.body.classList.add("slide-out-left");
+    // document.body.classList.add("animate__animated","animate__fadeOutLeft");
     document.body.addEventListener(
       "animationend",
       () => {
