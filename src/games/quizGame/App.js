@@ -1,7 +1,7 @@
-import { src_obj } from "../../utils/default.js";
-import App from "../../AppMain.js";
+import App from "../../main.js";
 import EventManager from "../../managers/Events.js";
 import memory from "../../managers/Memory.js";
+import { src_obj } from "../../utils/default.js";
 import JuegoQuiz from "./Game.js";
 
 
@@ -18,7 +18,7 @@ class QuizApp extends EventManager{
     this.preguntas = Object.keys(preguntas)
     this.resumen = false
     this._tablero = gameElem
-
+    this.teclado = false
   }
 
   createApp(Componentes){
@@ -51,6 +51,20 @@ class QuizApp extends EventManager{
     this._addEvent(this.respUser, "click", this.AnswerInc);
     this._addEvent(this.box, "click", this.avanzarJuego);
     this._addEvent(this._popup.btn, "click", this.terminarPartida);
+    if(this.teclado){
+      this._addEvent(document, 'keydown',(e)=>{
+        this.keyboardHander(e)
+      })
+    }
+  }
+
+  keyboardHander(e){
+    switch(e.key){
+      case ' '    : this.AnswerInc(); break;
+      case 'Enter': this.manejarRespuestaUsuario(); break;
+      case 'Back' : this.AnswerReset(); break;
+      case 'h'    : this.avanzarJuego(); break
+    }
   }
 
   _animarInicio(){

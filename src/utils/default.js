@@ -30,7 +30,7 @@ const configDefault = {
 }
 
 
-const preguntasDefault = shuffleArr(Appimgs.game).slice(0, configDefault.vidas);
+const preguntasDefault = shuffleArr(Appimgs.game).slice(0, configDefault.dificultad);
 
 const partidaDefault = Object.fromEntries(
   preguntasDefault.map(element => [element, 0])
@@ -56,7 +56,7 @@ for (const [key, value] of Object.entries(Appimgs)) {
     let img = new Image();
     switch(key){
       case 'ui' :
-       img.src = src_ui +`${src}.png`;
+       img.src = src_ui  + `${src}.png`;
        break;
       case 'popup':
        img.src = src_pop + `${src}.png`;

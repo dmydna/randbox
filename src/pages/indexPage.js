@@ -2,7 +2,7 @@ import renderBar from '../componentes/renderBar.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 import IntroGameApp from '../games/IntroGame/App.js';
 import memoria from '../managers/Memory.js';
-import { _updCssVars } from '../menu/sections/utils.js';
+import { _updCssVars } from '../menu/componentes/utils.js';
 
 
 function indexPage(App){
@@ -53,7 +53,10 @@ function indexPage(App){
 
     const Game = new IntroGameApp(Object.keys(partida), config.vidas, gameContainer)
     Game.barra = progressContainer.querySelector('.progress-bar')
-
+    // Carga config teclado
+    if(config.teclado == 1){
+    	Game.teclado = true
+    }
     Game.jugar()
 
     return container

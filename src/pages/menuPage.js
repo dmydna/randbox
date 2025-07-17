@@ -4,17 +4,17 @@ import MenuApp from "../menu/App.js";
 
 /*menus */
 import memory from '../managers/Memory.js';
-import menuControls from '../menu/sections/controls.js';
-import menuHelp from '../menu/sections/help.js';
-import menuMain from '../menu/sections/main.js';
-import menuOptions from '../menu/sections/options.js';
-import menuTutorial from '../menu/sections/tutorial.js';
+import menuControls from '../menu/componentes/controls.js';
+import menuHelp from '../menu/componentes/help.js';
+import menuMain from '../menu/componentes/main.js';
+import menuOptions from '../menu/componentes/options.js';
+import menuTutorial from '../menu/componentes/tutorial.js';
 
 
 
 
 
-function menuPage(App){
+function menuPage(App, startMenu){
 
 
     const template = document.createElement("template");
@@ -70,6 +70,11 @@ function menuPage(App){
             Menu._createMenu(menuContent)
             Menu._aplicarConfiguracionDelJuego()
             Menu.showMenu(true)
+            if(startMenu){
+                Menu.cambiarMenu(startMenu)
+            }else{
+                Menu.cambiarMenu('main-menu')
+            }
         }
         document.body.classList.remove('onload')
     },{once:true})

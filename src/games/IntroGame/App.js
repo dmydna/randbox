@@ -1,7 +1,7 @@
-import App from "../../AppMain.js";
-import memory from "../../managers/Memory.js";
+import App from "../../main.js";
 import EventManager from "../../managers/Events.js";
-import { introKeyboard } from "../../utils/keyboard.js";
+import memory from "../../managers/Memory.js";
+
 
 
 class introGameApp extends EventManager{
@@ -14,7 +14,8 @@ class introGameApp extends EventManager{
     this.preguntas = imgArray;
     this.estado = null;
     this.tablero = tablero
-    this.barra = null
+    this.barra = null;
+    this.teclado = false;
     this._init();
   }
 
@@ -26,7 +27,11 @@ class introGameApp extends EventManager{
   }
 
   jugar() {
-    this._addEvent(document, 'keydown', introKeyboard)
+    if(this.teclado){
+      this._addEvent(document, 'keydown',(e)=>{
+        this.keyboardHander(e)
+      })
+    }
     this._addEvent(this.box, "animationstart", this.boxAnimationStart)
     this._addEvent(this.box, "animationend", this.boxAnimationEnd)
     this._addEvent(this.box, "click", this.manejarRespuestaUsuario)
@@ -51,6 +56,12 @@ class introGameApp extends EventManager{
       }
     })
 
+  }
+
+  keyboardHander(e){
+    if (e.key == " ") {
+      this.box.click();
+    }
   }
 
   kill(){

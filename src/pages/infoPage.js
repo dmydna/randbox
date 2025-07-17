@@ -1,5 +1,6 @@
 
 import Nav from "../componentes/renderNav.js";
+import memory from "../managers/Memory.js";
 import Navbar from "../managers/Nav.js";
 
 
@@ -60,6 +61,13 @@ function infoPage(App){
 
    box.addEventListener('animationend', ()=>{ document.body.classList.remove("onload") })
 
+   box.addEventListener('click', ()=>{
+    memory._setMemory("opciones", {
+    ...memory._getMemory("opciones"),
+    menu : 1
+   })
+   App.router('/menu')
+    } )
 
    return container
 }

@@ -1,7 +1,7 @@
 // TODO:
 import memory from "../managers/Memory.js";
 import { pageManager } from "../managers/PageManajer.js";
-import { _updCssVars } from "./sections/utils.js";
+import { _updCssVars } from "./componentes/utils.js";
 
 
 
@@ -27,7 +27,6 @@ class Menu extends pageManager{
       {id: 3, ico : 'fi-rr-info',       handler: this._siguiente}
     ]
     this.nav._createNav(navContent)
-    
     this.renderMenu()
   }
 
@@ -40,6 +39,7 @@ class Menu extends pageManager{
   }
 
   cambiarMenu = (name) => {
+
     this._cambiarMenu(name)
 
   

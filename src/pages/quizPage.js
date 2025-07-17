@@ -1,6 +1,5 @@
 import QuizApp from "../games/quizGame/App.js";
 // import { } from "../Componentes/test.js";
-import { quizKeyboardEnable } from "../utils/keyboard.js";
 
 
 // Renders
@@ -69,15 +68,17 @@ function quizPage(App){
         _progress: headerContainer.querySelector('.progress-bar')
     })
 
+    // Carga config teclado
+    if(config.teclado == 1){
+    	QuizGame.teclado = true
+    }
+
     // Comienza Quiz
     container.onload = QuizGame._init()
     QuizGame.iniciarJuego()
     QuizGame._animarInicio()
 
-    // Carga config teclado
-    if(config.teclado == 1){
-    	quizKeyboardEnable(true)
-    }
+
     if(config.memoria == 1){
         QuizGame.resumen = true;
         QuizGame.reanudarPartida(memoria)

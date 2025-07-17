@@ -12,6 +12,11 @@ const App = new AppManger(document.body)
 
 App.router = page
 
+
+
+
+
+
 const AppContent = [
     {id : "menu",  render : menuPage },
     {id : "intro", render : indexPage},
@@ -20,8 +25,10 @@ const AppContent = [
     {id : "info",  render :  infoPage}
 ]
 
-
 App._createApp(AppContent)
+
+
+
 
 
 document.addEventListener("keydown", function (event) {

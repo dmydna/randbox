@@ -45,7 +45,8 @@ class pageItem {
       this.memoria = {}
       this.router = null
     }
-      
+    
+
     _createApp(array){
       array.forEach( ({ id, render }, index) => {
         const pagew = new pageItem(id, render)
@@ -79,11 +80,11 @@ class pageItem {
     }
 
     renderPage = () => {
-        const container = this.elem
-        document.body.className = ''
-        const func = this.pageActual.render
-        container.appendChild(func(this))
-      }
+      const container = this.elem
+      document.body.className = ''
+      const func = this.pageActual.render
+      container.appendChild(func(this))
+    }
 
     fastRender(name){
       const container = this.elem

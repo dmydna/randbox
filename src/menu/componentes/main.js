@@ -1,6 +1,6 @@
-import { hoverFlatIcon } from '../../utils/utils.js';
+import App from "../../main.js";
 import memory from "../../managers/Memory.js";
-import App from "../../AppMain.js";
+import { hoverFlatIcon } from '../../utils/utils.js';
 
 
 

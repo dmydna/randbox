@@ -1,7 +1,7 @@
-import Navbar from '../managers/Nav.js';
 import renderNav from '../componentes/renderNav.js';
+import App from "../main.js";
 import memory from '../managers/Memory.js';
-import App from "../AppMain.js";
+import Navbar from '../managers/Nav.js';
 
 
 
