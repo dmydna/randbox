@@ -51,7 +51,7 @@ function indexPage(App){
     _updCssVars()
 
 
-    const Game = new IntroGameApp(Object.keys(partida), config.vidas, gameContainer)
+    const Game = new IntroGameApp(Object.keys(partida), config.intentos, gameContainer)
     Game.barra = progressContainer.querySelector('.progress-bar')
     // Carga config teclado
     if(config.teclado == 1){

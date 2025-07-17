@@ -16,7 +16,6 @@ import menuTutorial from '../menu/componentes/tutorial.js';
 
 function menuPage(App, startMenu){
 
-
     const template = document.createElement("template");
 
     template.innerHTML = `
@@ -57,13 +56,11 @@ function menuPage(App, startMenu){
     }
 
 
-
+    //Animacion de inicio
     document.onload = document.body.classList.add("onload");
 
-    const config = memory._getMemory('opciones')
-
     container.querySelector('.box').addEventListener('animationend', ()=>{
-
+        const config = memory._getMemory('opciones')
         if( config.menu == 0 ){
             App.router('/intro')
         }else{
@@ -79,6 +76,7 @@ function menuPage(App, startMenu){
         document.body.classList.remove('onload')
     },{once:true})
 
+    // usa index.css
     document.documentElement.classList.add('intro');
 
     return container

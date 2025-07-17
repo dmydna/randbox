@@ -9,8 +9,8 @@ class introGameApp extends EventManager{
   constructor(imgArray, intentos, tablero) {
     super()
     this.data = {};
-    this.intentos = intentos
-    this.intentosRestantes = intentos;
+    this.intentos = Number(intentos)
+    this.intentosRestantes = Number(intentos);
     this.preguntas = imgArray;
     this.estado = null;
     this.tablero = tablero

@@ -1,5 +1,7 @@
-import memoria from "../../managers/Memory.js";
+import memory from "../../managers/Memory.js";
+import { shuffleArr } from "../../utils/utils.js";
 
+const cantPreg = memory._getMemory("preguntas").length
 
 function menuOptions() {
 
@@ -7,9 +9,13 @@ function menuOptions() {
       {id: 'memoria',    title: 'guarda partida', value : 0,   type: 'setter' },
       {id: 'teclado',    title: 'teclado',        value : 0,   type: 'setter' },
       {id: 'menu',       title: 'menu',           value : 0,   type: 'setter' },
-      {id: 'velocidad',  title: 'velocidad',      value : 3,   type: 'range' , min: 2,max: 5},
-      {id: 'dificultad', title: 'dificultad',     value : 5,   type: 'range' , max: 12},
+      {id: 'velocidad',  title: 'velocidad',      value : 3,   type: 'range' , 
+      min: 2,max: 5},
+      {id: 'dificultad', title: 'dificultad',     value : 5,   type: 'range' , 
+      min: 1,max: cantPreg},
       {id: 'vidas',      title: 'vidas',          value : 3,   type: 'range' , max: 12},
+      {id: 'intentos',   title: 'intentos',       value : 3,   type: 'range' , 
+        min: 2,max: 12},
     ];
 
     const template = document.createElement("template");
@@ -23,7 +29,7 @@ function menuOptions() {
 
     const ul = container.querySelector('.menu')  
 
-    const config = memoria._getMemory("opciones")
+    const config = memory._getMemory("opciones")
 
 
     opciones.forEach((prop) => {
@@ -51,14 +57,27 @@ function _setterHandler(elem, config, index){
     elem.innerHTML = 'ON'
     config[index] = 1
   }
-  memoria._saveMemory()
+  memory._saveMemory()
 }
 
 
 function _rangeHandler(elem, config, index){
   config[index] =  elem.value
   elem.value    =  config[index]
-  memoria._saveMemory()
+
+  switch(index){
+    case 'dificultad':
+     // Arma partida aleatoria
+     const preguntas = Array.from(memory._getMemory("preguntas"))
+     const partida = Object.fromEntries(
+       shuffleArr(preguntas).slice(0, config.dificultad)
+       .map(element => [element, 0])
+     )
+     memory._setMemory("partida", partida)
+     break;
+  }
+
+  memory._saveMemory()
 }
 
 

@@ -87,12 +87,14 @@ class pageItem {
     }
 
     fastRender(name){
+      const node = this.root.findChild(name)
+      const func = node.render
       const container = this.elem
+      
       container.innerHTML = '' 
       document.body.className = ''
       document.documentElement.className = name
-      const node = this.root.findChild(name)
-      const func = node.render
+
       container.appendChild(func(this))
     }
   

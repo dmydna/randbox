@@ -23,18 +23,22 @@ const configDefault = {
   menu :1,
   progreso :1,
   vidas :3,
-  dificultad :4,
+  dificultad :5,
   teclado :1,
   velocidad :5,
-  memoria :0
+  memoria :0,
+  intentos:8
 }
 
 
-const preguntasDefault = shuffleArr(Appimgs.game).slice(0, configDefault.dificultad);
+const preguntasDefault = shuffleArr(Appimgs.game);
 
 const partidaDefault = Object.fromEntries(
-  preguntasDefault.map(element => [element, 0])
-);
+  preguntasDefault.slice(0, configDefault.dificultad).map(element => [element, 0])
+)
+
+
+
 
 const juegoDefault = {
   preguntas : preguntasDefault,

@@ -1,6 +1,7 @@
 import App from "../../main.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon } from '../../utils/utils.js';
+import { shuffleArr } from "../../utils/utils.js";
 
 
 
@@ -18,10 +19,10 @@ function menuMain(menu) {
 
    // Agrega Menu Items
    const menuItems = [
-        {id: 'play-btn',     title: 'PLAY',     ico :'fi fi-rr-play' ,   },
-        {id: 'continue-btn', title: 'CONTINUE', ico :'fi fi-rr-dice-d10' },
-        {id: 'options-btn', title: 'OPTIONS',  ico :'fi fi-rr-settings'  },
-        {id: 'help-btn',     title: 'HELP',     ico :'fi fi-rr-info'     }
+     {id: 'play-btn',     title: 'PLAY',     ico :'fi fi-rr-play' ,   },
+     {id: 'continue-btn', title: 'CONTINUE', ico :'fi fi-rr-dice-d10' },
+     {id: 'options-btn', title: 'OPTIONS',  ico :'fi fi-rr-settings'  },
+     {id: 'help-btn',     title: 'HELP',     ico :'fi fi-rr-info'     }
   ];
 
   const container = document.createElement("section");
@@ -65,21 +66,18 @@ function _continueGameHandler(){
 
 function _playMenuHandler(menu){
 
+    // Inicia nueva partida con preguntas aleatorias 
+    menu.showMenu(false)
+    document.querySelector(".box").style.opacity = "1"
 
-    document.querySelector(".box").style.opacity = "0"
-
-    setTimeout(()=>{
-        menu.showMenu(false)
-        document.body.classList.add('onStartGame')
-        document.querySelector(".box").style.opacity = "1"
-        App.router('/intro')
-    },800) 
-
-    document.querySelector('.box').addEventListener('animationend', ()=>{ 
-        document.body.classList.remove('onStartGame') 
-    }, {once:true})
-
+    // Limpia datos de partida anterior (setea a valor por default)
     memory._memoryReset('memoria')
+
+    // Refresca preguntas (aplica shuffle)
+    shuffleArr( memory._getMemory('preguntas'))
+    memory._saveMemory()
+
+    App.router('/intro')
 }
 
 // Auxiliares
