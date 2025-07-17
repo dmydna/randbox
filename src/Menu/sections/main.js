@@ -1,6 +1,6 @@
-import memory from "../../Games/Memory.js";
+import { hoverFlatIcon } from '../../componentes/navbar.js';
+import memory from "../../games/Memory.js";
 import App from "../../pages/AppMain.js";
-import {hoverFlatIcon}  from './../../Componentes/navbar.js';
 
 
 

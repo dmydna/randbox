@@ -1,20 +1,19 @@
-import { hoverClassToggle, hoverFlatIcon, navbar } from "../Componentes/navbar.js";
-import QuizApp from "../Games/quizGame/App.js";
+import QuizApp from "../games/quizGame/App.js";
 // import { } from "../Componentes/test.js";
-import { quizKeyboardEnable } from "../Componentes/keyboard.js";
+import { quizKeyboardEnable } from "../utils/keyboard.js";
 
 
 // Renders
-import renderBar from './render/renderBar.js';
-import renderNav from './render/renderNav.js';
-import renderPopup from './render/renderPopup.js';
-import renderQuiz from './render/renderQuiz.js';
+import renderBar from '../componentes/renderBar.js';
+import renderNav from '../componentes/renderNav.js';
+import renderPopup from '../componentes/renderPopup.js';
+import renderQuiz from '../componentes/renderQuiz.js';
 
 // Clases
-import ShuffleImgs from "../Games/quizGame/ShuffleImgs.js";
-import PopupClass from "../Games/quizGame/Popup.js";
-import Navbar from "../Componentes/Nav.js";
-import memory from "../Games/Memory.js";
+import Navbar from "../componentes/Nav.js";
+import memory from "../games/Memory.js";
+import PopupClass from "../games/quizGame/Popup.js";
+import ShuffleImgs from "../games/quizGame/ShuffleImgs.js";
 
 
 

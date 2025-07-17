@@ -1,12 +1,8 @@
 import { src_obj } from "../../main.js";
-import JuegoQuiz from "./Game.js";
-import PopupGame from "./Popup.js";
-import ShuffleImg from "./ShuffleImgs.js";
-import EventManager from "../Events.js";
-import Navbar from "../../Componentes/Nav.js";
-import Popup from "./Popup.js";
 import App from "../../pages/AppMain.js";
+import EventManager from "../Events.js";
 import memory from "../Memory.js";
+import JuegoQuiz from "./Game.js";
 
 
 

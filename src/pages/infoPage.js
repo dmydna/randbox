@@ -1,7 +1,6 @@
 
-import App from "./AppMain.js"
-import Nav from "./render/renderNav.js"
-import Navbar from "../Componentes/Nav.js";
+import Nav from "../componentes/renderNav.js";
+import Navbar from "../managers/Nav.js";
 
 
 

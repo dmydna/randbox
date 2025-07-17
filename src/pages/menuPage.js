@@ -1,15 +1,14 @@
-import renderNav from './render/renderNav.js';
-import MenuApp from "../Menu/Menu.js"
-import Navbar from '../Componentes/Nav.js';
-import App    from '../pages/AppMain.js'
+import renderNav from '../componentes/renderNav.js';
+import Navbar from '../managers/Nav.js';
+import MenuApp from "../menu/App.js";
 
 /*menus */
-import menuOptions from '../Menu/sections/options.js';
-import menuControls from '../Menu/sections/controls.js';
-import menuHelp from '../Menu/sections/help.js';
-import menuMain from '../Menu/sections/main.js';
-import menuTutorial from '../Menu/sections/tutorial.js';
-import memory from '../Games/Memory.js';
+import memory from '../managers/Memory.js';
+import menuControls from '../menu/sections/controls.js';
+import menuHelp from '../menu/sections/help.js';
+import menuMain from '../menu/sections/main.js';
+import menuOptions from '../menu/sections/options.js';
+import menuTutorial from '../menu/sections/tutorial.js';
 
 
 

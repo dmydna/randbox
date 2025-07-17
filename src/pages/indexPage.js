@@ -1,9 +1,8 @@
-import IntroGameApp from '../Games/IntroGame/App.js'
-import renderBar from './render/renderBar.js';
-import renderQuiz from './render/renderQuiz.js';
-import { juegoDefault } from '../main.js';
-import memoria from '../Games/Memory.js';
-import { _updCssVars } from '../Menu/sections/utils.js';
+import renderBar from '../componentes/renderBar.js';
+import renderQuiz from '../componentes/renderQuiz.js';
+import IntroGameApp from '../games/IntroGame/App.js';
+import memoria from '../managers/Memory.js';
+import { _updCssVars } from '../menu/sections/utils.js';
 
 
 function indexPage(App){

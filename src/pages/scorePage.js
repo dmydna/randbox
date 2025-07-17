@@ -1,10 +1,7 @@
-import { hoverClassToggle } from './../Componentes/navbar.js';
-import Navbar  from './../Componentes/Nav.js'
+import Navbar from '../componentes/Nav.js';
+import renderNav from '../componentes/renderNav.js';
+import memory from '../games/Memory.js';
 import App from "./AppMain.js";
-import renderBar from './render/renderBar.js';
-import renderNav from './render/renderNav.js';
-import MemoryManger from '../Games/Memory.js';
-import memory from '../Games/Memory.js';
 
 
 
