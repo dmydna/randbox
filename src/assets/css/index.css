@@ -197,11 +197,11 @@
   top: 70vh;
 } 
 
-.intro .continue-btn{
+.continue-btn{
   display: var(--continue-game)!important;
 }
 
-.intro .score-btn{
+.score-btn{
   display: var(--score-menu)!important;
 }
 

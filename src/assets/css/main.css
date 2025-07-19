@@ -33,7 +33,8 @@
   --popup-enable: 0;
   --menu-enable: 1;
   --hearts: 3;
-  --continue-game: 'none';
+  --continue-game: none;
+  --score-menu: none;
 }
 
 

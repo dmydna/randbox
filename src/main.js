@@ -14,6 +14,8 @@ App.router = page
 
 
 
+  
+
 
 const AppContent = [
     {id : "menu",  render : menuPage },
@@ -23,7 +25,7 @@ const AppContent = [
     {id : "info",  render :  infoPage}
 ]
 
-App._createApp(AppContent)
+document.onload = App._createApp(AppContent)
 
 
 

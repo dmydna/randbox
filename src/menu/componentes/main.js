@@ -1,6 +1,7 @@
 import App from "../../main.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon, shuffleArr } from '../../utils/utils.js';
+import { _updCssVars } from "./utils.js";
 
 
 
@@ -74,11 +75,28 @@ function _playMenuHandler(menu){
     menu.showMenu(false)
     document.querySelector(".box").style.opacity = "1"
 
+    // Aplica configuraciones css
+    _updCssVars()
+
     // Limpia datos de partida anterior (setea a valor por default)
     memory.reset('partida')
 
-    // Refresca preguntas (aplica shuffle)
-    shuffleArr( memory.get('preguntas'))
+    // Genera Partida aleatoria basada en dificultad
+    const opciones = memory.get('opciones')
+    const partida  = memory.get('partida')
+
+    const preguntas = Array.from(memory.get('preguntas'))
+    const quiz = Object.fromEntries(
+      shuffleArr(preguntas)
+      .slice(0, opciones.dificultad)
+      .map(element => [element, 0])
+    )
+    
+    memory.set('partida', {
+      ...partida, 
+      quiz:quiz
+    })
+
     memory.refresh()
 
     App.router('/intro')

@@ -93,8 +93,6 @@ class QuizApp extends EventManager{
       estado: this.estado,
       pregunta: this.juego.obtenerPreguntaActual()
     })
-
-    console.log(memory.get("partida").pregunta)
     
   }
 

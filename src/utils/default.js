@@ -76,6 +76,5 @@ for (const [key, value] of Object.entries(Appimgs)) {
 
 
 
-
-export { AppMemory , src_obj, src_pop, src_ui };
+export { AppMemory , src_obj, src_pop, src_ui};
 

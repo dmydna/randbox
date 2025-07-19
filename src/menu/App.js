@@ -41,18 +41,12 @@ class Menu extends pageManager{
   cambiarMenu = (name) => {
 
     this._cambiarMenu(name)
-
-  
     const newMenu = this.menuActual.data
     if(this.menuActual !=  this.root){
       const oldMenu = this.menuActual.parent.data
       document.body.classList.remove(oldMenu)
     }
     document.body.classList.add(newMenu)
-
-
- 
-    // this.menuActual.render
     this.renderMenu()  
   }
   atras = () => {
@@ -67,12 +61,11 @@ class Menu extends pageManager{
     }
     this._atras() // actualizo struct
     this.renderMenu()
-    if(this.menuActual == this.root){
-      this._aplicarConfiguracionDelJuego()
-    }
-
-
+    // if(this.menuActual == this.root){
+    //   this._aplicarConfiguracionDelJuego()
+    // }
   }
+
   home = () => {
     if(this.menuAtras){
       document.body.classList.remove(this.menuAtras.data)
@@ -108,21 +101,21 @@ class Menu extends pageManager{
   }
 
 
- _aplicarConfiguracionDelJuego(){
+//  _aplicarConfiguracionDelJuego(){
 
-  const config  = memory.get('opciones')
+//   const config  = memory.get('opciones')
   
-  _updCssVars()
+//   // _updCssVars()
 
-  if(config.menu == 0 && document.querySelector('.onload')){
-    this.estado = 'hidden'
-    return true
-  }else 
-   if(document.querySelector('.onload')){
-    this.estado = 'visible'
-    } 
-    return false
-  }
+//   if(config.menu == 0 && document.querySelector('.onload')){
+//     this.estado = 'hidden'
+//     return true
+//   }else 
+//    if(document.querySelector('.onload')){
+//     this.estado = 'visible'
+//     } 
+//     return false
+//   }
 }
 
 

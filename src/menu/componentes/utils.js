@@ -1,126 +1,7 @@
 import memory from "../../managers/Memory"
+import { shuffleArr } from "../../utils/utils"
 
-function _playMenuHandler(){
-    const cantidadItentos = config['dificultad']
-   
-    document.querySelector(".box").style.opacity = "0"
-
-    setTimeout(()=>{
-        showMenu(false)
-        document.body.classList.add('onStartGame')
-        document.querySelector(".box").style.opacity = "1"
-        _playNewGame()
-    },800) 
-
-    document.querySelector('.box').addEventListener('animationend', ()=>{ 
-        document.body.classList.remove('onStartGame') 
-    }, {once:true})
-
-      
-      reset()
-}
-
-function _playNewGame(cantidadItentos){
-    introGame.intentos = cantidadItentos
-    introGame.jugar();
-    return
-}
-
-function reset(){
-    localStorage.setItem("memoria", JSON.stringify({
-        preguntasDisponibles : [],
-        intentosDisponibles : config.vidas,
-        progreso:0,
-        puntaje:0,
-        estado:"_",
-        respuesta: 0
-      }));
-}
-
-function _cambiarMenu(name){
-    Menu.siguiente(name)
-    const oldState = Menu.menuAtras.data
-    const newState = Menu.menuActual.data
-    document.body.classList.remove(oldState)
-    document.body.classList.add(newState)
-    _renderMenu()  
-}
-
-
-function showMenu(bool=true){
-    const popup = document.querySelector('.popup')
-    if(bool){
-      document.body.classList.add('popup-active')
-      document.body.classList.add(Menu.root.data)
-    }else{
-      document.body.classList.remove(Menu.root.data)
-      document.body.classList.remove('popup-active')
-      popup.style.display = 'none'
-    }
-
-  }
-
-
-function _rangeMenuInit(range){
-    range.forEach((elem, index)=>{
-        const elemInput = elem.children[0];
-        const classElem = elemInput.classList[0]
-        const elemValue = document.createElement('span')
-        elemInput.value = config[classElem]
-        elemValue.innerHTML = elemInput.value;
-        elem.appendChild(elemValue)
-        elemInput.addEventListener('input', (e) => {
-            let valor = e.target.value
-            elemValue.innerHTML = valor
-            config[classElem] = Number(valor)
-            localStorage.setItem("GameConfig", JSON.stringify(config));
-            _aplicarConfiguracionDelJuego()
-        })
-    
-    })
-}
-
-function _interuptorMenuInit(interruptors){
-    interruptors.forEach((elem, index)=>{
-        let classElem = elem.classList[1]
-        elem.innerHTML = config[classElem] == 1 ? 'ON' : 'OFF' 
-        elem.addEventListener('click', (e)=>{
-            let classElem = e.target.classList[1]
-            if(config[classElem] == 1){
-                elem.innerHTML = 'OFF'
-                config[classElem] = 0;
-            }else{
-                elem.innerHTML = 'ON'
-                config[classElem] = 1;
-            }
-            localStorage.setItem("GameConfig", JSON.stringify(config));
-            _aplicarConfiguracionDelJuego()
-        })
-    })
-}
-
-
-function _optionMenuInit(){
-    const ranges = document.querySelectorAll('.range');
-    const interruptors = document.querySelectorAll('.interuptor')
-    _rangeMenuInit(ranges)
-    _interuptorMenuInit(interruptors)
-}
-
-
-
-function _continueGameInit(){
-    if(config.memoria == 1){
-        continueBtn.addEventListener('click',()=>{
-            window.location.href = "../quiz.html"
-        })
-    }else{
-        continueBtn.remove()
-    }
-}
-
-
-
+// CSS CONFIG
 
 function _updCssVars(){
     const config = memory.get('opciones')
@@ -136,4 +17,109 @@ function _updCssVars(){
 }
 
 
-export { _updCssVars }
+// MENU CREATE ITEMS
+
+// Ratio
+function _createRatioItem(prop, config, _rangeHandler){
+    const template = document.createElement("template");
+    template.innerHTML =`
+    <li class="menu-options-item">
+      <span class='title-options'></span>
+      <input class='ratio-options'/>
+    </li>
+    `
+    const container = template.content.cloneNode(true);
+  
+    const span = container.querySelector('.title-options')
+    const input = container.querySelector('.ratio-options')
+  
+    span.textContent = prop.title
+    input.type = "radio";
+    input.value = config[prop.id] ?? prop.value;
+    input.addEventListener("input", () => _rangeHandler(input, config ,prop.id));
+    
+  
+    return container 
+  }
+
+
+// Title
+
+function _createTitleItem(prop, config, _rangeHandler){
+  const template = document.createElement("template");
+  template.innerHTML =`
+  <li class="menu-options-item">
+    <span class='title-options'></span>
+  </li>
+  `
+  const container = template.content.cloneNode(true);
+  const span = container.querySelector('.title-options')
+
+  span.textContent = prop.title
+
+  return container
+}
+  
+// Setter
+
+function _createSetterItem(prop, config,_setterHandler) {
+
+  const template = document.createElement("template");
+
+  template.innerHTML = `
+  <li class="menu-options-item">
+    <span class='title-options'></span>
+    <span class='setter-options'><span> 
+  </li>
+  `
+  const container = template.content.cloneNode(true);
+
+  const span1 = container.querySelector('.title-options')
+  const span2 = container.querySelector('.setter-options')
+
+  span1.textContent = prop.title
+  span2.textContent = (config[prop.id] == 0) ? 'OFF' : 'ON';
+  span2.addEventListener("click", () =>{ _setterHandler(span2, config,prop.id ) });
+
+  return container
+}
+  
+
+// Range
+
+function _createRangeItem(prop, config, _rangeHandler) {
+
+  const template = document.createElement("template");
+
+  template.innerHTML = `
+  <li class="menu-options-item">
+    <span  class='title-options'></span>
+    <input class='setter-options'/> 
+  </li>
+  `
+  const container = template.content.cloneNode(true);
+
+  // title
+  const span = container.querySelector(".title-options");
+  span.textContent = prop.title
+  // input
+  const input = container.querySelector(".setter-options");
+
+  input.type = "range";
+  input.min = prop.min  ??  0;
+  input.max = prop.max  ?? 12;
+  input.value = config[prop.id] ?? prop.value;
+//   if(prop.id=='dificultad'){
+//     input.addEventListener('input', () =>  partidaAleatoria(input, config, prop.id))
+//     return container
+//   }
+  input.addEventListener("input", () => _rangeHandler(input, config ,prop.id));
+
+
+  return container;
+} 
+  
+
+
+
+export { _updCssVars, _createSetterItem, _createRangeItem, _createRatioItem, _createTitleItem }

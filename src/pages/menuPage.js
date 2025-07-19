@@ -65,7 +65,6 @@ function menuPage(App, startMenu){
             App.router('/intro')
         }else{
             Menu._createMenu(menuContent)
-            Menu._aplicarConfiguracionDelJuego()
             Menu.showMenu(true)
             if(startMenu){
                 Menu.cambiarMenu(startMenu)

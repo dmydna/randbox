@@ -50,4 +50,14 @@
   border-radius: 2.5px;
   justify-content: space-between;
   align-items: center;
+  border-radius: 20px;
+}
+
+.score .score-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.score-item {
+  height: 35px;
 }

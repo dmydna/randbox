@@ -35,20 +35,40 @@ function scorePage(){
 
   template.innerHTML = `
      <div class="container">
-     <div class="header">
+      <div class="header">
         <img height="70px" src="src/assets/img/ui/high-score.png">
-        <h1 class="score">${memory.get('partida').score}</h1>
+        <h1 class="score-bar">
+          <img height="35px" src="src/assets/img/ui/coin.png"></i>
+          <p class="score-item"></p>
+        </h1>
       </div>
       <div id="game-container">
         <div class="randbox"></div>
       </div>
       <div class="nav-footer"></div>
-      </div>
+     </div>
   `
   const container = template.content.cloneNode(true);
   
   const gameContainer = container.querySelector('.randbox') 
   const navContainer = container.querySelector('.nav-footer') 
+  const scoreContainer = container.querySelector('.score-item')
+
+  // Visualiza score con delay
+  const score_points = memory.get('partida').score
+  let i = 0;
+  let intervalo = setInterval(() => {
+    scoreContainer.innerHTML = i;
+    i+=100;
+    if (i >= score_points) {
+    setTimeout(()=>{
+      clearInterval(intervalo);
+      scoreContainer.innerHTML = i-100;
+     },0)
+    }
+  }, 0);
+
+
 
   navContainer.appendChild(renderNav())
 
@@ -67,9 +87,6 @@ function scorePage(){
   return container
 }
 
-
-
-//localStorage.clear();
 
 
 export default scorePage
