@@ -1,7 +1,6 @@
 import App from "../../main.js";
 import memory from "../../managers/Memory.js";
-import { hoverFlatIcon } from '../../utils/utils.js';
-import { shuffleArr } from "../../utils/utils.js";
+import { hoverFlatIcon, shuffleArr } from '../../utils/utils.js';
 
 
 
@@ -19,9 +18,10 @@ function menuMain(menu) {
 
    // Agrega Menu Items
    const menuItems = [
-     {id: 'play-btn',     title: 'PLAY',     ico :'fi fi-rr-play' ,   },
+     {id: 'play-btn',     title: 'PLAY',     ico :'fi fi-rr-play'   },
+     {id: 'score-btn',    title: 'SCORE',    ico :'fi fi-rr-trophy-star' },
      {id: 'continue-btn', title: 'CONTINUE', ico :'fi fi-rr-dice-d10' },
-     {id: 'options-btn', title: 'OPTIONS',  ico :'fi fi-rr-settings'  },
+     {id: 'options-btn',  title: 'OPTIONS',  ico :'fi fi-rr-settings'  },
      {id: 'help-btn',     title: 'HELP',     ico :'fi fi-rr-info'     }
   ];
 
@@ -43,6 +43,7 @@ function menuMain(menu) {
     li.addEventListener('click', (e)=>{
       switch(prop.id){
         case 'play-btn': _playMenuHandler(menu); break;
+        case 'score-btn': _verScoreHandler(); break;
         case 'continue-btn': _continueGameHandler(); break;
         case 'options-btn': menu.cambiarMenu('options'); break;
         case 'help-btn': menu.cambiarMenu('help'); break;
@@ -60,9 +61,12 @@ function menuMain(menu) {
 // Handlers
 
 function _continueGameHandler(){
-    App.fastRender('quiz')
- }
- 
+  App.router('/quiz')
+}
+
+function _verScoreHandler(){
+  App.router('/score')
+}
 
 function _playMenuHandler(menu){
 
@@ -71,11 +75,11 @@ function _playMenuHandler(menu){
     document.querySelector(".box").style.opacity = "1"
 
     // Limpia datos de partida anterior (setea a valor por default)
-    memory._memoryReset('memoria')
+    memory.reset('partida')
 
     // Refresca preguntas (aplica shuffle)
-    shuffleArr( memory._getMemory('preguntas'))
-    memory._saveMemory()
+    shuffleArr( memory.get('preguntas'))
+    memory.refresh()
 
     App.router('/intro')
 }

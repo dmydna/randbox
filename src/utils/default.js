@@ -5,46 +5,46 @@ const Appimgs = {
   ui  :     ["higth-score","home","mystery","open-box"],
   game:     ["apple","cheese","hamburger","rocket","coin","box","dado"],
   popup:    ["like", "skull", "game-over","win"],
-  keyborad: ["back","enter","m","p","space"]
+  keyboard: ["back","enter","m","p","space"]
 }
 
 
-const memoriaDefault = {
-  preguntasDisponibles:[],
-  intentosDisponibles:3,
-  progreso:0,
-  puntaje:0,
-  estado:"_",
-  respuesta:0
-}
+const preguntas = shuffleArr(Appimgs.game);
 
 
-const configDefault = {
+const opciones = {
   menu :1,
   progreso :1,
   vidas :3,
   dificultad :5,
   teclado :1,
   velocidad :5,
-  memoria :0,
+  memoria :1,
   intentos:8
 }
 
 
-const preguntasDefault = shuffleArr(Appimgs.game);
-
-const partidaDefault = Object.fromEntries(
-  preguntasDefault.slice(0, configDefault.dificultad).map(element => [element, 0])
+const quiz  = Object.fromEntries(
+  preguntas.slice(0, opciones.dificultad).map(element => [element, 0])
 )
 
+const partida = {
+  quiz: quiz,
+  preguntasDisponibles:[],
+  intentosDisponibles:3,
+  progreso:0,
+  puntaje:0,
+  estado:"_",
+  respuesta: 0,
+  score: 0,
+  pregunta: '',
+}
 
 
-
-const juegoDefault = {
-  preguntas : preguntasDefault,
-  opciones :  configDefault ,
-  memoria:    memoriaDefault,
-  partida:    partidaDefault
+const AppMemory = {
+  preguntas : preguntas,
+  opciones :  opciones ,
+  partida:    partida
 }
 
 
@@ -77,5 +77,5 @@ for (const [key, value] of Object.entries(Appimgs)) {
 
 
 
-export { juegoDefault, src_obj, src_pop, src_ui };
+export { AppMemory , src_obj, src_pop, src_ui };
 

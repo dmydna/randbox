@@ -1,7 +1,7 @@
 import memory from "../../managers/Memory.js";
 import { shuffleArr } from "../../utils/utils.js";
 
-const cantPreg = memory._getMemory("preguntas").length
+const cantPreg = memory.get("preguntas").length
 
 function menuOptions() {
 
@@ -29,7 +29,7 @@ function menuOptions() {
 
     const ul = container.querySelector('.menu')  
 
-    const config = memory._getMemory("opciones")
+    const config = memory.get("opciones")
 
 
     opciones.forEach((prop) => {
@@ -57,27 +57,27 @@ function _setterHandler(elem, config, index){
     elem.innerHTML = 'ON'
     config[index] = 1
   }
-  memory._saveMemory()
+  memory.refresh()
 }
 
 
 function _rangeHandler(elem, config, index){
-  config[index] =  elem.value
+  config[index] =  Number(elem.value)
   elem.value    =  config[index]
 
   switch(index){
     case 'dificultad':
      // Arma partida aleatoria
-     const preguntas = Array.from(memory._getMemory("preguntas"))
-     const partida = Object.fromEntries(
+     const preguntas = Array.from(memory.get("preguntas"))
+     const quiz = Object.fromEntries(
        shuffleArr(preguntas).slice(0, config.dificultad)
        .map(element => [element, 0])
      )
-     memory._setMemory("partida", partida)
+     memory.get("partida").quiz = quiz
      break;
   }
 
-  memory._saveMemory()
+  memory.refresh()
 }
 
 

@@ -45,13 +45,13 @@ function indexPage(App){
     boxContainer.classList.add('center-fix')
 
  
-    const partida = memoria._getMemory("partida")
-    const config = memoria._getMemory("opciones")
+    const partida = memoria.get("partida")
+    const config = memoria.get("opciones")
 
     _updCssVars()
 
 
-    const Game = new IntroGameApp(Object.keys(partida), config.intentos, gameContainer)
+    const Game = new IntroGameApp(partida.quiz, config.intentos, gameContainer)
     Game.barra = progressContainer.querySelector('.progress-bar')
     // Carga config teclado
     if(config.teclado == 1){

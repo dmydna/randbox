@@ -6,12 +6,12 @@ import memory from "../../managers/Memory.js";
 
 class introGameApp extends EventManager{
 
-  constructor(imgArray, intentos, tablero) {
+  constructor(quizVacio, intentos, tablero) {
     super()
-    this.data = {};
+    this.data = quizVacio;
     this.intentos = Number(intentos)
     this.intentosRestantes = Number(intentos);
-    this.preguntas = imgArray;
+    this.preguntas = Object.keys(quizVacio);
     this.estado = null;
     this.tablero = tablero
     this.barra = null;
@@ -92,9 +92,9 @@ class introGameApp extends EventManager{
     this.data[giftImgStr] = this.data[giftImgStr] ?? 0;
     this.data[giftImgStr]++;
 
-    memory._setMemory("partida", this.data)
-    memory._setMemory("memoria", {
-      ...memory._getMemory('memoria'), 
+    memory.set('partida', {
+      ...memory.get('partida'), 
+      quiz: this.data,
       preguntasDisponibles : this.preguntas
     } )
   }
@@ -129,7 +129,6 @@ class introGameApp extends EventManager{
       this.gift.src = `src/assets/img/objects/${this.preguntas[this.index]}.png`;
       this.barra.style.width = `${this.progreso()}%`;
       this.intentosRestantes--;
-      memory._setMemory("partida", this.data)
     }
   };
 }

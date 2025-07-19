@@ -14,6 +14,7 @@ class ShuffleImgsAnim {
 	  this.intervalo;
 	  this.timeout;
 	  this.indiceActual = 0;
+	  this.promise = null
 	}
   
 	_init(arrayImagenes, elem){
@@ -63,6 +64,8 @@ class ShuffleImgsAnim {
 
 		   	// por defecto el srcFinal vuelve a su estado inicial
 			this.imagen.src = this.srcInicial;
+
+			return true
 	  }
 	}
   
@@ -84,6 +87,9 @@ class ShuffleImgsAnim {
 	  if (this.timeout) {
 		clearTimeout(this.timeout);
 		this.timeout = null;
+	  }
+	  if(this.promise){
+		this.promise(true)
 	  }
 	}
 

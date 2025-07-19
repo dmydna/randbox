@@ -3,7 +3,7 @@ import Nav from "../componentes/renderNav.js";
 import memory from "../managers/Memory.js";
 import Navbar from "../managers/Nav.js";
 
-
+import { hoverClassToggle } from "../utils/utils.js";
 
 
 function infoPage(App){
@@ -33,19 +33,10 @@ function infoPage(App){
    </div>
    `
    const container = template.content.cloneNode(true);
-
-   const headerContainer = container.querySelector('.header') 
-   const gameContainer = container.querySelector('.game-container') 
-   const popupContainer = container.querySelector('.popup-container')
    const navContainer = container.querySelector('.nav-footer')
-
    navContainer.appendChild(Nav()) 
-
    const box = container.querySelector(".bounce-in-top");
-   const randbox = container.querySelector(".randbox");
-   const homeBtn = container.querySelector('.midBtn')
-   const backBtn = container.querySelector('.ltBtn')
-   const socialBtn =container.querySelector(".social")
+
 
    const GIT = "https://github.com/dmydna/randbox"
 
@@ -58,15 +49,20 @@ function infoPage(App){
     ])
 
    document.body.onload = document.body.classList.add("onload")
-
-   box.addEventListener('animationend', ()=>{ document.body.classList.remove("onload") })
-
-   box.addEventListener('click', ()=>{
-    memory._setMemory("opciones", {
-    ...memory._getMemory("opciones"),
-    menu : 1
+   box.addEventListener('animationend', ()=>{ 
+      document.body.classList.remove("onload")
+      box.classList.remove('bounce-in-top')
+      hoverClassToggle(box, 'box heartbeat')
    })
-   App.router('/menu')
+
+   
+   box.addEventListener('click', ()=>{
+        memory.clear(true)
+        box.classList.add('scale-out-center')
+        box.addEventListener('animationend', ()=>{
+            App.router('/menu')
+        })
+
     } )
 
    return container

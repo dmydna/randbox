@@ -25,18 +25,6 @@ function createScoreBoard(scoreBoard, Quiz){
   }
 }
 
-function createNavfooter(navbar){
-  navbar._addEvent_Middle( () => { 
-    App.router('/menu')
-  })
-  navbar._addEvent_Left( () => { 
-    App.router('/quiz')
-  })
-  navbar._addEvent_Right( () => { 
-    App.router('/info')
-  })
-}
-
 
 function scorePage(){
   document.body.className = ""
@@ -49,7 +37,7 @@ function scorePage(){
      <div class="container">
      <div class="header">
         <img height="70px" src="src/assets/img/ui/high-score.png">
-        <h1 class="score">${memory._getMemory('score')}</h1>
+        <h1 class="score">${memory.get('partida').score}</h1>
       </div>
       <div id="game-container">
         <div class="randbox"></div>
@@ -65,12 +53,15 @@ function scorePage(){
   navContainer.appendChild(renderNav())
 
   const nav = new Navbar(navContainer)
-  nav._addIcons(['fi-rr-angle-left','fi-rr-home','fi-rr-info'])
-  
-  const partida = memory._getMemory("partida")
     
+  nav._createNav([
+    {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.router('/quiz')},
+    {id: 2, ico : 'fi-rr-home',       handler: ()=> App.router('/menu')},
+    {id: 3, ico : 'fi-rr-info',       handler: ()=> App.router('/info')}
+  ])
 
-  createNavfooter(nav)
+  const partida = memory.get("partida").quiz
+    
   createScoreBoard(gameContainer, partida)
 
   return container

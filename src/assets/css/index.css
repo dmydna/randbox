@@ -201,6 +201,10 @@
   display: var(--continue-game)!important;
 }
 
+.intro .score-btn{
+  display: var(--score-menu)!important;
+}
+
 .intro .menu-options-item{
   display: flex; gap: 10px;
 }

@@ -4,7 +4,7 @@ function renderNav(){
 
         template.innerHTML = `
             <div class="nav-btn ltBtn">
-                <i class="nav-btn fi"></i>
+                <i class="fi"></i>
             </div>
             <div class="nav-btn midBtn">
                 <i class="fi"></i>

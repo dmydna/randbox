@@ -16,13 +16,29 @@ class Quiz {
 	constructor(preguntas){;
 		this.#datos = preguntas;
 		this.preguntas = Object.keys(preguntas);
-		this.#preguntaActual = {str:`${this.preguntas[0]}`,index: 0};
 		this.cantPreguntas = this.preguntas.length;
+		this.#preguntaActual = {
+			str:`${this.preguntas[0]}`,
+			index: 0
+		};
 	}
 	
 	getPreguntaActual(){
 		const res = this.#preguntaActual.str 
 		return res;
+	}
+
+	cambiarPregunta(pregunta){
+		if(this.preguntas.includes(pregunta)){
+			for(let i = 0; i < this.preguntas.length; i++){
+				if(this.preguntas[i] == pregunta){
+					this.#preguntaActual.str  = pregunta
+					this.#preguntaActual.index = i
+					return true
+				}
+			}
+		}
+		return false
 	}
 
 	getIndex(){
@@ -75,11 +91,12 @@ class JuegoQuiz {
         this.puntaje = 0;
 		this.preguntasDisponibles = Object.keys(preguntas);
 		this.progreso = 0;
+		this.preguntaActual = this.quiz.getPreguntaActual(), // primer pregunta
 		this.#data = { "preguntas": preguntas, "intentos": intentosIniciales} // guarda los datos inciales
     }
 
     obtenerPreguntaActual() {
-        return this.quiz.getPreguntaActual();
+        return this.preguntaActual;
     }
 
 	intentarDeNuevo(){
@@ -94,9 +111,6 @@ class JuegoQuiz {
 	}
 
 	recordar = () => {
-		// if(this.intentosRestantes == null){
-		// 	this.intentosRestantes = this.#data["intentos"]
-		// }
 		return ({
 			puntaje: this.puntaje,
 			progreso: this.progreso,
@@ -106,17 +120,25 @@ class JuegoQuiz {
 		})
 	}
 
-	retomarPartida(memoria){
-		this.puntaje = memoria.puntaje
-		this.progreso = memoria.progreso
-		this.preguntasDisponibles = memoria.preguntasDisponibles
-		this.preguntas = memoria.preguntas
-		this.intentosRestantes = memoria.intentosRestantes
+	cambiarPreguntaActual(pregunta){
+		if(this.quiz.cambiarPregunta(pregunta)){
+			this.preguntaActual = pregunta
+		}
+	}
+
+	retomarPartida(partida){
+		this.puntaje = partida.puntaje
+		this.progreso = partida.progreso
+		this.preguntasDisponibles = partida.preguntasDisponibles
+		this.preguntas = partida.preguntas
+		this.intentosRestantes = partida.intentosRestantes
+		this.cambiarPreguntaActual(partida.pregunta)
+
 	}
 
     verificarRespuesta(respuestaUsuario) {
         const esCorrecta = this.quiz.verificarRespuesta(respuestaUsuario);
-		const preguntaActualString = this.quiz.getPreguntaActual()
+		const preguntaActualString = this.preguntaActual
         if (esCorrecta) {
 			this.preguntasDisponibles = this.preguntasDisponibles.filter(elem => elem != preguntaActualString)
 			this.incPuntaje()
@@ -130,6 +152,8 @@ class JuegoQuiz {
     }
 
     siguientePregunta() {
+		// preguntasDisponibles indica si la siguiente pregunta del quiz
+		// esta disponible, no obtiene la siguiente pregunta
 
 		const preguntasDisponibles     = this.preguntasDisponibles
 		let   siguientePreguntaString  = this.quiz.siguientePregunta()
@@ -138,16 +162,18 @@ class JuegoQuiz {
 		
 		this.shufflePreguntas()
 
+		// siguiente pregunta es alteatoria y sin restricciones, 
+		// busco una pregunta que si este disponible
 		while( ! preguntasDisponibles.includes(siguientePreguntaString) ) {
 			siguientePreguntaString = this.quiz.siguientePregunta()
 		}
-
+		this.preguntaActual = siguientePreguntaString
 
         return siguientePreguntaString;
     }
 
 	shufflePreguntas(){
-
+		// Esto altera el orden de las preguntas y en especial de la siguiente
 		const longitud = this.quiz.cantPreguntas;
 		for (let i = longitud - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));

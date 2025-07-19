@@ -2,9 +2,9 @@
 function menuControls(){
 
     const keys = [
-        {id: 'm',     title: 'menu'       },
-        {id: 'back',  title: 'atras/reset'},
-        {id: 'space', title: 'saltar/inc' },
+        {id: 'm',     title: 'menu'   },
+        {id: 'back',  title: 'reset'  },
+        {id: 'space', title: 'accion' },
         {id: 'enter', title: 'confirmar'  },
     ]
     

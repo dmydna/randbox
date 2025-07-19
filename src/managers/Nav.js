@@ -1,3 +1,4 @@
+import { hoverFlatIcon } from "../utils/utils.js";
 import EventManager from "./Events.js";
 
 class Navbar extends EventManager {
@@ -17,13 +18,17 @@ class Navbar extends EventManager {
         switch(id){
           case 3: 
            this._addEvent(this.rt_btn, 'click', handler) ; 
-           this.rt_btn.firstElementChild.classList.add(ico); break;
+           this.rt_btn.firstElementChild.classList.add(ico); 
+           break;
           case 2: 
            this._addEvent(this.mid_btn, 'click', handler) ;
-           this.mid_btn.firstElementChild.classList.add(ico); break;          
+           this.mid_btn.firstElementChild.classList.add(ico); 
+           hoverFlatIcon(this.mid_btn, 'ss')
+           break;          
           case 1: 
            this._addEvent(this.lt_btn, 'click', handler) ;
-           this.lt_btn.firstElementChild.classList.add(ico); break;  
+           this.lt_btn.firstElementChild.classList.add(ico); 
+           break;  
         }
       })
     }

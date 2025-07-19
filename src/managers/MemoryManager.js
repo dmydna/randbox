@@ -1,16 +1,16 @@
-import { juegoDefault } from '../utils/default.js';
-
+import { AppMemory } from '../utils/default.js';
+import { encrypt, decrypt } from '../utils/utils.js';
 
 
 
 class MemoryManager {
 
   constructor() {
-    this._Default = juegoDefault;
-    this._Data = this._loadMemory();
+    this._Default = AppMemory;
+    this._Data = this.load();
   }
 
-  _saveMemory() {
+  refresh() {
     try {
       localStorage.setItem("appStorage", JSON.stringify(this._Data));
     } catch (e) {
@@ -19,37 +19,44 @@ class MemoryManager {
     return this._Data;
   }
 
-  _loadMemory() {
+  load() {
     try {
-      return JSON.parse(localStorage.getItem("appStorage")) || JSON.parse(JSON.stringify(this._Default));
+      return JSON.parse(localStorage.getItem("appStorage"))
+         || JSON.parse(JSON.stringify(this._Default));
+
     } catch (e) {
       console.error("Error al cargar localStorage, usando Default:", e);
       return JSON.parse(JSON.stringify(this._Default));
     }
   }
 
-  _setMemory(name, value) {
+  set(name, value) {
     if (value === this._Data) {
       throw new Error("No se puede guardar el objeto en sí mismo como valor");
     }
     this._Data[name] = value;
-    this._saveMemory();
+    this.refresh();
   }
 
-  _getMemory(name) {
-    this._Data = this._loadMemory();
+  get(name) {
+    this._Data = this.load();
     return this._Data[name];
   }
 
-  _memoryReset(name) {
-    this._setMemory(name, this._Default[name])
+  reset(name) {
+    this.set(name, this._Default[name])
   }
 
   
-  _memoryFullReset(){
+  fullreset(){
     this._Data = JSON.parse(JSON.stringify(this._Default));
-    this._saveMemory();
+    this.refresh();
+  }
 
+  clear(bool){
+    if(bool){
+      localStorage.clear()
+    }
   }
 }
 

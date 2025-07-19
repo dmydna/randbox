@@ -38,14 +38,12 @@ class QuizApp extends EventManager{
   }
 
   iniciarJuego() {
-
-    const navContent = [
-      {id: 1, ico : 'fi-br-refresh', handler: this.AnswerReset},
-      {id: 2, ico : 'fi-rr-social-network', handler: this.manejarRespuestaUsuario},
-      {id: 3, ico : 'fi-br-plus', handler: this.AnswerInc}
-    ]
     
-    this._controlls._createNav(navContent)
+    this._controlls._createNav([
+      {id: 1, ico : 'fi-rr-refresh', handler: this.AnswerReset},
+      {id: 2, ico : 'fi-rr-social-network', handler: this.manejarRespuestaUsuario},
+      {id: 3, ico : 'fi-rr-plus', handler: this.AnswerInc}
+    ])
     // incializa la primer pregunta
     this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
     this._addEvent(this.respUser, "click", this.AnswerInc);
@@ -76,9 +74,10 @@ class QuizApp extends EventManager{
 
   AnswerInc =() => {
     this.respUser.innerHTML++;
-    if( this.resumen ){
-      this.recordar()
-    }
+    memory.set("partida", {
+      ...memory.get("partida"), 
+      respuesta: Number(this.respUser.innerHTML)
+    }) 
 
   }
 
@@ -88,11 +87,14 @@ class QuizApp extends EventManager{
 
   recordar = () => {
 
-    memory._setMemory("memoria", {
+    memory.set("partida", {
+      ...memory.get("partida"),
       ...this.juego.recordar(),
-      respuesta: this.respUser.innerHTML,
-      estado: this.estado 
+      estado: this.estado,
+      pregunta: this.juego.obtenerPreguntaActual()
     })
+
+    console.log(memory.get("partida").pregunta)
     
   }
 
@@ -108,10 +110,9 @@ class QuizApp extends EventManager{
     document.body.classList.add(newState);
     this._popup.actualizar();
 
-    if( this.resumen ){
+    if(this.resumen){
       this.recordar()
     }
-
     return;
   }
 
@@ -138,36 +139,32 @@ class QuizApp extends EventManager{
  
   }
 
-  reanudarPartida(memoria){
+  reanudarPartida(partida){
 
-    if(memoria.estado == "_"){
+    if(partida.estado == "_"){
     // importante: caso base de la recursion
       return
     }
 
     if(this.resumen){
-      if(memoria.estado == 'user-loses'){
+      if(partida.estado == 'user-loses'){
         this.cambiarEstado('user-loses')
         this._popup.show()
-      }else if(memoria.estado == 'user-wins'){
+      }else if(partida.estado == 'user-wins'){
         this.cambiarEstado('user-wins')
         this._popup.show()
       }
 
-      for(let i=0; i < this.juego.intentosRestantes - memoria.vidas; i++ ){
+      for(let i=0; i < this.juego.intentosRestantes - partida.vidas; i++ ){
         this._popup.quitarCorazones()
       }
-      
-      let preguntaActual = this.juego.obtenerPreguntaActual() 
-      if(!preguntaActual){
-        preguntaActual = this.juego.siguientePregunta() 
-      }  
-      this.juego.retomarPartida(memoria)
-      this._progress.style.width = `${memoria.progreso}%`
-      this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
-      this.respUser.innerHTML = memoria.respuesta 
-      this.estado = memoria.estado
-
+        
+      this.juego.retomarPartida(partida)
+      this._progress.style.width = `${partida.progreso}%`
+      this.box.src = this.__srcHandler(`${partida.pregunta}`);
+      this.estado = partida.estado
+      this.respUser.innerHTML = partida.respuesta
+      console.log(partida.respuesta)
     }
   }
 
@@ -203,7 +200,7 @@ class QuizApp extends EventManager{
 
   userRespondeBien() {
     this.puntos.innerHTML = `+ ${this.juego.incPuntaje()}`;
-    this._progress.style.width = `${this.juego.getProgreso()}%`;
+    this._progress.style.width = ` ${this.juego.getProgreso()}%`;
     this.cambiarEstado("user-reply-succeeded");
     this.userRespondeTimeout();
   }
@@ -227,7 +224,18 @@ class QuizApp extends EventManager{
   }
 
 
-  avanzarJuego = () => {
+
+  avanzarJuego = async () => {
+
+    const siguientePregunta = this.juego.siguientePregunta()
+
+    const shufflePromise = async () => {
+      return new Promise(resolve => {
+        shuffleImgs.promise = resolve
+        shuffleImgs.shuffleAnimate(null, 2000);
+      });
+    }
+    
     const shuffleImgs = this._animations;
     this.AnswerReset(); // cantAp -> 0
 
@@ -235,24 +243,26 @@ class QuizApp extends EventManager{
       /* Si el juego termina no cambia de pregunta */
       return false;
     }
+
     /* Pasa a la sig pregunta con una animacion shuffle*/
     if (shuffleImgs) {
       document.body.style.pointerEvents = "none";
-      // incia la animacion y ejecuta una funcion handler al finalizar
-      shuffleImgs.shuffleAnimate(() => {
-        document.body.style.pointerEvents = "auto";
-        return this.juego.siguientePregunta(); //importante
-      }, 2000); /*importante shuffleImg es infinito por default*/
-    } else {
-      /* por default pasa a la sig pregunta */
-      this.box.src = this._srcHandler(this.juego.siguientePregunta());
+      await shufflePromise()
+      document.body.style.pointerEvents = "auto"
+    } 
+
+    /* por default pasa a la sig pregunta */
+    this.box.src = this.__srcHandler(siguientePregunta);
+    if( this.resumen ){
+      this.recordar()
     }
     this.guardarScore()
+
     return true;
   };
 
   __srcHandler(respuesta) {
-    return src_obj + `${respuesta}.png`;
+    return ` ${src_obj}${respuesta}.png`;
   }
 
   manejarRespuestaUsuario = () => {
@@ -283,7 +293,10 @@ class QuizApp extends EventManager{
     this.guardarScore()
   }
   guardarScore(){
-    memory._setMemory("score", this.juego.puntaje)
+    memory.set("partida",{ 
+      ...memory.get("partida"),
+     score: this.juego.puntaje
+    })
   }
 }
 

@@ -22,9 +22,9 @@ class Menu extends pageManager{
     this.menuActual = this.root;
     
     const navContent = [
-      {id: 1, ico : 'fi-rr-angle-left', handler: this.atras},
-      {id: 2, ico : 'fi-rr-home',       handler: this.home},
-      {id: 3, ico : 'fi-rr-info',       handler: this._siguiente}
+      {id: 1, ico : 'fi-rr-angle-left',       handler: this.atras},
+      {id: 2, ico : 'fi-rr-settings-sliders', handler: this.home},
+      {id: 3, ico : 'fi-rr-angle-right',             handler: this._siguiente}
     ]
     this.nav._createNav(navContent)
     this.renderMenu()
@@ -110,17 +110,9 @@ class Menu extends pageManager{
 
  _aplicarConfiguracionDelJuego(){
 
-  const config  = memory._getMemory('opciones')
+  const config  = memory.get('opciones')
+  
   _updCssVars()
-  if(document.querySelector('.popup-active')){
-    this.estado = 'visible'
-      if(config.memoria == 0){
-        document.querySelector('.continue-btn').style.display = 'none'
-      }else{
-        document.querySelector('.continue-btn').style.display = 'flex'
-      }
-    return
-  }
 
   if(config.menu == 0 && document.querySelector('.onload')){
     this.estado = 'hidden'

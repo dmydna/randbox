@@ -9,10 +9,10 @@ import renderPopup from '../componentes/renderPopup.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 
 // Clases
-import Navbar from "../managers/Nav.js";
-import memory from "../managers/Memory.js";
 import PopupClass from "../games/quizGame/Popup.js";
 import ShuffleImgs from "../games/quizGame/ShuffleImgs.js";
+import memory from "../managers/Memory.js";
+import Navbar from "../managers/Nav.js";
 
 
 
@@ -52,14 +52,13 @@ function quizPage(App){
 
 
 
-    const config =   memory._getMemory("opciones")
-    const memoria =  memory._getMemory("memoria")
-    const preguntasQuiz = memory._getMemory("partida")
+    const config =   memory.get("opciones")
+    const partida =  memory.get("partida")
 
     // Incializo Quiz
 
 
-    const QuizGame =   new QuizApp(preguntasQuiz, config.vidas, gameContainer)
+    const QuizGame =   new QuizApp({...partida.quiz}, config.vidas, gameContainer)
 
     QuizGame.createApp({
         _animations: new ShuffleImgs(),
@@ -81,7 +80,7 @@ function quizPage(App){
 
     if(config.memoria == 1){
         QuizGame.resumen = true;
-        QuizGame.reanudarPartida(memoria)
+        QuizGame.reanudarPartida(partida)
     }
 
     // Animaciones

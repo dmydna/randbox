@@ -60,7 +60,7 @@ function menuPage(App, startMenu){
     document.onload = document.body.classList.add("onload");
 
     container.querySelector('.box').addEventListener('animationend', ()=>{
-        const config = memory._getMemory('opciones')
+        const config = memory.get('opciones')
         if( config.menu == 0 ){
             App.router('/intro')
         }else{

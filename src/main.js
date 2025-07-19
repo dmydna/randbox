@@ -15,8 +15,6 @@ App.router = page
 
 
 
-
-
 const AppContent = [
     {id : "menu",  render : menuPage },
     {id : "intro", render : indexPage},

@@ -17,7 +17,7 @@ function _playMenuHandler(){
     }, {once:true})
 
       
-      _memoryReset()
+      reset()
 }
 
 function _playNewGame(cantidadItentos){
@@ -26,7 +26,7 @@ function _playNewGame(cantidadItentos){
     return
 }
 
-function _memoryReset(){
+function reset(){
     localStorage.setItem("memoria", JSON.stringify({
         preguntasDisponibles : [],
         intentosDisponibles : config.vidas,
@@ -123,13 +123,16 @@ function _continueGameInit(){
 
 
 function _updCssVars(){
-    const config = memory._getMemory('opciones')
+    const config = memory.get('opciones')
+    const partida = memory.get('partida')
+
     const html =  document.documentElement
     html.style.setProperty('--progress-enable',  config.progreso * 0.5)
     html.style.setProperty('--menu-enable', config.menu)
     html.style.setProperty('--animation-time', (-1) * config.velocidad + 5.5 + 's' )
     html.style.setProperty('--hearts', config.vidas)
-    html.style.setProperty('--continue-game', (config.memoria == 0) ? 'none' : 'flex')
+    html.style.setProperty('--continue-game', (config.memoria == 1 && partida.estado != '_' && partida.estado != 'user-wins' ) ? 'flex' : 'none')
+    html.style.setProperty('--score-menu', (config.memoria == 1 && partida.estado == 'user-wins') ? 'flex' : 'none')
 }
 
 
