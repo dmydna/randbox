@@ -1,0 +1,104 @@
+.intro .box {   position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation-name: defaultBox;
+  animation-duration: var(--animation-time);
+  animation-iteration-count: initial;
+  animation-direction: alternate;
+}
+
+
+.intro .box:hover {   
+  cursor: pointer;
+}
+
+.intro .box-anim .box {
+  animation-name: lanzar-box-1;
+}
+
+
+.intro .onload .box {
+  animation: bounce-in-top 1.1s both;
+}
+
+/* .menu .onload .box {
+  animation: caida-randbox var(--animation-time) !important;
+} */
+
+.intro .progress{
+  position: sticky;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+.intro .playGame .progress{
+  opacity: var(--progress-enable);
+}
+
+.intro .gift {
+  width: 80px;
+  height: 80px;
+  margin-top: 20px; /*fix*/
+  visibility: hidden;
+}
+
+
+.intro .onload .progress, 
+.intro .endgame .progress, 
+.intro .endgame .box  {
+  opacity: 0;
+}
+
+.intro .onload .gift{
+  visibility: hidden!important
+}
+
+.intro .endgame .gift {
+  visibility: hidden!important;
+}
+
+
+.intro .endgame .box {
+  animation-duration : .5s;
+  animation-name : scale-out-center!important;
+}
+
+.intro .box-up .gift {
+  visibility: visible;
+}
+
+
+.intro .box-down .gift {
+  visibility: hidden;
+}
+
+
+.intro .box-up #game-container{
+  overflow: visible;
+}
+
+.intro .box-up .randbox {
+  height: 100%;
+}
+
+.intro .onload .nav-footer {
+  opacity: 0;
+}
+
+.intro .onStartGame .box {
+  -webkit-animation: bounce-in-top 1.1s both;
+  animation: bounce-in-top 1.1s both;
+}
+
+
+.intro .nav-footer{
+  opacity: 0;
+}
+
+.intro .center-fix {
+  /*intro game*/
+  display: flex;
+  justify-content: center;
+}
