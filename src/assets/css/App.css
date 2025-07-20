@@ -1,6 +1,7 @@
 
 @import url('./main.css');
-@import url('./index.css');
+@import url('./menu.css');
+@import url('./intro.css');
 @import url('./quiz.css');
 @import url('./score.css'); 
 @import url('./info.css');

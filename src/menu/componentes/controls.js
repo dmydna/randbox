@@ -2,10 +2,18 @@
 function menuControls(){
 
     const keys = [
-        {id: 'm',     title: 'menu'   },
-        {id: 'back',  title: 'reset'  },
-        {id: 'space', title: 'accion' },
-        {id: 'enter', title: 'confirmar'  },
+        {name: 'm',              type: 'key' ,   title: 'menu'   },
+        {name: 'space',          type: 'key' ,   title: 'lanzar caja' },
+        {name: '',               type: 'title',  title: 'Seccion de preguntas' },
+        {name: '',               type: 'title',  title: '* teclado' },
+        {name: 'back',           type: 'key' ,   title: 'reinciar contador'  },
+        {name: 'space',          type: 'key' ,   title: 'incrementar contador' },
+        {name: 'enter',          type: 'key' ,   title: 'enviar respuesta'  },
+        {name: 'h',              type: 'key' ,   title: 'siguiente objeto'  },
+        {name: '',               type: 'title',  title: '* botones' },
+        {name: 'refresh',        type: 'btn' ,   title: 'reinciar contador'  },
+        {name: 'plus',           type: 'btn' ,   title: 'incrementar contador'  },
+        {name: 'social-network', type: 'btn' ,   title: 'enviar respuesta'  },
     ]
     
     const template = document.createElement("template");
@@ -17,13 +25,30 @@ function menuControls(){
     `
     const container = template.content.cloneNode(true);
     const menuContainer = container.querySelector('.menu')
+    const section = container.querySelector('.controls-submenu')
 
-    keys.forEach(({id, title})=>{
+
+    keys.forEach(({name,type,title})=>{
+
+        let image = '';
+        let css   = '';
+
+        switch(type){
+            case 'key': 
+              image = `<img src="/src/assets/img/keyboard/${name}.png">`
+              break;
+            case 'btn':
+              image = `<i class="fi fi-rr-${name}"></i>`
+              break;
+            case 'title':
+              title = `<b>${title}<b>`
+        }
+
         menuContainer.innerHTML += `
-            <li> 
-               <p>${title}</p> 
+            <li class="${css}"> 
+               <div>${title}</div> 
                <div style="display: flex; gap: 10px;">  
-                 <img src="./src/assets/img/keyboard/${id}.png">
+                 ${image}
                </div>
             </li>
         `

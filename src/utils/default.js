@@ -5,7 +5,7 @@ const Appimgs = {
   ui  :     ["higth-score","home","mystery","open-box"],
   game:     ["apple","cheese","hamburger","rocket","coin","box","dado"],
   popup:    ["like", "skull", "game-over","win"],
-  keyboard: ["back","enter","m","p","space"]
+  keyboard: ["back","enter","m","p","space","h"]
 }
 
 
@@ -48,33 +48,32 @@ const AppMemory = {
 }
 
 
-// Precargar Imagenes
-
 const src_obj = "src/assets/img/objects/"
 const src_pop = "src/assets/img/popup/"
 const src_ui =  "src/assets/img/ui/"
 
+// Precargar Imagenes
 
-for (const [key, value] of Object.entries(Appimgs)) {
-  value.forEach((src) => {
-    let img = new Image();
-    switch(key){
-      case 'ui' :
-       img.src = src_ui  + `${src}.png`;
-       break;
-      case 'popup':
-       img.src = src_pop + `${src}.png`;
-       break;
-      case 'game':
-       img.src = src_obj + `${src}.png`;
-      break;
-    }
-  });
+function preloadImages(){
+  for (const [key, value] of Object.entries(Appimgs)) {
+    value.forEach((src) => {
+      let img = new Image();
+      switch(key){
+        case 'ui' :
+         img.src = src_ui  + `${src}.png`;break;
+        case 'popup':
+         img.src = src_pop + `${src}.png`;break;
+        case 'game':
+         img.src = src_obj + `${src}.png`;break;
+      }
+    });
+  }
 }
 
 
 
 
 
-export { AppMemory , src_obj, src_pop, src_ui};
+
+export { AppMemory , src_obj, src_pop, src_ui, preloadImages};
 

@@ -23,10 +23,42 @@ function createScoreBoard(scoreBoard, Quiz){
       const scoreBoardElem = createScoreBoardElem(pregunta, respuesta);
       scoreBoard.innerHTML += scoreBoardElem 
   }
+
+  return scoreBoard
+}
+
+function scoreItemAnim(elems){
+
+  const scoreItems = Array.from(elems).filter((elem => elem.tagName === 'DIV'))
+  let i = 0;
+  const intervalo = setInterval(() => {
+    if (i >= scoreItems.length) {
+      clearInterval(intervalo);
+      return;
+    }
+    scoreItems[i].style.opacity = '1'
+    i++;
+  }, 600); 
+}
+
+function scoreBarAnim(scoreContainer){
+  const score_points = memory.get('partida').score
+  let i = 0;
+  let intervalo = setInterval(() => {
+    scoreContainer.innerHTML = i;
+    i+=100;
+    if (i >= score_points) {
+      clearInterval(intervalo);
+      scoreContainer.innerHTML = i-100;
+    }
+  }, 0);
 }
 
 
-function scorePage(){
+
+
+function scorePage(App){
+
   document.body.className = ""
   document.documentElement.className = ""
   document.documentElement.classList.add('score');  
@@ -55,20 +87,7 @@ function scorePage(){
   const scoreContainer = container.querySelector('.score-item')
 
   // Visualiza score con delay
-  const score_points = memory.get('partida').score
-  let i = 0;
-  let intervalo = setInterval(() => {
-    scoreContainer.innerHTML = i;
-    i+=100;
-    if (i >= score_points) {
-    setTimeout(()=>{
-      clearInterval(intervalo);
-      scoreContainer.innerHTML = i-100;
-     },0)
-    }
-  }, 0);
-
-
+  scoreBarAnim(scoreContainer)
 
   navContainer.appendChild(renderNav())
 
@@ -82,8 +101,11 @@ function scorePage(){
 
   const partida = memory.get("partida").quiz
     
-  createScoreBoard(gameContainer, partida)
+  const scoreBoardElem = createScoreBoard(gameContainer, partida)
 
+  // Visualiza score items con delay
+  scoreItemAnim(scoreBoardElem.childNodes)
+  
   return container
 }
 
