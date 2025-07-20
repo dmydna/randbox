@@ -48,7 +48,7 @@ function indexPage(App){
     const partida = memoria.get("partida")
     const config = memoria.get("opciones")
 
-    _updCssVars()
+    // _updCssVars()
 
 
     const Game = new IntroGameApp(partida.quiz, config.intentos, gameContainer)

@@ -1,27 +1,23 @@
-import renderNav from '../componentes/renderNav.js';
-import Navbar from '../managers/Nav.js';
-import MenuApp from "../menu/App.js";
-
-/*menus */
-import memory from '../managers/Memory.js';
+import memory       from '../managers/Memory.js';
+import renderNav    from '../componentes/renderNav.js';
+import Navbar       from '../managers/Nav.js';
+import MenuApp      from '../menu/App.js';
 import menuControls from '../menu/componentes/controls.js';
-import menuHelp from '../menu/componentes/help.js';
-import menuMain from '../menu/componentes/main.js';
-import menuOptions from '../menu/componentes/options.js';
+import menuHelp     from '../menu/componentes/help.js';
+import menuMain     from '../menu/componentes/main.js';
+import menuOptions  from '../menu/componentes/options.js';
 import menuTutorial from '../menu/componentes/tutorial.js';
 
 
 
-
-
-function menuPage(App, startMenu){
+const menuPage = (App, startMenu=null) => {
 
     const template = document.createElement("template");
 
     template.innerHTML = `
     <div class="container">
         <div class="header"></div>
-            <img class="box" src="./src/assets/img/ui/open-box.png" />
+            <img class="box" src="/src/assets/img/ui/open-box.png" />
         <div class="popup">
         </div>
         <div class="nav-footer">
@@ -56,27 +52,37 @@ function menuPage(App, startMenu){
     }
 
 
-    //Animacion de inicio
-    document.onload = document.body.classList.add("onload");
-
-    container.querySelector('.box').addEventListener('animationend', ()=>{
+    if(startMenu){
+        // Renderiza pagina basada en menu
+        // crea instancia unica de menu
+        Menu._createMenu(menuContent)
+        Menu.showMenu(true)
+        Menu.cambiarMenu(startMenu)
+        document.documentElement.className = 'menu'
+        navContainer.style.visibility = 'hidden'
+        const i = document.createElement('i')
+        i.className = 'fi fi-ss-cross close-btn'
+        i.addEventListener('click', ()=>{
+            App.router('/menu')
+        },{once: true})
+        popupContainer.appendChild(i)
+    }else{
+        // Inicia por default main
+        // Animacion de inicio
+        document.onload = document.body.classList.add("onload");
         const config = memory.get('opciones')
-        if( config.menu == 0 ){
-            App.router('/intro')
-        }else{
-            Menu._createMenu(menuContent)
-            Menu.showMenu(true)
-            if(startMenu){
-                Menu.cambiarMenu(startMenu)
+
+        container.querySelector('.box').addEventListener('animationend', ()=>{
+            if( config.menu == 0 ){
+                App.router('/intro')
             }else{
+                Menu._createMenu(menuContent)
+                Menu.showMenu(true)
                 Menu.cambiarMenu('main-menu')
             }
-        }
-        document.body.classList.remove('onload')
-    },{once:true})
-
-    // usa index.css
-    document.documentElement.classList.add('intro');
+            document.body.classList.remove('onload')
+        },{once:true})
+    }
 
     return container
 }

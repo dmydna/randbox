@@ -27,7 +27,6 @@ class Menu extends pageManager{
       {id: 3, ico : 'fi-rr-angle-right',             handler: this._siguiente}
     ]
     this.nav._createNav(navContent)
-    this.renderMenu()
   }
 
   killmenu(){
@@ -45,6 +44,7 @@ class Menu extends pageManager{
     if(this.menuActual !=  this.root){
       const oldMenu = this.menuActual.parent.data
       document.body.classList.remove(oldMenu)
+      document.body.classList.remove(this.root.data)
     }
     document.body.classList.add(newMenu)
     this.renderMenu()  

@@ -1,12 +1,3 @@
-
-@import url('https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'); 
-
-
-
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'); 
-
-
-
 @import url('./animalista.css');
 
 
@@ -33,7 +24,7 @@
   --popup-enable: 0;
   --menu-enable: 1;
   --hearts: 3;
-  --continue-game: none;
+  --continue-menu: none;
   --score-menu: none;
 }
 
@@ -258,6 +249,9 @@ input[type="range"] {
 @media (max-width: 1200px ) {
   .container {
     margin-inline: 5px;
+  }
+  .menu .tutorial li {
+    min-width: 80vw!important;
   }
 }
 

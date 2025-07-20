@@ -5,20 +5,21 @@ import infoPage from './pages/infoPage.js';
 import menuPage from "./pages/menuPage.js";
 import quizPage from './pages/quizPage.js';
 import scorePage from './pages/scorePage.js';
+import  { preloadImages} from './utils/default.js';
 
 
+preloadImages()
 
-const App = new AppManger(document.body)
+const App = new AppManger(document.getElementById('root'))
+
 
 App.router = page
 
-
-
-  
-
-
 const AppContent = [
-    {id : "menu",  render : menuPage },
+    {id : "menu",      render : menuPage },
+    {id : "tutorial",  render : (app) => menuPage(app, 'tutorial') },
+    {id : "options",   render : (app) => menuPage(app, 'options')  },
+    {id : "controls",  render : (app) => menuPage(app, 'controls') },
     {id : "intro", render : indexPage},
     {id : "quiz" , render : quizPage },
     {id : "score", render : scorePage},
@@ -26,10 +27,6 @@ const AppContent = [
 ]
 
 document.onload = App._createApp(AppContent)
-
-
-
-
 
 document.addEventListener("keydown", function (event) {
     if (event.key == 'm') {

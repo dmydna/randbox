@@ -1,5 +1,5 @@
 import EventManager from './Events.js';
-
+import { _updCssVars } from '../menu/componentes/utils.js';
 
 
 class pageItem {
@@ -91,6 +91,10 @@ class pageItem {
       const func = node.render
       const container = this.elem
       
+      this.paginaActual = node
+      // actualiza estilos 
+      _updCssVars()
+
       container.innerHTML = '' 
       document.body.className = ''
       document.documentElement.className = name

@@ -76,7 +76,7 @@ function _playMenuHandler(menu){
     document.querySelector(".box").style.opacity = "1"
 
     // Aplica configuraciones css
-    _updCssVars()
+    // _updCssVars()
 
     // Limpia datos de partida anterior (setea a valor por default)
     memory.reset('partida')

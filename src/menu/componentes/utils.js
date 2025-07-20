@@ -1,5 +1,4 @@
 import memory from "../../managers/Memory"
-import { shuffleArr } from "../../utils/utils"
 
 // CSS CONFIG
 
@@ -12,7 +11,7 @@ function _updCssVars(){
     html.style.setProperty('--menu-enable', config.menu)
     html.style.setProperty('--animation-time', (-1) * config.velocidad + 5.5 + 's' )
     html.style.setProperty('--hearts', config.vidas)
-    html.style.setProperty('--continue-game', (config.memoria == 1 && partida.estado != '_' && partida.estado != 'user-wins' ) ? 'flex' : 'none')
+    html.style.setProperty('--continue-menu', (config.memoria == 1 && partida.estado != '_' && partida.estado != 'user-wins' ) ? 'flex' : 'none')
     html.style.setProperty('--score-menu', (config.memoria == 1 && partida.estado == 'user-wins') ? 'flex' : 'none')
 }
 
@@ -122,4 +121,5 @@ function _createRangeItem(prop, config, _rangeHandler) {
 
 
 
-export { _updCssVars, _createSetterItem, _createRangeItem, _createRatioItem, _createTitleItem }
+export { _createRangeItem, _createRatioItem, _createSetterItem, _createTitleItem, _updCssVars }
+
