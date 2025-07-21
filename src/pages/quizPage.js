@@ -18,8 +18,13 @@ import Navbar from "../managers/Nav.js";
 
 function quizPage(App){
 
-     document.body.className = ""
-
+    const token = memory.get('token')
+    if( token == 'init'){
+        App.router('/main')
+        return
+    }
+    
+    document.body.className = ""
     const template = document.createElement("template");
 
     template.innerHTML = `
@@ -56,7 +61,6 @@ function quizPage(App){
     const partida =  memory.get("partida")
 
     // Incializo Quiz
-
 
     const QuizGame =   new QuizApp({...partida.quiz}, config.vidas, gameContainer)
 
