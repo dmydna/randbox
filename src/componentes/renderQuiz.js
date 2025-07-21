@@ -1,8 +1,7 @@
-function renderQuiz(contexto){
+function renderQuiz(contexto) {
+  const template = document.createElement("template");
 
-    const template = document.createElement("template");
-    
-    template.innerHTML = `
+  template.innerHTML = `
         <div class="points"></div>
         <div class="randbox">
             <div style="margin-top: 20px;"  class="box-container">
@@ -10,10 +9,10 @@ function renderQuiz(contexto){
                 <h1 class="user-reply"></h1> 
             </div>
         </div> 
-    `
-    const container = template.content.cloneNode(true);
+    `;
+  const container = template.content.cloneNode(true);
 
-    return container
+  return container;
 }
 
-export default renderQuiz
+export default renderQuiz;

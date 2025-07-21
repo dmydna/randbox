@@ -1,8 +1,7 @@
-function menuTutorial(menu){
+function menuTutorial(menu) {
+  const template = document.createElement("template");
 
-    const template = document.createElement("template");
-
-    template.innerHTML = `
+  template.innerHTML = `
     <ul class="menu">
     <div class="tutorial">
       <div class="text-content-menu">
@@ -27,10 +26,10 @@ function menuTutorial(menu){
       </div>
     </div>
     </ul>
-    `
-    const container = template.content.cloneNode(true);
+    `;
+  const container = template.content.cloneNode(true);
 
-    return container
+  return container;
 }
 
-export default menuTutorial
+export default menuTutorial;

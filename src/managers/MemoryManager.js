@@ -1,10 +1,7 @@
-import { AppMemory } from '../utils/default.js';
-import { encrypt, decrypt } from '../utils/utils.js';
-
-
+import { AppMemory } from "../utils/default.js";
+import { encrypt, decrypt } from "../utils/utils.js";
 
 class MemoryManager {
-
   constructor() {
     this._Default = AppMemory;
     this._Data = this.load();
@@ -21,9 +18,10 @@ class MemoryManager {
 
   load() {
     try {
-      return JSON.parse(localStorage.getItem("appStorage"))
-         || JSON.parse(JSON.stringify(this._Default));
-
+      return (
+        JSON.parse(localStorage.getItem("appStorage")) ||
+        JSON.parse(JSON.stringify(this._Default))
+      );
     } catch (e) {
       console.error("Error al cargar localStorage, usando Default:", e);
       return JSON.parse(JSON.stringify(this._Default));
@@ -44,22 +42,19 @@ class MemoryManager {
   }
 
   reset(name) {
-    this.set(name, this._Default[name])
+    this.set(name, this._Default[name]);
   }
 
-  
-  fullreset(){
+  fullreset() {
     this._Data = JSON.parse(JSON.stringify(this._Default));
     this.refresh();
   }
 
-  clear(bool){
-    if(bool){
-      localStorage.clear()
+  clear(bool) {
+    if (bool) {
+      localStorage.clear();
     }
   }
 }
 
-
-
-export default MemoryManager
+export default MemoryManager;

@@ -1,68 +1,79 @@
-import memory from "../../managers/Memory"
+import memory from "../../managers/Memory";
 
 // CSS CONFIG
 
-function _updCssVars(){
-    const config = memory.get('opciones')
-    const partida = memory.get('partida')
+function _updCssVars() {
+  const opciones = memory.get("opciones");
+  const partida = memory.get("partida");
 
-    const html =  document.documentElement
-    html.style.setProperty('--progress-enable',  config.progreso * 0.5)
-    html.style.setProperty('--menu-enable', config.menu)
-    html.style.setProperty('--animation-time', (-1) * config.velocidad + 5.5 + 's' )
-    html.style.setProperty('--hearts', config.vidas)
-    html.style.setProperty('--continue-menu', (config.memoria == 1 && partida.estado != '_' && partida.estado != 'user-wins' ) ? 'flex' : 'none')
-    html.style.setProperty('--score-menu', (config.memoria == 1 && partida.estado == 'user-wins') ? 'flex' : 'none')
+  const html = document.documentElement;
+  html.style.setProperty("--progress-enable", opciones.progreso * 0.5);
+  html.style.setProperty("--menu-enable", opciones.menu);
+  html.style.setProperty(
+    "--animation-time",
+    -1 * opciones.velocidad + 5.5 + "s"
+  );
+  html.style.setProperty("--hearts", opciones.vidas);
+  html.style.setProperty(
+    "--continue-menu",
+    opciones.memoria == 1 &&
+      partida.estado != "_" &&
+      partida.estado != "user-wins"
+      ? "flex"
+      : "none"
+  );
+  html.style.setProperty(
+    "--score-menu",
+    opciones.memoria == 1 && partida.estado == "user-wins" ? "flex" : "none"
+  );
 }
-
 
 // MENU CREATE ITEMS
 
 // Ratio
-function _createRatioItem(prop, config, _rangeHandler){
-    const template = document.createElement("template");
-    template.innerHTML =`
+function _createRatioItem(item, _rangeHandler) {
+  const opciones = memory.get("opciones");
+  const template = document.createElement("template");
+  template.innerHTML = `
     <li class="menu-options-item">
       <span class='title-options'></span>
       <input class='ratio-options'/>
     </li>
-    `
-    const container = template.content.cloneNode(true);
-  
-    const span = container.querySelector('.title-options')
-    const input = container.querySelector('.ratio-options')
-  
-    span.textContent = prop.title
-    input.type = "radio";
-    input.value = config[prop.id] ?? prop.value;
-    input.addEventListener("input", () => _rangeHandler(input, config ,prop.id));
-    
-  
-    return container 
-  }
+    `;
+  const container = template.content.cloneNode(true);
 
+  const span = container.querySelector(".title-options");
+  const input = container.querySelector(".ratio-options");
+
+  span.textContent = item.title;
+  input.type = "radio";
+  input.value = opciones[item.id] ?? item.value;
+  input.addEventListener("input", () => _rangeHandler(input, item.id));
+
+  return container;
+}
 
 // Title
 
-function _createTitleItem(prop, config, _rangeHandler){
+function _createTitleItem(item, _rangeHandler) {
   const template = document.createElement("template");
-  template.innerHTML =`
+  template.innerHTML = `
   <li class="menu-options-item">
     <span class='title-options'></span>
   </li>
-  `
+  `;
   const container = template.content.cloneNode(true);
-  const span = container.querySelector('.title-options')
+  const span = container.querySelector(".title-options");
 
-  span.textContent = prop.title
+  span.textContent = item.title;
 
-  return container
+  return container;
 }
-  
+
 // Setter
 
-function _createSetterItem(prop, config,_setterHandler) {
-
+function _createSetterItem(item, _setterHandler) {
+  const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
   template.innerHTML = `
@@ -70,24 +81,25 @@ function _createSetterItem(prop, config,_setterHandler) {
     <span class='title-options'></span>
     <span class='setter-options'><span> 
   </li>
-  `
+  `;
   const container = template.content.cloneNode(true);
 
-  const span1 = container.querySelector('.title-options')
-  const span2 = container.querySelector('.setter-options')
+  const span1 = container.querySelector(".title-options");
+  const span2 = container.querySelector(".setter-options");
 
-  span1.textContent = prop.title
-  span2.textContent = (config[prop.id] == 0) ? 'OFF' : 'ON';
-  span2.addEventListener("click", () =>{ _setterHandler(span2, config,prop.id ) });
+  span1.textContent = item.title;
+  span2.textContent = opciones[item.id] == 0 ? "OFF" : "ON";
+  span2.addEventListener("click", () => {
+    _setterHandler(span2, item.id);
+  });
 
-  return container
+  return container;
 }
-  
 
 // Range
 
-function _createRangeItem(prop, config, _rangeHandler) {
-
+function _createRangeItem(item, _rangeHandler) {
+  const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
   template.innerHTML = `
@@ -95,31 +107,29 @@ function _createRangeItem(prop, config, _rangeHandler) {
     <span  class='title-options'></span>
     <input class='setter-options'/> 
   </li>
-  `
+  `;
   const container = template.content.cloneNode(true);
 
   // title
   const span = container.querySelector(".title-options");
-  span.textContent = prop.title
+  span.textContent = item.title;
   // input
   const input = container.querySelector(".setter-options");
 
   input.type = "range";
-  input.min = prop.min  ??  0;
-  input.max = prop.max  ?? 12;
-  input.value = config[prop.id] ?? prop.value;
-//   if(prop.id=='dificultad'){
-//     input.addEventListener('input', () =>  partidaAleatoria(input, config, prop.id))
-//     return container
-//   }
-  input.addEventListener("input", () => _rangeHandler(input, config ,prop.id));
+  input.min = item.min ?? 0;
+  input.max = item.max ?? 12;
+  input.value = opciones[item.id] ?? item.value;
 
+  input.addEventListener("input", () => _rangeHandler(input, item.id));
 
   return container;
-} 
-  
+}
 
-
-
-export { _createRangeItem, _createRatioItem, _createSetterItem, _createTitleItem, _updCssVars }
-
+export {
+  _createRangeItem,
+  _createRatioItem,
+  _createSetterItem,
+  _createTitleItem,
+  _updCssVars,
+};

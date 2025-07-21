@@ -1,8 +1,6 @@
 import { preguntasQuiz, QuizGame } from "../pages/quizPage.js";
 
-
-const cantAp = document.body.querySelector('.user-reply')
-
+const cantAp = document.body.querySelector(".user-reply");
 
 function runTestKey(event, func, key, iterations, time = 600) {
   if (event.key == key) {
@@ -75,5 +73,4 @@ function runAnimation(callback, iterations = 10, time = 600) {
   }, time);
 }
 
-export { };
-
+export {};

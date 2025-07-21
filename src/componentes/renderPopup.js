@@ -1,19 +1,17 @@
+function renderPopup() {
+  const template = document.createElement("template");
 
-
-function renderPopup(){
-        const template = document.createElement("template");
-
-        template.innerHTML = `
+  template.innerHTML = `
         <div class="popup">
             <img class="popup-ico">
             <div class="heart-bar"></div>  
             <div class="popup-btn">
             <i class="fi"></i> 
         </div>
-        `
-        const container = template.content.cloneNode(true);
+        `;
+  const container = template.content.cloneNode(true);
 
-        return container
+  return container;
 }
 
-export default renderPopup
+export default renderPopup;

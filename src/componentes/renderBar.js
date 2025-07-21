@@ -1,15 +1,14 @@
-function renderBar(handler){
+function renderBar(handler) {
+  const template = document.createElement("template");
 
-    const template = document.createElement("template");
-    
-    template.innerHTML = `
+  template.innerHTML = `
         <div class="progress">
             <div class="progress-bar"></div>
         </div>
-    `
-    const container = template.content.cloneNode(true);
+    `;
+  const container = template.content.cloneNode(true);
 
-    return container
+  return container;
 }
 
-export default renderBar
+export default renderBar;

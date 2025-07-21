@@ -59,6 +59,12 @@ function scoreBarAnim(scoreContainer){
 
 function scorePage(App){
 
+  const token = memory.get('token')
+  if( token == 'init' || token == 'quiz-loaded'){
+    App.router('/main')
+    return
+  }
+
   document.body.className = ""
   document.documentElement.className = ""
   document.documentElement.classList.add('score');  

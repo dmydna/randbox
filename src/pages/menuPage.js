@@ -58,6 +58,7 @@ const menuPage = (App, startMenu=null) => {
         Menu._createMenu(menuContent)
         Menu.showMenu(true)
         Menu.cambiarMenu(startMenu)
+        
         document.documentElement.className = 'menu'
         navContainer.style.visibility = 'hidden'
         const i = document.createElement('i')

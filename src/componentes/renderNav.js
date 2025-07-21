@@ -1,8 +1,7 @@
-function renderNav(){
+function renderNav() {
+  const template = document.createElement("template");
 
-        const template = document.createElement("template");
-
-        template.innerHTML = `
+  template.innerHTML = `
             <div class="nav-btn ltBtn">
                 <i class="fi"></i>
             </div>
@@ -11,17 +10,10 @@ function renderNav(){
             </div>
             <div class="nav-btn rtBtn">
                 <i class="fi"></i>
-        `
-        const container = template.content.cloneNode(true);
-   
-        container.refs = {
-            left: container.querySelector('.ltBtn .fi'),
-            middle: container.querySelector('.midBtn .fi'),
-            right: container.querySelector('.rtBtn .fi')
-        }
-        
-        return container
+        `;
+  const container = template.content.cloneNode(true);
+
+  return container;
 }
 
-
-export default renderNav
+export default renderNav;
