@@ -56,6 +56,7 @@ class QuizApp extends EventManager {
   keyboardHander(e) {
     switch (e.key) {
       case " ":
+        e.preventDefault();
         this.AnswerInc();
         break;
       case "Enter":
@@ -65,7 +66,7 @@ class QuizApp extends EventManager {
         this.AnswerReset();
         break;
       case "h":
-        this.avanzarJuego();
+        this.box.click();
         break;
     }
   }
@@ -223,7 +224,8 @@ class QuizApp extends EventManager {
     }, 1200);
   }
 
-  avanzarJuego = async () => {
+  avanzarJuego = async (e) => {
+    e.stopPropagation()
     const siguientePregunta = this.juego.siguientePregunta();
 
     const shufflePromise = async () => {

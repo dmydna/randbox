@@ -1,5 +1,5 @@
 import QuizApp from "../games/quizGame/App.js";
-// import { } from "../Componentes/test.js";
+import { hoverClassToggle } from "../utils/utils.js";
 
 
 // Renders
@@ -20,7 +20,7 @@ function quizPage(App){
 
     const token = memory.get('token')
     if( token == 'init'){
-        App.router('/main')
+        App.router('/menu')
         return
     }
     
@@ -28,12 +28,12 @@ function quizPage(App){
     const template = document.createElement("template");
 
     template.innerHTML = `
+    <div class="header"></div>
     <div class="container">
-        <div class="header"></div>
         <div class="game-container"></div>
         <div class="popup-container"></div>
-        <div class="nav-footer"></div>
     </div>
+    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true);
 
@@ -89,9 +89,25 @@ function quizPage(App){
 
     // Animaciones
     const box = container.querySelector('.box')
-    box.classList.add('shake-little')
     const repUser = container.querySelector('.user-reply')
-    repUser.classList.add('shake-little')
+
+    hoverClassToggle(box, 'box heartbeat')
+    hoverClassToggle(repUser, 'user-reply heartbeat')
+
+    // Expande zonas clickeables
+    const boxClicker = container.querySelector('.box-clicker')
+    const respUserClicker = container.querySelector('.respUser-clicker')
+
+    boxClicker.addEventListener('click' ,(e)=>{
+        e.preventDefault()
+        box.click()
+    })
+
+    respUserClicker.addEventListener('click', (e)=>{
+        e.preventDefault()
+        repUser.click()
+    })
+
 
 
     return container

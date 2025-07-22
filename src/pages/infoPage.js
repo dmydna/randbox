@@ -13,8 +13,8 @@ function infoPage(App){
    const template = document.createElement("template");
 
    template.innerHTML = `
+   <div class="header"></div>
    <div class="container">
-       <div class="header"></div>
        <div id="game-container">
             <div class="randbox">
                 <img class="box bounce-in-top" src="/src/assets/img/ui/open-box.png">
@@ -29,8 +29,8 @@ function infoPage(App){
                 </div>
             </div>
         </div>
-       <div class="nav-footer"></div>
    </div>
+   <div class="nav-footer"></div>
    `
    const container = template.content.cloneNode(true);
    const navContainer = container.querySelector('.nav-footer')

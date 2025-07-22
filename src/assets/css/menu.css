@@ -1,99 +1,111 @@
 
-.menu .box {   position: relative;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    right: 0;
-    animation-name: defaultBox;
-    animation-duration: var(--animation-time);
-    animation-iteration-count: initial;
-    animation-direction: alternate;
+
+#menu 
+.box {   
+  position: relative;
+  z-index: 1;
+  top: 0;
+  top: calc(50vh - 100px);
+  left: 0;
+  right: 0;
+  animation-name: defaultBox;
+  animation-duration: var(--animation-time);
+  animation-iteration-count: initial;
+  animation-direction: alternate;
 }
 
 
-.menu .onload .box {
+#menu 
+.onload .box {
     animation: bounce-in-top 1.1s both;
 }
 
 
-.menu .onload .box {
+#menu 
+.onload .box {
     animation: caida-randbox var(--animation-time) !important;
 }
 
-.menu .onload .menu{
+#menu 
+.onload #menu{
     opacity: 0;
 }
 
-.menu .controls-submenu img{
+#menu
+.controls-submenu img{
     height: 32px;
     width: 32px;
 }
 
 
-.menu .controls-submenu img{
+#menu 
+.controls-submenu img{
     scale: 1.7;
 }
 
 
-.menu .range span {
+#menu .range span {
     width: 25px;
     display: inline-block;
   }
   
-.menu 
+#menu 
 .popup-active .box {
     display: none;
   }
 
-.menu 
+#menu 
 .onStartGame .gift {
     display: none!important;
 }
 
-.menu .main-menu,
-.menu .options-menu,
-.menu .help-menu, 
-.menu .controls-submenu,
-.menu .resumen-submenu,
-.menu .go-menu {
+#menu .main-menu,
+#menu .options-menu,
+#menu .help-menu, 
+#menu .controls-submenu,
+#menu .resumen-submenu,
+#menu .go-menu {
   display: none;
 }
 
-.menu .controls-submenu, 
-.menu .options-menu,
-.menu .resumen-submenu {
+#menu .controls-submenu, 
+#menu .options-menu,
+#menu .resumen-submenu {
   width: 340px;
 }
 
 
 
-.menu .main-menu-active .main-menu,
-.menu .options-menu-active .options-menu,
-.menu .help-menu-active .help-menu,
-.menu .resumen-submenu-active .resumen-submenu,
-.menu .controls-submenu-active .controls-submenu,
-.menu .go-menu-active .go-menu{
+#menu .main-menu-active .main-menu,
+#menu .options-menu-active .options-menu,
+#menu .help-menu-active .help-menu,
+#menu .resumen-submenu-active .resumen-submenu,
+#menu .controls-submenu-active .controls-submenu,
+#menu .go-menu-active .go-menu{
   display: block;
 }
 
-.menu 
+#menu 
 .popup-active .nav-footer{
   opacity: 1;
 }
 
-.menu 
-.main-menu-active .nav-footer,
-.go-menu-active .nav-footer{
+#menu 
+.main-menu-active .nav-footer{
   opacity: 0!important;
 }
 
 
+#menu 
 .menu {
   text-align: center;
   padding: 0;
   margin: 0;
+  max-height:  calc(100vh - var(--nav-height)* 2 - calc(var(--menu-title-height) * var(--menu-title)) - 100px);
+  overflow: auto;
 }
 
+#menu 
 .menu li{
   list-style: none;
   font-size: 20px;
@@ -103,80 +115,79 @@
   align-items: center;
 }
 
+#menu
 .menu li:hover{
   cursor: pointer;
   font-weight: bolder;
 }
 
+#menu 
 .menu .fi {
   margin-right: 10px;
 }
 
-.menu 
+#menu 
 .popup{
   text-align: center;
   height: fit-content;
 }
 
-.menu 
+#menu 
 .main-menu .menu li{
   justify-content: center!important;
   text-align: center;
 }
 
-.menu 
-.go-menu {
-  font-size: 80px;
-}
 
-.menu 
+
+#menu 
 .resumen-active .popup {
   top: 70vh;
 } 
 
-.menu 
+#menu 
 .continue-btn{
   display: var(--continue-menu)!important;
 }
 
-.menu 
+#menu 
 .score-btn{
   display: var(--score-menu)!important;
 }
 
-.menu 
+#menu 
 .menu-options-item{
   display: flex; gap: 10px;
 }
 
-.menu 
+#menu 
 .popup {
   width: auto;
 }
 
-.menu 
+#menu 
 .nav-footer{
     opacity: 0;
 }
 
 
-
-.menu .text-content-menu{
+#menu 
+.tutorial-menu{
   list-style: auto;
   display: block;
-  max-height: 60vh;
-  overflow: auto;
   width: 520px;
 }
 
-.menu .text-content-menu ul {
+#menu 
+.tutorial-menu ul {
   padding-inline-end: 0;
   padding-inline-start: 0;
   margin-inline-start: 40px;
   margin-inline-end: 20px;
 }
 
-.menu .text-content-menu li {
+#menu 
+.tutorial-menu li {
   display: revert;
   list-style: auto;
   text-align: -webkit-auto;
@@ -185,27 +196,27 @@
 }
 
 
-.menu .text-content-menu .fi {
+#menu 
+.tutorial-menu .fi {
   margin: 10px;
   bottom: -4px;
   position: relative;
 }
 
 
-.menu .separador {
+#menu 
+.separador {
   font-weight: bolder;
 }
 
-.menu .help-menu {
+#menu 
+.help-menu {
   min-width: 300px;
 }
 
-.menu .controls-submenu{
-  max-height: 60vh;
-  overflow: auto;
-}
 
-.menu .close-btn{
+#menu 
+.close-btn{
   position: fixed;
   border-radius: 20px;
   padding: 10px;
@@ -218,10 +229,24 @@
   color:white;
 }
 
-.menu .close-btn:hover{
+#menu 
+.close-btn:hover{
   background: white;
   color:var(--primary);
   cursor: pointer;
 }
 
+#menu 
+.menu-title{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  height: var(--menu-title-height);
+}
+
+#menu 
+.menu-title i{
+  transform: translate(-10px, 5px);
+  position: relative;
+  display: inline-block;
+}
 

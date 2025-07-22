@@ -65,7 +65,7 @@ class AppManger extends EventManager {
 
     container.innerHTML = "";
     document.body.className = "";
-    document.documentElement.className = name;
+    document.documentElement.id = name;
 
     container.appendChild(render(this));
   }

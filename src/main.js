@@ -27,7 +27,7 @@ const AppContent = [
 document.onload = App._createApp(AppContent);
 
 document.addEventListener("keydown", function (event) {
-  if (event.key == "m") {
+  if (event.key == "Escape") {
     App.router("/menu");
   }
 });

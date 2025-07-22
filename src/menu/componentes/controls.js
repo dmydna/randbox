@@ -18,6 +18,9 @@ function menuControls() {
 
   template.innerHTML = `
     <section class="controls-submenu">
+        <h2 class="menu-title">
+            <i class="fi fi-rr-gamepad"></i>controles
+        </h2>
         <ul class="menu"></ul>
     </section>
     `;

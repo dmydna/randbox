@@ -9,15 +9,15 @@ function introPage(App){
     const template = document.createElement("template");
 
     template.innerHTML = `
+    <div class="header"></div>
     <div class="container">
-        <div class="header"></div>
-        <div class="game-container"></div>
+        <div id="game-container"></div>
         <div class="progress-container"></div>
-        <div class="nav-footer"></div>
     </div>
+    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true); 
-    const gameContainer = container.querySelector('.game-container') 
+    const gameContainer = container.querySelector('#game-container') 
     const progressContainer = container.querySelector('.progress-container')
 
     const ProgressBar = renderBar()
@@ -35,7 +35,7 @@ function introPage(App){
     },{once:true})
     
 
-    const userResp = container.querySelector('.user-reply')
+    const userResp = container.querySelector('.respUser-clicker')
     const img = document.createElement('img')
     img.className = 'gift'
     userResp.replaceWith(img)

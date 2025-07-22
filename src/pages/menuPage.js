@@ -15,14 +15,12 @@ const menuPage = (App, startMenu=null) => {
     const template = document.createElement("template");
 
     template.innerHTML = `
+    <div class="header"></div>
     <div class="container">
-        <div class="header"></div>
-            <img class="box" src="/src/assets/img/ui/open-box.png" />
-        <div class="popup">
-        </div>
-        <div class="nav-footer">
-        </div>
+        <img class="box" src="/src/assets/img/ui/open-box.png" />
+        <div class="popup"></div>
     </div>
+    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true);
     const navContainer = container.querySelector('.nav-footer')
@@ -58,8 +56,8 @@ const menuPage = (App, startMenu=null) => {
         Menu._createMenu(menuContent)
         Menu.showMenu(true)
         Menu.cambiarMenu(startMenu)
-        
-        document.documentElement.className = 'menu'
+        document.documentElement.id= 'menu'
+        document.documentElement.className = startMenu
         navContainer.style.visibility = 'hidden'
         const i = document.createElement('i')
         i.className = 'fi fi-ss-cross close-btn'
@@ -67,6 +65,7 @@ const menuPage = (App, startMenu=null) => {
             App.router('/menu')
         },{once: true})
         popupContainer.appendChild(i)
+
     }else{
         // Inicia por default main
         // Animacion de inicio
@@ -84,6 +83,9 @@ const menuPage = (App, startMenu=null) => {
             document.body.classList.remove('onload')
         },{once:true})
     }
+
+
+
 
     return container
 }

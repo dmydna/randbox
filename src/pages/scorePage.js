@@ -61,7 +61,7 @@ function scorePage(App){
 
   const token = memory.get('token')
   if( token == 'init' || token == 'quiz-loaded'){
-    App.router('/main')
+    App.router('/menu')
     return
   }
 
@@ -72,19 +72,20 @@ function scorePage(App){
   const template = document.createElement("template");
 
   template.innerHTML = `
+    <div class="header">
+      <img height="60px" src="src/assets/img/ui/high-score.png">
+      <h1 class="score-bar">
+      <img height="35px" src="src/assets/img/ui/coin.png"></i>
+      <p class="score-item"></p>
+      </h1>
+    </div>
      <div class="container">
-      <div class="header">
-        <img height="70px" src="src/assets/img/ui/high-score.png">
-        <h1 class="score-bar">
-          <img height="35px" src="src/assets/img/ui/coin.png"></i>
-          <p class="score-item"></p>
-        </h1>
-      </div>
-      <div id="game-container">
+     <div id="game-container">
         <div class="randbox"></div>
       </div>
-      <div class="nav-footer"></div>
      </div>
+     </div>
+     <div class="nav-footer"></div>
   `
   const container = template.content.cloneNode(true);
   

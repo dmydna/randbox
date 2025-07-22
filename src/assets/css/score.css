@@ -1,9 +1,11 @@
 
-.score .focus {
+#score 
+.focus {
   display: block !important;
 }
 
-.score .randbox {
+#score 
+.randbox {
   width: 100%;
   gap: 10px;
   flex-wrap: nowrap;
@@ -12,7 +14,8 @@
   justify-content: center;
 }
 
-.score .gift {
+#score 
+.gift {
   position: relative;
   height: 50px;
   width: 50px;
@@ -30,18 +33,21 @@
 }
 
 
-.score .randbox .onload {
+#score 
+.randbox .onload {
   animation-name: none;
 }
 
 
 
-.score .box:hover {
+#score 
+.box:hover {
     cursor: pointer;
 }
 
 
-.score .gift-container {
+#score 
+.gift-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -55,11 +61,14 @@
   transition: opacity 1s;
 }
 
-.score .score-bar {
+#score 
+.score-bar {
   display: flex;
   gap: 10px;
 }
 
+
+#score 
 .score-item {
   height: 35px;
 }

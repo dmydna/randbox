@@ -14,37 +14,19 @@ function menuOptions() {
     { id: "memoria", title: "guarda partida", value: 0, type: "switch" },
     { id: "teclado", title: "teclado", value: 0, type: "switch" },
     { id: "menu", title: "menu", value: 0, type: "switch" },
-    {
-      id: "velocidad",
-      title: "velocidad",
-      value: 3,
-      type: "range",
-      min: 2,
-      max: 5,
-    },
-    {
-      id: "dificultad",
-      title: "dificultad",
-      value: 5,
-      type: "range",
-      min: 1,
-      max: cantPreg,
-    },
-    { id: "vidas", title: "vidas", value: 3, type: "range", max: 12 },
-    {
-      id: "intentos",
-      title: "intentos",
-      value: 3,
-      type: "range",
-      min: 2,
-      max: 12,
-    },
+    {id: "velocidad",title: "velocidad",value: 3,type: "range",min: 2,max: 5,},
+    {id: "dificultad",title: "dificultad",value: 5,type: "range",min: 1,max: cantPreg,},
+    {id: "vidas", title: "vidas", value: 3, type: "range", max: 12 },
+    {id: "intentos",title: "intentos",value: 3,type: "range",min: 2,max: 12,},
   ];
 
   const template = document.createElement("template");
 
   template.innerHTML = `
       <section  class="options-menu">
+        <h2 class="menu-title">
+            <i class="fi fi-sr-settings"></i>opciones
+        </h2>
         <ul class="menu"></ul>
       </section>
     `;
@@ -71,7 +53,7 @@ function menuOptions() {
     ul.appendChild(li);
   });
 
-  container.appendChild(ul);
+
   return container;
 }
 

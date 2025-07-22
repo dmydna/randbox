@@ -2,11 +2,10 @@ function menuTutorial(menu) {
   const template = document.createElement("template");
 
   template.innerHTML = `
-    <ul class="menu">
-    <div class="tutorial">
-      <div class="text-content-menu">
+    <section class="tutorial-menu">
+      <div class="menu">
+        <h1><i class="fi fi-ss-gamepad"></i> Cómo jugar</h1>
         <ul>
-         <h1><i class="fi fi-ss-gamepad"></i> Cómo jugar</h1>
          <li>Haz clic sobre la caja para comenzar.</li>
          <li>Cuenta cuántas veces aparece cada objeto.</li>
          
@@ -24,10 +23,11 @@ function menuTutorial(menu) {
          <li>Puedes usar el <b>teclado</b> para jugar más rápido (ver controles).</li>
         </ul>
       </div>
-    </div>
-    </ul>
+  </sección>
     `;
   const container = template.content.cloneNode(true);
+
+  document.documentElement.style.setProperty("--menu-title", 0)
 
   return container;
 }

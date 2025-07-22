@@ -11,21 +11,23 @@
   --bg-blanco:#fff;
   --bg-magenta:#ff00ffc0;
   --bg-naranja: #ffa500c0;
+  --bg-content: #efeef1;
   --primary: darkorchid;
   --secondary: rgb(175, 231, 175);
   --max-width: 1200px;
-  --bar-height: 5px;
+  --nav-height:76px;
+  --container-height: calc( 100vh - var(--nav-height)*2);
   --popup-btn-width: 80px;
   --popup-width: 250px;
   --radius: 15px;
-  --bg-content: #efeef1;
   --animation-time: 2.5s;
   --progress-enable: 0.5;
   --popup-enable: 0;
   --menu-enable: 1;
-  --hearts: 3;
+  --menu-title : 1;
   --continue-menu: none;
   --score-menu: none;
+  --menu-title-height: 30px;
 }
 
 
@@ -47,30 +49,49 @@ img{
 }
  
 * {
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
   
 
 .header {
-  height: 70px;
   display: flex;
   gap: 40px;
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  padding: 10px;
+}
+
+.header, .nav-footer{
+  height:  var(--nav-height);
+  box-sizing: border-box;
+}
+
+.header ,
+.nav-footer,
+.container{
+  max-width: var(--max-width);
+  margin-inline: auto;
 }
 
 
 .container {
     height: 100%;
-    max-width: var(--max-width);
     margin-inline: auto;
     z-index: -1;
 }
+
+.container {
+  max-height: var(--container-height) ;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
 
 .nav-footer {
   display: flex;
@@ -148,6 +169,13 @@ img{
   height: auto;
   justify-content: center;
   min-height: -webkit-fill-available;
+  min-height: 100%;
+}
+
+
+
+.game-container {
+  min-height: 100%;
 }
 
 
@@ -226,15 +254,12 @@ img{
 
 
 #game-container {
-    width: 100%;
-    height: 70vh;
-    overflow: overlay;
-    scrollbar-width: none;
+  height: 100%;
+  width: 100%;
 }
-  
 
-.onload #game-container{
-    overflow: visible;
+.onload .container{
+  overflow: visible;
 }
   
 .onload .randbox {
@@ -321,19 +346,23 @@ input:checked + .slider:before {
 
 
 @media (max-width: 600px ) {
-  .menu .text-content-menu {
+  #menu .tutorial-menu {
     width: 80vw!important;
   }
 }
 
 
-@keyframes caida-randbox {
+/* @keyframes caida-randbox {
     0% {top: -100vh;}
     50% {top: 30vh;}
     100% {top: 0;transform: rotate(360deg);}
 }
-  
-  
+   */
+@keyframes caida-randbox {
+  0%   {top: calc(-50vh - 100px)}
+  50%  {top: calc(70vh - 100px)}
+  100% {top: calc(50vh - 100px);transform: rotate(360deg);}
+} 
   
 @keyframes lanzar-box-1 {
     0% { top: 0; opacity:1; }
