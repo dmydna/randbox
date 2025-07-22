@@ -1,7 +1,7 @@
 import memory from "../../managers/Memory.js";
 import {
   _updCssVars,
-  _createSetterItem,
+  _createSwitchItem,
   _createRangeItem,
   _createRatioItem,
   _createTitleItem,
@@ -11,9 +11,9 @@ const cantPreg = memory.get("preguntas").length;
 
 function menuOptions() {
   const opcionesItems = [
-    { id: "memoria", title: "guarda partida", value: 0, type: "setter" },
-    { id: "teclado", title: "teclado", value: 0, type: "setter" },
-    { id: "menu", title: "menu", value: 0, type: "setter" },
+    { id: "memoria", title: "guarda partida", value: 0, type: "switch" },
+    { id: "teclado", title: "teclado", value: 0, type: "switch" },
+    { id: "menu", title: "menu", value: 0, type: "switch" },
     {
       id: "velocidad",
       title: "velocidad",
@@ -55,8 +55,8 @@ function menuOptions() {
   opcionesItems.forEach((item) => {
     let li = "";
     switch (item.type) {
-      case "setter":
-        li = _createSetterItem(item, _setterHandler);
+      case "switch":
+        li = _createSwitchItem(item, _switchHandler);
         break;
       case "range":
         li = _createRangeItem(item, _rangeHandler);
@@ -76,6 +76,23 @@ function menuOptions() {
 }
 
 // Handlers
+
+
+function _switchHandler(elem, key){
+
+  
+  if(elem.checked){
+    memory.set("opciones", {
+      ...memory.get("opciones"),
+      [key]: 1,
+    })
+  }else{
+    memory.set("opciones", {
+      ...memory.get("opciones"),
+      [key]: 0,
+    });
+  }
+}
 
 function _setterHandler(elem, key) {
   memory.set("opciones", {

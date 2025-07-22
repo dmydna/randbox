@@ -70,31 +70,35 @@ function _createTitleItem(item, _rangeHandler) {
   return container;
 }
 
-// Setter
+// Switchers
 
-function _createSetterItem(item, _setterHandler) {
+function _createSwitchItem(item, _switchHandler){
   const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
   template.innerHTML = `
   <li class="menu-options-item">
     <span class='title-options'></span>
-    <span class='setter-options'><span> 
-  </li>
-  `;
+    <label class="switch">
+     <input type="checkbox" checked>
+     <span class="slider round"></span>
+    </label>
+  </li>`
+
   const container = template.content.cloneNode(true);
 
-  const span1 = container.querySelector(".title-options");
-  const span2 = container.querySelector(".setter-options");
+  const span  = container.querySelector('.title-options')
+  const input = container.querySelector('input')
 
-  span1.textContent = item.title;
-  span2.textContent = opciones[item.id] == 0 ? "OFF" : "ON";
-  span2.addEventListener("click", () => {
-    _setterHandler(span2, item.id);
+  span.textContent = item.title;
+  input.checked = opciones[item.id] == 0 ? false : true
+  input.addEventListener("input", () => {
+    _switchHandler(input, item.id);
   });
 
-  return container;
+  return container 
 }
+
 
 // Range
 
@@ -129,7 +133,7 @@ function _createRangeItem(item, _rangeHandler) {
 export {
   _createRangeItem,
   _createRatioItem,
-  _createSetterItem,
   _createTitleItem,
   _updCssVars,
+  _createSwitchItem
 };

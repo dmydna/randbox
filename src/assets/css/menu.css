@@ -162,15 +162,18 @@
 
 
 .menu .text-content-menu{
-  max-height: 400px;
-  overflow: auto;
-}
-
-.menu .text-content-menu{
   list-style: auto;
   display: block;
   max-height: 60vh;
-  max-width: 500px;
+  overflow: auto;
+  width: 520px;
+}
+
+.menu .text-content-menu ul {
+  padding-inline-end: 0;
+  padding-inline-start: 0;
+  margin-inline-start: 40px;
+  margin-inline-end: 20px;
 }
 
 .menu .text-content-menu li {
@@ -178,8 +181,8 @@
   list-style: auto;
   text-align: -webkit-auto;
   margin: 10px 0;
+  max-width: 520px;
 }
-
 
 
 .menu .text-content-menu .fi {
@@ -187,6 +190,7 @@
   bottom: -4px;
   position: relative;
 }
+
 
 .menu .separador {
   font-weight: bolder;
@@ -219,3 +223,5 @@
   color:var(--primary);
   cursor: pointer;
 }
+
+
