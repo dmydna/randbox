@@ -20,7 +20,7 @@ class Menu extends pageManager {
       { id: 2, ico: "fi-rr-settings-sliders", handler: this.home },
       { id: 3, ico: "fi-rr-angle-right", handler: this._siguiente },
     ];
-    this.nav._createNav(navContent);
+    this.nav._updateNav(navContent);
   };
 
   killmenu() {

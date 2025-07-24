@@ -30,16 +30,28 @@ class Navbar extends EventManager {
     })
   }
 
-  _kil() {
+  _resetNav(){
+    this.lt_btn.firstElementChild.className  = 'fi'
+    this.mid_btn.firstElementChild.className = 'fi'
+    this.rt_btn.firstElementChild.className  = 'fi'
+    this._removeAllEvents();
+  }
+
+  _updateNav = (btn) =>{
+    this._resetNav()
+    this._createNav(btn)
+  }
+
+  _kill() {
     this._removeAllEvents();
   }
 
   show(bool = true) {
     if (!bool) {
-      document.body.classList.add("nav-hide");
+      this.container.style.visibility = 'hidden'
       return;
     }
-    document.body.classList.remove("nav-hide");
+    this.container.style.visibility = 'visible'
     return;
   }
 }

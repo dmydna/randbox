@@ -1,3 +1,6 @@
+import App from "../main";
+
+
 function hoverClassToggle(elem, secondary, targetElem = null) {
   const target = targetElem || elem;
   const primary = target.className;

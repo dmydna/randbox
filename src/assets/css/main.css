@@ -361,7 +361,14 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+.root-btn:hover{
+  color: var(--primary);
+}
 
+
+.nav-hide .nav-footer{
+  visibility: hidden;
+}
 
 @media (max-width: 1200px ) {
   .container {

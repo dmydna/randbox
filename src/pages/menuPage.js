@@ -1,11 +1,9 @@
-import memory       from '../managers/Memory.js';
-import renderNav    from '../componentes/renderNav.js';
-import Navbar       from '../managers/Nav.js';
-import MenuApp      from '../menu/App.js';
+import memory from '../managers/Memory.js';
+import MenuApp from '../menu/App.js';
 import menuControls from '../menu/componentes/controls.js';
-import menuHelp     from '../menu/componentes/help.js';
-import menuMain     from '../menu/componentes/main.js';
-import menuOptions  from '../menu/componentes/options.js';
+import menuHelp from '../menu/componentes/help.js';
+import menuMain from '../menu/componentes/main.js';
+import menuOptions from '../menu/componentes/options.js';
 import menuTutorial from '../menu/componentes/tutorial.js';
 
 
@@ -15,22 +13,22 @@ const menuPage = (App, startMenu=null) => {
     const template = document.createElement("template");
 
     template.innerHTML = `
-    <div class="header"></div>
     <div class="container">
         <img class="box" src="/src/assets/img/ui/open-box.png" />
         <div class="popup"></div>
     </div>
-    <div class="nav-footer"></div>
     `
+    
+    const appNav = App.navbar
+    const appHeader = App.headerElem
+
     const container = template.content.cloneNode(true);
-    const navContainer = container.querySelector('.nav-footer')
+    const navContainer = appNav.container
     const popupContainer = container.querySelector('.popup')
 
-    const Nav = renderNav()
-    navContainer.appendChild(Nav)
 
     const Menu = new MenuApp(container)
-    Menu.nav = new Navbar(navContainer)
+    Menu.nav = App.navbar
     
     const menuContent = {
         name: 'main-menu',
@@ -58,10 +56,9 @@ const menuPage = (App, startMenu=null) => {
         Menu.cambiarMenu(startMenu)
         document.documentElement.id= 'menu'
         document.documentElement.className = startMenu
-        navContainer.style.visibility = 'hidden'
         const i = document.createElement('i')
         i.className = 'fi fi-ss-cross close-btn'
-
+        document.documentElement.classList.add('nav-hide')
         i.addEventListener('click', ()=>{
             history.back();
         },{once: true})

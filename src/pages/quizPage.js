@@ -4,7 +4,6 @@ import { hoverClassToggle } from "../utils/utils.js";
 
 // Renders
 import renderBar from '../componentes/renderBar.js';
-import renderNav from '../componentes/renderNav.js';
 import renderPopup from '../componentes/renderPopup.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 
@@ -12,7 +11,6 @@ import renderQuiz from '../componentes/renderQuiz.js';
 import PopupClass from "../games/quizGame/Popup.js";
 import ShuffleImgs from "../games/quizGame/ShuffleImgs.js";
 import memory from "../managers/Memory.js";
-import Navbar from "../managers/Nav.js";
 
 
 
@@ -28,32 +26,31 @@ function quizPage(App){
     const template = document.createElement("template");
 
     template.innerHTML = `
-    <div class="header"></div>
     <div class="container">
         <div class="game-container"></div>
         <div class="popup-container"></div>
     </div>
-    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true);
 
-    const headerContainer = container.querySelector('.header') 
+    const appNav = App.navbar // class
+    const appHeader = App.headerElem // Node
+
     const gameContainer = container.querySelector('.game-container') 
     const popupContainer = container.querySelector('.popup-container')
-    const navContainer = container.querySelector('.nav-footer')
 
-    const Header = renderBar()
+
     const Quiz = renderQuiz()
-    const Nav = renderNav()
     const Popup = renderPopup()
 
 
     gameContainer.style.width = '100%'
-    headerContainer.appendChild(Header)
+    App.headerElem.appendChild(renderBar())
+
+
     gameContainer.appendChild(Quiz)
     popupContainer.appendChild(Popup)
 
-    navContainer.appendChild(Nav)
 
 
 
@@ -66,9 +63,9 @@ function quizPage(App){
 
     QuizGame.createApp({
         _animations: new ShuffleImgs(),
-        _controls: new Navbar(navContainer),
+        _controls: App.navbar,
         _popup: new PopupClass(popupContainer),
-        _progress: headerContainer.querySelector('.progress-bar')
+        _progress: App.headerElem.querySelector('.progress-bar')
     })
 
     // Carga config teclado

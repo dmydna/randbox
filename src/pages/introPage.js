@@ -9,12 +9,10 @@ function introPage(App){
     const template = document.createElement("template");
 
     template.innerHTML = `
-    <div class="header"></div>
     <div class="container">
         <div id="game-container"></div>
         <div class="progress-container"></div>
     </div>
-    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true); 
     const gameContainer = container.querySelector('#game-container') 

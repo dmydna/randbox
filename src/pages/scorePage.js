@@ -1,7 +1,5 @@
-import renderNav from '../componentes/renderNav.js';
-import App from "../main.js";
+import scoreHeader from '../componentes/scoreHeader.js';
 import memory from '../managers/Memory.js';
-import Navbar from '../managers/Nav.js';
 
 
 
@@ -72,35 +70,25 @@ function scorePage(App){
   const template = document.createElement("template");
 
   template.innerHTML = `
-    <div class="header">
-      <img height="60px" src="src/assets/img/ui/high-score.png">
-      <h1 class="score-bar">
-      <img height="35px" src="src/assets/img/ui/coin.png"></i>
-      <p class="score-item"></p>
-      </h1>
-    </div>
      <div class="container">
-     <div id="game-container">
-        <div class="randbox"></div>
-      </div>
+       <div id="game-container">
+         <div class="randbox"></div>
+       </div>
      </div>
-     </div>
-     <div class="nav-footer"></div>
   `
   const container = template.content.cloneNode(true);
-  
+  App.headerElem.appendChild(
+    scoreHeader()
+  )  
   const gameContainer = container.querySelector('.randbox') 
-  const navContainer = container.querySelector('.nav-footer') 
-  const scoreContainer = container.querySelector('.score-item')
+  const scoreContainer = App.headerElem.querySelector('.score-item')
 
   // Visualiza score con delay
   scoreBarAnim(scoreContainer)
 
-  navContainer.appendChild(renderNav())
 
-  const nav = new Navbar(navContainer)
-    
-  nav._createNav([
+
+  App.navbar._updateNav([
     {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.router('/quiz')},
     {id: 2, ico : 'fi-rr-home',       handler: ()=> App.router('/menu')},
     {id: 3, ico : 'fi-rr-info',       handler: ()=> App.router('/info')}

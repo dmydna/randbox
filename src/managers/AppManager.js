@@ -12,6 +12,9 @@ class AppManger extends EventManager {
     this.elem = elem;
     this.memoria = {};
     this.router = null;
+    this.navbar;
+    this.headerElem;
+    this.content;
   }
 
   _createApp(array) {
@@ -55,8 +58,10 @@ class AppManger extends EventManager {
   fastRender(name) {
     const node = this.root.findChild(name);
     const render = node.render;
-    const container = this.elem;
+    const container = this.content;
 
+    this.headerElem.innerHTML = ''
+    this.navbar._kill()
     this.paginaAtras  = this.paginaActual
     this.paginaActual = node;
     // actualiza estilos
@@ -65,6 +70,7 @@ class AppManger extends EventManager {
     container.innerHTML = "";
     document.body.className = "";
     document.documentElement.id = name;
+    document.documentElement.className = "";
 
     container.appendChild(render(this));
   }

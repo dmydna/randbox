@@ -36,7 +36,7 @@ class QuizApp extends EventManager {
   }
 
   iniciarJuego() {
-    this._controlls._createNav([
+    this._controlls._updateNav([
       { id: 1, ico: "fi-rr-refresh", handler: this.AnswerReset },
       { id: 2, ico: "fi-rr-social-network", handler: this.manejarRespuestaUsuario },
       { id: 3, ico: "fi-rr-plus", handler: this.AnswerInc },
