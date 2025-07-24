@@ -9,7 +9,8 @@ import { preloadImages } from "./utils/default.js";
 
 preloadImages();
 
-const App = new AppManger(document.getElementById("root"));
+const container = document.getElementById("root")
+const App = new AppManger(container);
 
 App.router = page;
 
@@ -24,6 +25,10 @@ const AppContent = [
   { id: "info", render: infoPage },
 ];
 
+const i = document.createElement('i')
+i.className="root-btn fi fi-rr-menu-dots-vertical" 
+document.body.appendChild(i)
+
 document.onload = App._createApp(AppContent);
 
 document.addEventListener("keydown", function (event) {
@@ -31,5 +36,10 @@ document.addEventListener("keydown", function (event) {
     App.router("/menu");
   }
 });
+
+i.addEventListener('click', ()=>{
+  App.router('/menu')
+})
+
 
 export default App;

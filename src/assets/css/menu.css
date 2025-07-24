@@ -285,6 +285,10 @@
 }
 
 
+#menu .root-btn{
+  display: none;
+}
+
 /*Intancia tutorial desde otras paginas*/
 
 .tutorial-from-intro .tutorial-tips,
