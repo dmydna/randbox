@@ -66,7 +66,7 @@ class QuizApp extends EventManager {
         this.AnswerReset();
         break;
       case "h":
-        this.box.click();
+        this.avanzarJuego();
         break;
     }
   }
@@ -82,7 +82,10 @@ class QuizApp extends EventManager {
     );
   }
 
-  AnswerInc = () => {
+  AnswerInc = (e) => {
+
+    if(e){ e.stopPropagation() }
+
     this.respUser.innerHTML++;
     memory.set("partida", {
       ...memory.get("partida"),
@@ -164,7 +167,6 @@ class QuizApp extends EventManager {
       this.box.src = this.__srcHandler(`${partida.pregunta}`);
       this.estado = partida.estado;
       this.respUser.innerHTML = partida.respuesta;
-      console.log(partida.respuesta);
     }
   }
 
@@ -225,7 +227,9 @@ class QuizApp extends EventManager {
   }
 
   avanzarJuego = async (e) => {
-    e.stopPropagation()
+
+    if(e){ e.stopPropagation() }
+
     const siguientePregunta = this.juego.siguientePregunta();
 
     const shufflePromise = async () => {

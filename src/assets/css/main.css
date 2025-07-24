@@ -338,6 +338,23 @@ input:checked + .slider:before {
 }
 
 
+
+.particles-img {
+  animation: particulas 4.1s both infinite;
+  z-index: 1;
+  position: absolute;
+  left: 70px;
+  width: 100px;
+  height: 100px;
+  opacity: .7;
+  scale: 1.5;
+  opacity: 0;
+}
+
+
+
+
+
 @media (max-width: 1200px ) {
   .container {
     margin-inline: 5px;
@@ -347,7 +364,7 @@ input:checked + .slider:before {
 
 @media (max-width: 600px ) {
   #menu .tutorial-menu {
-    width: 80vw!important;
+    width: 89vw!important;
   }
 }
 
@@ -357,7 +374,25 @@ input:checked + .slider:before {
     50% {top: 30vh;}
     100% {top: 0;transform: rotate(360deg);}
 }
-   */
+*/
+
+
+@keyframes __particles-fx {
+    0%   {opacity:  0 }
+    10%  {opacity:  .1; z-index: 1 }
+    20%  {opacity:  0 }
+    30%  {opacity:  .3; z-index: -1 }
+    40%  {opacity:  0 }
+    50%  {opacity:  .5; z-index: 1 }
+    60%  {opacity:  0 }
+    70%  {opacity: .7; z-index: -1 }
+    80%  {opacity: 0 }
+    90%  {opacity: .9; z-index: 1 }
+    100% {opacity:  0 }
+} 
+
+
+
 @keyframes caida-randbox {
   0%   {top: calc(-50vh - 100px)}
   50%  {top: calc(70vh - 100px)}

@@ -250,3 +250,20 @@
 .respUser-clicker, .box-clicker{
   width: 100%;
 }
+
+#quiz .points::after {
+  content: '';
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  background-image: url(/src/assets/img/ui/coin.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  left: -45px;
+}
+
+
+#quiz .user-loses .particles-img,
+#quiz .user-reply-failed .particles-img{
+  opacity: 0!important;
+}

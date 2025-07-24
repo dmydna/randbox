@@ -39,7 +39,6 @@ class pageManager extends EventManager {
 
   _createNode = (nodeData) => {
     const node = new pageItem(nodeData.name, nodeData.render, nodeData.estado);
-    console.log(nodeData.estado)
     if (nodeData.children) {
       nodeData.children.forEach((childData) => {
         const childNode = this._createNode(childData);

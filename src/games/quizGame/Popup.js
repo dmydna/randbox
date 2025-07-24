@@ -18,11 +18,11 @@ class Popup {
     switch (this.contexto.estado) {
       case "user-wins":
         this.img.src = src_pop + "win.png";
-        this.btn.firstElementChild.classList.add("fi-rr-play-circle");
+        this.btn.firstElementChild.className = "fi fi-rr-play-circle";
         break;
       case "user-loses":
         this.img.src = src_pop + "game-over.png";
-        this.btn.firstElementChild.classList.add("fi-rr-rotate-left");
+        this.btn.firstElementChild.className = "fi fi-rr-rotate-left";
         break;
       case "user-reply-succeeded":
         this.img.src = src_pop + "like.png";
@@ -32,7 +32,7 @@ class Popup {
         this.quitarCorazones();
         break;
       case "user-restart-game":
-        this.btn.classList.remove("fi-rr-rotate-left");
+        this.btn.firstElementChild.className = "fi";
         this.img.src = src_pop + "again.png";
     }
   }

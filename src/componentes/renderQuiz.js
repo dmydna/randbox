@@ -2,7 +2,8 @@ function renderQuiz(contexto) {
   const template = document.createElement("template");
 
   template.innerHTML = `
-        <div class="points"></div>
+        <div class="points">
+        </div>
         <div class="randbox">
             <div style="margin-top: 20px;"  class="box-container">
               <div class="box-clicker">

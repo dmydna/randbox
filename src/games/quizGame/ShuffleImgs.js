@@ -95,7 +95,6 @@ class ShuffleImgsAnim {
     this.srcFinal = funcion;
     this.duracionTotal = time;
     this.iniciarAnimacion();
-    console.log("shuffleTime -> " + time);
   };
 }
 

@@ -61,9 +61,14 @@ const menuPage = (App, startMenu=null) => {
         navContainer.style.visibility = 'hidden'
         const i = document.createElement('i')
         i.className = 'fi fi-ss-cross close-btn'
+
         i.addEventListener('click', ()=>{
-            App.router('/menu')
+            history.back();
         },{once: true})
+
+
+
+
         popupContainer.appendChild(i)
 
     }else{

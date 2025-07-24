@@ -97,7 +97,6 @@ class introGameApp extends EventManager {
   }
 
   manejarRespuestaUsuario = () => {
-    console.log(this.intentosRestantes);
     if (this.intentosRestantes == 0) {
       this._removeAllEvents();
       return;

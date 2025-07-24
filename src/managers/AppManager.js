@@ -23,7 +23,7 @@ class AppManger extends EventManager {
       });
       if (index == 0) {
         this.paginaActual = pagew;
-        this.paginaAtras = pagew;
+        this.paginaAtras  = pagew;
       }
     });
     this.fastRender("menu");
@@ -36,15 +36,13 @@ class AppManger extends EventManager {
     this.paginaAtras = page.parent;
   };
 
-  _atras = () => {
-    const paginaAtras = this.paginaAtras;
-    const paginaActual = this.paginaActual;
-    this.paginaActual = paginaAtras;
+  back () {
     if (this.paginaActual == this.root) {
-      this.paginaActual.parent = this.root;
       return;
     }
-    this.paginaAtras = paginaAtras.parent;
+    this.paginaAtras = this.paginaActual
+    this.paginaActual = this.paginaAtras;
+    this.fastRender(this.paginaActual.name)
   };
 
   renderPage = () => {
@@ -59,6 +57,7 @@ class AppManger extends EventManager {
     const render = node.render;
     const container = this.elem;
 
+    this.paginaAtras  = this.paginaActual
     this.paginaActual = node;
     // actualiza estilos
     _updCssVars();

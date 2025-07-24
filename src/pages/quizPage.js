@@ -109,6 +109,18 @@ function quizPage(App){
     })
 
 
+    if(config.tutorial == 1){
+        setTimeout(() => {
+            App.router("/tutorial")
+            const html = document.documentElement;
+            html.classList.add('tutorial-from-quiz')
+            memory.set('opciones',{
+                ...memory.get('opciones'),
+                tutorial : 0
+            })
+          }, 2000);
+    }
+
 
     return container
 }

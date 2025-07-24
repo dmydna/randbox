@@ -90,6 +90,16 @@ function _playMenuHandler(menu) {
   });
 
   // memory.refresh()
+  if(opciones.tutorial==1){
+    setTimeout(() => {
+      App.router("/tutorial")
+      const html = document.documentElement;
+      html.classList.add('tutorial-from-intro')
+    }, 2000);
+  }
+
+
+
 
   App.router("/intro");
 }

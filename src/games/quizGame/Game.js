@@ -36,12 +36,10 @@ class Quiz {
         if (this.preguntas[i] == pregunta) {
           this.#preguntaActual.str = pregunta;
           this.#preguntaActual.index = i;
-          console.log("cambia de pregunta")
           return true;
         }
       }
     }
-    console.log("error al cambiar de pregunta")
     return false;
   }
 
