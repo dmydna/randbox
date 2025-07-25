@@ -1,5 +1,6 @@
 import { shuffleArr } from "./utils.js";
 
+// Mapping de todas las imagenes 
 const Appimgs = {
   ui: ["higth-score", "home", "mystery", "open-box"],
   game: ["apple", "cheese", "hamburger", "rocket", "coin", "box", "dado"],
@@ -9,24 +10,27 @@ const Appimgs = {
 
 const preguntas = shuffleArr(Appimgs.game);
 
+// afecta a toda la App
 const opciones = {
-  menu: 1,
+  menu: 1,            // root-btn
   progreso: 1,
   vidas: 3,
-  dificultad: 5,
+  dificultad: 5,      // cantidad de imagenes distintas
   teclado: 1,
-  velocidad: 5,
-  memoria: 1,
-  intentos: 8,
-  tutorial: 1,
-  mode: 'default',
+  velocidad: 5,       // velocidad de animacion (3s a 0.5s)
+  memoria: 1,         // retoma partida
+  intentos: 8,        // cantidad de imagenes en total
+  tutorial: 1,        
+  mode: 'default',    // modos de juego, setea las opciones 
 };
 
+
+// crea quiz Vacio basado en dificultad
 const quiz = Object.fromEntries(
   preguntas.slice(0, opciones.dificultad).map((element) => [element, 0])
 );
 
-const partida = {
+const partida_quiz = {
   quiz: quiz,
   preguntasDisponibles: [],
   intentosDisponibles: 3,
@@ -43,7 +47,7 @@ const partida_intro = {
   intro_estado            : "",
   intro_pregunta          : "",
   intro_progreso          : "",
-  intro_index             : "",
+  intro_index             : 0,
   intro_intentos          : 0,
   intro_intentosRestantes : 0,
   intro_quiz              : 0,
@@ -52,13 +56,20 @@ const partida_intro = {
 
 
 const AppMemory = {
-  preguntas: preguntas,
-  opciones: opciones,
-  partida: partida,
+  preguntas:     preguntas,      // mapea todas las preguntas disponibles
+  opciones:      opciones,
+  partida_quiz:  partida_quiz,
   partida_intro: partida_intro,
-  token: "init",
-  continuar_en: "_"
+  token: "init",                 // restricciones de router
+  continuar_en: "_",             // menu continue
+  version: '0.0100'       
 };
+
+/*Nota: memoryManager.check
+para las claves , se checkea que coincidan  AppStorage con AppMemory
+para los valores, se checkea la version  AppStorage con AppMemory
+*/
+
 
 const src_obj = "src/assets/img/objects/";
 const src_pop = "src/assets/img/popup/";

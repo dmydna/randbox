@@ -31,13 +31,18 @@ class introGameApp extends EventManager {
     this._addEvent(this.box, "click", this.manejarRespuestaUsuario);
   }
 
-  _animarInicio() {
+  animarInicio() {
     // document.onload = document.body.classList.add("onload");
     if(document.body.classList.contains("onload")){
       this.box.addEventListener(
         "animationend",() => {document.body.classList.remove("onload");},
         { once: true }
       );
+      // memory.set("partida_intro", {
+      //   ...memory.get("partida_intro"),
+      //   intro_base              : "init",
+      // })
+      this.recordar()
     }
   }
 
@@ -59,7 +64,7 @@ class introGameApp extends EventManager {
 
   reanudarPartida(partida) {
     if (partida.intro_base == "_") {
-      // importante: caso base de la recursion
+      // importante: caso base de  recursion
       return;
     }
     if (this.resumen) {
@@ -71,15 +76,22 @@ class introGameApp extends EventManager {
       this.estado            = partida.intro_estado;
       this.index             = partida.intro_index;
 
-      document.body.classList.add('playGame', this.estado, 'continue')
+      document.body.classList.add('continue')
+      if(partida.intro_progreso == ''){
+        console.log(partida.intro_progreso)
+        document.body.classList.remove('playGame')
+      }else{
+        document.body.classList.add('playGame')
+      }
+
       this.progreso.style.width = `${partida.intro_progreso}`;
       this.pregunta.src = `${src_obj}${this.preguntas[this.index]}.png`
-      memory.set("partida", {
-        ...memory.get("partida"),
+      memory.set("partida_quiz", {
+        ...memory.get("partida_quiz"),
         quiz: this.quiz,
         preguntasDisponibles: this.preguntas,
       });
-      this.resumen = false
+      // this.resumen = false
     }
   }
 
@@ -148,12 +160,14 @@ class introGameApp extends EventManager {
     this.quiz[pregunta] = this.quiz[pregunta] ?? 0;
     this.quiz[pregunta]++;
 
-    memory.set("partida", {
-      ...memory.get("partida"),
+    memory.set("partida_quiz", {
+      ...memory.get("partida_quiz"),
       quiz: this.quiz,
       preguntasDisponibles: this.preguntas,
     });
-    this.recordar()
+    
+    this.recordar();
+
   }
 
   manejarRespuestaUsuario = () => {

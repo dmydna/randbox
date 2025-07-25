@@ -72,3 +72,7 @@
 .score-item {
   height: 35px;
 }
+
+#score .root-btn{
+  display: none;
+}

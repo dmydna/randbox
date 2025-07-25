@@ -31,6 +31,7 @@ class pageItem {
 }
 
 class pageManager extends EventManager {
+  
   constructor() {
     super();
     this.root;

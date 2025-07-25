@@ -1,8 +1,7 @@
 import renderBar from '../componentes/renderBar.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 import IntroGameApp from '../games/IntroGame/App.js';
-import memory from '../managers/Memory.js';
-import memoria from '../managers/Memory.js';
+import { default as memoria, default as memory } from '../managers/Memory.js';
 
 
 function introPage(App){
@@ -36,7 +35,7 @@ function introPage(App){
     boxContainer.classList.add('center-fix')
 
  
-    const partida = memoria.get("partida")
+    const partida = memoria.get("partida_quiz")
     const config = memoria.get("opciones")
     const partida_intro = memory.get("partida_intro")
 
@@ -55,7 +54,7 @@ function introPage(App){
     }
 
     // Animacion Inicial
-    IntroGame._animarInicio()
+    IntroGame.animarInicio()
     IntroGame.jugar()
 
     return container

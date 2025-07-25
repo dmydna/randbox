@@ -54,7 +54,7 @@ function quizPage(App){
 
 
     const config =   memory.get("opciones")
-    const partida =  memory.get("partida")
+    const partida =  memory.get("partida_quiz")
 
     // Incializo Quiz
 
@@ -75,7 +75,7 @@ function quizPage(App){
     // Comienza Quiz
     container.onload = QuizGame._init()
     QuizGame.iniciarJuego()
-    QuizGame._animarInicio()
+    QuizGame.animarInicio()
 
 
     if(config.memoria == 1){

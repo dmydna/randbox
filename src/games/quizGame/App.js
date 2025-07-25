@@ -71,7 +71,7 @@ class QuizApp extends EventManager {
     }
   }
 
-  _animarInicio() {
+  animarInicio() {
     // document.onload = document.body.classList.add("onload");
     if(document.documentElement.classList.contains("onload")){
       this.box.addEventListener(
@@ -87,8 +87,8 @@ class QuizApp extends EventManager {
     if(e){ e.stopPropagation() }
 
     this.respUser.innerHTML++;
-    memory.set("partida", {
-      ...memory.get("partida"),
+    memory.set("partida_quiz", {
+      ...memory.get("partida_quiz"),
       respuesta: Number(this.respUser.innerHTML),
     });
   };
@@ -98,8 +98,8 @@ class QuizApp extends EventManager {
   };
 
   recordar = () => {
-    memory.set("partida", {
-      ...memory.get("partida"),
+    memory.set("partida_quiz", {
+      ...memory.get("partida_quiz"),
       ...this.juego.recordar(),
       estado: this.estado,
       pregunta: this.juego.obtenerPreguntaActual(),
@@ -148,7 +148,7 @@ class QuizApp extends EventManager {
 
   reanudarPartida(partida) {
     if (partida.estado == "_") {
-      // importante: caso base de la recursion
+      // importante: caso base de recursion
       return;
     }
 
@@ -186,7 +186,7 @@ class QuizApp extends EventManager {
     this.juego.intentarDeNuevo();
     this.cambiarEstado("user-restart-game");
     await this._popup.reiniciar();
-    // REINCIAR JUEGO
+    // REINCIA JUEGO
     this.AnswerReset();
     this._progress.style.width = 0;
     this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
@@ -259,9 +259,11 @@ class QuizApp extends EventManager {
 
     /* por default pasa a la sig pregunta */
     this.box.src = this.__srcHandler(siguientePregunta);
+
     if (this.resumen) {
       this.recordar();
     }
+    
     this.guardarScore();
 
     return true;
@@ -299,8 +301,8 @@ class QuizApp extends EventManager {
     this.guardarScore();
   }
   guardarScore() {
-    memory.set("partida", {
-      ...memory.get("partida"),
+    memory.set("partida_quiz", {
+      ...memory.get("partida_quiz"),
       score: this.juego.puntaje,
     });
   }

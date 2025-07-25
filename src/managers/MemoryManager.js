@@ -1,9 +1,14 @@
-import { AppMemory } from "../utils/default.js";
 import { encrypt, decrypt } from "../utils/utils.js";
+import { AppMemory } from "../utils/default.js";
+
+/*Nota: memoryManager.check
+para las claves , se checkea que coincidan  AppStorage con AppMemory
+para los valores, se checkea la version  AppStorage con AppMemory
+*/
 
 class MemoryManager {
   constructor() {
-    this._Default = AppMemory;
+    this._Default = AppMemory; // importar (no mandar por parametro)
     this._Data = this.load();
   }
 
@@ -16,12 +21,36 @@ class MemoryManager {
     return this._Data;
   }
 
+
+  check(){
+    const keys1 = Object.keys(this._Data)
+    const keys2 = Object.keys(this._Default)
+
+    const mismaKeys= 
+    keys1.length === keys2.length &&
+    keys1.every(key => keys2.includes(key)) &&
+    keys2.every(key => keys1.includes(key));
+
+    if(!mismaKeys){
+      this._Data = localStorage.setItem("appStorage", JSON.stringify(this._Default));
+      console.log("AppStorage corrupted fix!")
+      return this._Data
+    }
+
+    if(this._Data && this._Data.version == this._Default.version){
+      return this._Data
+    }else{
+      console.log("AppStorage actualizado!")
+      this._Data = localStorage.setItem("appStorage", JSON.stringify(this._Default));
+      return this._Data
+    }
+  }
   load() {
     try {
       return (
         JSON.parse(localStorage.getItem("appStorage")) ||
-        JSON.parse(JSON.stringify(this._Default))
-      );
+        JSON.parse(JSON.stringify(this._Default)) )
+      ;
     } catch (e) {
       console.error("Error al cargar localStorage, usando Default:", e);
       return JSON.parse(JSON.stringify(this._Default));
@@ -35,6 +64,7 @@ class MemoryManager {
     this._Data[name] = value;
     this.refresh();
   }
+
 
   get(name) {
     this._Data = this.load();

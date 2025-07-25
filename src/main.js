@@ -8,8 +8,13 @@ import menuPage from "./pages/menuPage.js";
 import quizPage from "./pages/quizPage.js";
 import scorePage from "./pages/scorePage.js";
 import { preloadImages } from "./utils/default.js";
+import memory from "./managers/Memory.js";
+
 
 preloadImages();
+
+memory.refresh()
+memory.check()
 
 const container = document.getElementById("root")
 const App = new AppManger(container);

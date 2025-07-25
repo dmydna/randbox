@@ -51,7 +51,7 @@ const menuPage = (App, startMenu=null) => {
     if(startMenu){
         // Renderiza pagina basada en menu
         // crea instancia unica de menu
-        Menu._createMenu(menuContent)
+        Menu.createMenu(menuContent)
         Menu.showMenu(true)
         Menu.cambiarMenu(startMenu)
         document.documentElement.id= 'menu'
@@ -75,9 +75,9 @@ const menuPage = (App, startMenu=null) => {
         // Animacion de inicio
         const config = memory.get('opciones')
 
-        Menu._createMenu(menuContent)
+        Menu.createMenu(menuContent)
         Menu.box = container.querySelector('.box')
-        Menu._animarInicio()
+        Menu.animarInicio()
 
         
         Menu.cambiarMenu('main-menu')

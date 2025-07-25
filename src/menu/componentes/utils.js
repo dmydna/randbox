@@ -4,7 +4,8 @@ import memory from "../../managers/Memory";
 
 function _updCssVars() {
   const opciones = memory.get("opciones");
-  const partida = memory.get("partida");
+  const partida_quiz = memory.get("partida_quiz");
+  const partida_intro = memory.get("partida_intro")
 
   const html = document.documentElement;
   // html.style.setProperty("--progress-enable", opciones.progreso * 0.5);
@@ -17,15 +18,16 @@ function _updCssVars() {
   html.style.setProperty(
     "--continue-menu",
     opciones.memoria == 1 &&
-      partida.estado != "_" &&
-      partida.estado != "user-wins" 
-      || partida.intro_base != '_'
+      partida_quiz.estado != "_" &&
+      partida_quiz.estado != "user-wins" 
+      || partida_intro.intro_base != '_' &&  
+      partida_quiz.estado != "user-wins" 
       ? "flex"
       : "none"
   );
   html.style.setProperty(
     "--score-menu",
-    opciones.memoria == 1 && partida.estado == "user-wins" ? "flex" : "none"
+    opciones.memoria == 1 && partida_quiz.estado == "user-wins" ? "flex" : "none"
   );
 }
 
@@ -269,8 +271,7 @@ function _createRangeItem(item, _rangeHandler) {
 }
 
 export {
-  _createGroupRadio, _createRangeItem, _createSwitchItem, 
-  _updCssVars,
-  _createGroup,
+  _createGroup, _createGroupRadio, _createRangeItem, _createSwitchItem,
+  _updCssVars
 };
 

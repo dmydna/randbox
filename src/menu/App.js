@@ -1,5 +1,4 @@
 import { pageManager } from "../managers/PageManajer.js";
-import { _updCssVars } from "./componentes/utils.js";
 
 class Menu extends pageManager {
   constructor(elem) {
@@ -12,7 +11,7 @@ class Menu extends pageManager {
     this.box ;
   }
 
-  _animarInicio() {
+  animarInicio() {
     // document.onload = document.body.classList.add("onload");
     if(document.body.classList.contains("onload")){
       this.box.addEventListener(
@@ -23,7 +22,7 @@ class Menu extends pageManager {
   }
 
 
-  _createMenu = (menuData) => {
+  createMenu = (menuData) => {
     this.root = this._createNode(menuData);
     this.menuActual = this.root;
 
@@ -39,10 +38,6 @@ class Menu extends pageManager {
     document.body.classList = "";
   }
 
-  _estadoNode(node) {
-    return node.name + "-menu-active";
-  }
-
   cambiarMenu = (name) => {
     this.showMenu(true)
     this._cambiarMenu(name);
@@ -53,7 +48,6 @@ class Menu extends pageManager {
       document.body.classList.remove(this.root.data);
     }
     document.body.classList.add(newMenu);
-    console.log(this.menuActual)
     this.renderMenu();
   };
   atras = () => {
@@ -67,9 +61,6 @@ class Menu extends pageManager {
     }
     this._atras(); // actualizo struct
     this.renderMenu();
-    // if(this.menuActual == this.root){
-    //   this._aplicarConfiguracionDelJuego()
-    // }
   };
 
   home = () => {

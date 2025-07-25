@@ -1,9 +1,9 @@
 import App from "../../main.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon, shuffleArr } from "../../utils/utils.js";
-import { _updCssVars } from "./utils.js";
 
 function menuMain(menu) {
+
   // Agrega Menu Items
   const menuItems = [
     { id: "play-btn", title: "PLAY", ico: "fi fi-rr-play" },
@@ -71,7 +71,7 @@ function _playMenuHandler(menu) {
   document.querySelector(".box").style.opacity = "1";
 
   // Limpia datos de partida anterior (setea a valor por default)
-  memory.reset("partida");
+  memory.reset("partida_quiz");
   memory.reset("partida_intro");
   memory.set("token", "init");
 
@@ -81,7 +81,7 @@ function _playMenuHandler(menu) {
 
   // Genera Partida aleatoria basada en dificultad
   const opciones = memory.get("opciones");
-  const partida = memory.get("partida");
+  const partida = memory.get("partida_quiz");
 
   const preguntas = Array.from(memory.get("preguntas"));
   const quiz = Object.fromEntries(
@@ -90,7 +90,7 @@ function _playMenuHandler(menu) {
       .map((element) => [element, 0])
   );
 
-  memory.set("partida", {
+  memory.set("partida_quiz", {
     ...partida,
     quiz: quiz,
   });

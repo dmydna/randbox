@@ -1,6 +1,7 @@
 import EventManager from "./Events.js";
 import { _updCssVars } from "../menu/componentes/utils.js";
 import { pageItem } from "./PageManajer.js";
+import memory from "./Memory.js";
 
 class AppManger extends EventManager {
   constructor(elem) {

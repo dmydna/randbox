@@ -40,7 +40,7 @@ function scoreItemAnim(elems){
 }
 
 function scoreBarAnim(scoreContainer){
-  const score_points = memory.get('partida').score
+  const score_points = memory.get("partida_quiz").score
   let i = 0;
   let intervalo = setInterval(() => {
     scoreContainer.innerHTML = i;
@@ -89,12 +89,12 @@ function scorePage(App){
   App.navbar._updateNav([
     {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.router('/quiz')},
     {id: 2, ico : 'fi-rr-home',       handler: ()=> App.router('/menu')},
-    {id: 3, ico : 'fi-rr-info',       handler: ()=> App.router('/info')}
+    {id: 3, ico : 'fi-rr-angle-right',       handler: ()=> App.router('/info')}
   ])
 
-  const partida = memory.get("partida").quiz
+  const partida_quiz = memory.get("partida_quiz").quiz
     
-  const scoreBoardElem = createScoreBoard(gameContainer, partida)
+  const scoreBoardElem = createScoreBoard(gameContainer, partida_quiz)
 
   // Visualiza score items con delay
   if(document.body.classList.contains('onload')){
