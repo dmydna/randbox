@@ -1,6 +1,7 @@
 import App from "../../main.js";
 import EventManager from "../../managers/Events.js";
 import memory from "../../managers/Memory.js";
+import { src_obj } from "../../utils/default.js";
 
 class introGameApp extends EventManager {
   constructor(quizVacio, intentos, container) {
@@ -42,12 +43,12 @@ class introGameApp extends EventManager {
 
 
   recordar = () => {
-    memory.set("partida", {
-      ...memory.get("partida"),
+    memory.set("partida_intro", {
+      ...memory.get("partida_intro"),
       intro_base              : "init",
       intro_estado            : this.estado,
       intro_pregunta          : this.preguntas[this.index],
-      intro_progreso          : this.obtenerProgreso(),
+      intro_progreso          : this.progreso.style.width ,
       intro_index             : this.index,
       intro_intentos          : this.intentos,
       intro_intentosRestantes : this.intentosRestantes,
@@ -62,17 +63,17 @@ class introGameApp extends EventManager {
       return;
     }
     if (this.resumen) {
+
       this.quiz              = partida.intro_quiz;
       this.intentos          = partida.intro_intentos;
       this.intentosRestantes = partida.intro_intentosRestantes;
       this.preguntas         = partida.intro_preguntas
       this.estado            = partida.intro_estado;
       this.index             = partida.intro_index;
-      document.body.classList.add('playGame', this.estado)
-      this.progreso.style.width = `${partida.intro_progreso}%`;
-      this.pregunta.src = `src/assets/img/objects/${
-        this.preguntas[this.index??0]
-      }.png`
+
+      document.body.classList.add('playGame', this.estado, 'continue')
+      this.progreso.style.width = `${partida.intro_progreso}`;
+      this.pregunta.src = `${src_obj}${this.preguntas[this.index]}.png`
       memory.set("partida", {
         ...memory.get("partida"),
         quiz: this.quiz,
@@ -152,6 +153,7 @@ class introGameApp extends EventManager {
       quiz: this.quiz,
       preguntasDisponibles: this.preguntas,
     });
+    this.recordar()
   }
 
   manejarRespuestaUsuario = () => {
@@ -162,6 +164,7 @@ class introGameApp extends EventManager {
     this.cambiarEstado({ playGame: true });
     this.avanzarJuego();
     this.actualizarData();
+
   };
 
   obtenerProgreso() {
@@ -175,6 +178,8 @@ class introGameApp extends EventManager {
 
   avanzarJuego = () => {
     if (!this.container.querySelector(".box-up")) {
+      document.body.classList.remove( 'continue')
+
       this.index = Math.floor(Math.random() * this.preguntas.length);
       this.cambiarEstado({ "box-anim": true, "box-down": false });
       this.pregunta.src = `src/assets/img/objects/${
@@ -183,7 +188,6 @@ class introGameApp extends EventManager {
       this.progreso.style.width = `${this.obtenerProgreso()}%`;
       this.intentosRestantes--;
 
-      this.recordar()
     }
   };
 }

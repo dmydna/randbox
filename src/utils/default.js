@@ -38,11 +38,26 @@ const partida = {
   pregunta: "",
 };
 
+const partida_intro = {
+  intro_base              : "_",
+  intro_estado            : "",
+  intro_pregunta          : "",
+  intro_progreso          : "",
+  intro_index             : "",
+  intro_intentos          : 0,
+  intro_intentosRestantes : 0,
+  intro_quiz              : 0,
+  intro_preguntas         : ""
+}
+
+
 const AppMemory = {
   preguntas: preguntas,
   opciones: opciones,
   partida: partida,
+  partida_intro: partida_intro,
   token: "init",
+  continuar_en: "_"
 };
 
 const src_obj = "src/assets/img/objects/";

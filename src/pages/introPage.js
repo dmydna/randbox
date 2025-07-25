@@ -1,6 +1,7 @@
 import renderBar from '../componentes/renderBar.js';
 import renderQuiz from '../componentes/renderQuiz.js';
 import IntroGameApp from '../games/IntroGame/App.js';
+import memory from '../managers/Memory.js';
 import memoria from '../managers/Memory.js';
 
 
@@ -37,6 +38,7 @@ function introPage(App){
  
     const partida = memoria.get("partida")
     const config = memoria.get("opciones")
+    const partida_intro = memory.get("partida_intro")
 
 
     const IntroGame = new IntroGameApp(partida.quiz, config.intentos, gameContainer)
@@ -46,10 +48,11 @@ function introPage(App){
     	IntroGame.teclado = true
     }
 
-    // if(config.memoria == 1){
-    //     IntroGame.resumen = true;
-    //     IntroGame.reanudarPartida(partida)
-    // }
+    if(config.memoria == 1){
+        IntroGame.resumen = true;
+        IntroGame.reanudarPartida(partida_intro)
+        memory.set('continuar_en', '/intro')
+    }
 
     // Animacion Inicial
     IntroGame._animarInicio()

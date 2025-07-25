@@ -81,6 +81,7 @@ function quizPage(App){
     if(config.memoria == 1){
         QuizGame.resumen = true;
         QuizGame.reanudarPartida(partida)
+        memory.set('continuar_en', '/quiz')
     }
 
     // Animaciones

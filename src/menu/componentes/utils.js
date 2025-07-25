@@ -18,7 +18,8 @@ function _updCssVars() {
     "--continue-menu",
     opciones.memoria == 1 &&
       partida.estado != "_" &&
-      partida.estado != "user-wins"
+      partida.estado != "user-wins" 
+      || partida.intro_base != '_'
       ? "flex"
       : "none"
   );

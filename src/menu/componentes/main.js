@@ -57,7 +57,8 @@ function menuMain(menu) {
 // Handlers
 
 function _continueGameHandler() {
-  App.router("/quiz");
+  const continue_game = memory.get('continuar_en')
+  App.router(continue_game);
 }
 
 function _verScoreHandler() {
@@ -71,6 +72,7 @@ function _playMenuHandler(menu) {
 
   // Limpia datos de partida anterior (setea a valor por default)
   memory.reset("partida");
+  memory.reset("partida_intro");
   memory.set("token", "init");
 
   App.setPreRender( ()=>{

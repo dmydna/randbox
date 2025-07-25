@@ -14,10 +14,16 @@
   cursor: pointer;
 }
 
+
+
 #intro .box-anim .box {
   animation-name: lanzar-box-1;
 }
 
+
+#intro .continue .box {
+  animation-name: defaultAnimation!important;
+}
 
 #intro .onload .box {
   animation: bounce-in-top 1.1s both;
