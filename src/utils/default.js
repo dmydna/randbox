@@ -19,7 +19,7 @@ const opciones = {
   memoria: 1,
   intentos: 8,
   tutorial: 1,
-  mode: 'default'
+  mode: 'default',
 };
 
 const quiz = Object.fromEntries(

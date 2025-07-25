@@ -1,5 +1,6 @@
 
 
+
 #menu 
 .box {   
   position: relative;
@@ -27,7 +28,7 @@
 }
 
 #menu 
-.onload #menu{
+.onload .popup{
     opacity: 0;
 }
 
@@ -48,11 +49,12 @@
     width: 25px;
     display: inline-block;
   }
-  
+/*   
 #menu 
 .popup-active .box {
     display: none;
-  }
+  } */
+
 
 #menu 
 .onStartGame .gift {
@@ -288,6 +290,9 @@
 #menu .root-btn{
   display: none;
 }
+
+
+
 
 /*Intancia tutorial desde otras paginas*/
 

@@ -5,7 +5,7 @@ import memoria from '../managers/Memory.js';
 
 
 function introPage(App){
-    document.body.className = ""
+
     const template = document.createElement("template");
 
     template.innerHTML = `
@@ -24,14 +24,7 @@ function introPage(App){
     progressContainer.appendChild(ProgressBar)
     gameContainer.appendChild(Quiz)
 
-    // Animacion Inicial
-    const box = container.querySelector('.box')
 
-    document.body.classList.add("onload")
-    box.addEventListener('animationend', ()=>{
-        document.body.classList.remove('onload')
-    },{once:true})
-    
 
     const userResp = container.querySelector('.respUser-clicker')
     const img = document.createElement('img')
@@ -53,6 +46,13 @@ function introPage(App){
     	IntroGame.teclado = true
     }
 
+    // if(config.memoria == 1){
+    //     IntroGame.resumen = true;
+    //     IntroGame.reanudarPartida(partida)
+    // }
+
+    // Animacion Inicial
+    IntroGame._animarInicio()
     IntroGame.jugar()
 
     return container

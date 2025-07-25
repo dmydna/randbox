@@ -72,15 +72,15 @@ class QuizApp extends EventManager {
   }
 
   _animarInicio() {
-    document.onload = document.body.classList.add("onload");
-    this.box.addEventListener(
-      "animationend",
-      () => {
-        document.body.classList.remove("onload");
-      },
-      { once: true }
-    );
+    // document.onload = document.body.classList.add("onload");
+    if(document.documentElement.classList.contains("onload")){
+      this.box.addEventListener(
+        "animationend",() => {document.documentElement.classList.remove("onload");},
+        { once: true }
+      );
+    }
   }
+
 
   AnswerInc = (e) => {
 
@@ -137,6 +137,9 @@ class QuizApp extends EventManager {
         this.cambiarEstado();
         this._popup.show(false);
         this.kill();
+        App.setPreRender(()=>{
+          document.body.classList.add('onload')
+        })
         App.router("/score");
       },
       { once: true }

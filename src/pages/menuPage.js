@@ -66,24 +66,27 @@ const menuPage = (App, startMenu=null) => {
 
 
 
+
+
         popupContainer.appendChild(i)
 
     }else{
         // Inicia por default main
         // Animacion de inicio
-        document.onload = document.body.classList.add("onload");
         const config = memory.get('opciones')
 
-        container.querySelector('.box').addEventListener('animationend', ()=>{
-            if( config.menu == 0 ){
-                App.router('/intro')
-            }else{
-                Menu._createMenu(menuContent)
-                Menu.showMenu(true)
-                Menu.cambiarMenu('main-menu')
-            }
-            document.body.classList.remove('onload')
-        },{once:true})
+        Menu._createMenu(menuContent)
+        Menu.box = container.querySelector('.box')
+        Menu._animarInicio()
+
+        
+        Menu.cambiarMenu('main-menu')
+    
+
+        // container.querySelector('.box').addEventListener('animationend', ()=>{
+
+        //     document.body.classList.remove('onload')
+        // },{once:true})
     }
 
 

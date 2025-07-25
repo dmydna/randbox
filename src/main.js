@@ -43,7 +43,13 @@ const i = document.createElement('i')
 i.className="root-btn fi fi-rr-menu-dots-vertical" 
 container.appendChild(i)
 
-document.onload = App._createApp(AppContent);
+App.setPreRender(()=>{
+  //Animacion de inicio
+  document.body.classList.add('onload')
+})
+
+App._createApp(AppContent);
+App._init()
 
 document.addEventListener("keydown", function (event) {
   if (event.key == "Escape") {

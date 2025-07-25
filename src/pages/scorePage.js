@@ -63,8 +63,6 @@ function scorePage(App){
     return
   }
 
-  document.body.className = ""
-  document.documentElement.className = ""
   document.documentElement.classList.add('score');  
 
   const template = document.createElement("template");
@@ -99,7 +97,16 @@ function scorePage(App){
   const scoreBoardElem = createScoreBoard(gameContainer, partida)
 
   // Visualiza score items con delay
-  scoreItemAnim(scoreBoardElem.childNodes)
+  if(document.body.classList.contains('onload')){
+    document.body.classList.remove('onload')
+    scoreItemAnim(scoreBoardElem.childNodes)
+  }else{
+    const giftContainer = container.querySelectorAll('.gift-container')
+    giftContainer.forEach(element => {
+      element.style.opacity = '1'
+    }); 
+  }
+
   
   return container
 }

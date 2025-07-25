@@ -73,6 +73,10 @@ function _playMenuHandler(menu) {
   memory.reset("partida");
   memory.set("token", "init");
 
+  App.setPreRender( ()=>{
+    document.body.classList.add('onload')
+  })
+
   // Genera Partida aleatoria basada en dificultad
   const opciones = memory.get("opciones");
   const partida = memory.get("partida");

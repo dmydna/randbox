@@ -9,7 +9,19 @@ class Menu extends pageManager {
     this.levels = [];
     this.nav = null;
     this.estado = "hidden";
+    this.box ;
   }
+
+  _animarInicio() {
+    // document.onload = document.body.classList.add("onload");
+    if(document.body.classList.contains("onload")){
+      this.box.addEventListener(
+        "animationend",() => {document.body.classList.remove("onload");},
+        { once: true }
+      );
+    }
+  }
+
 
   _createMenu = (menuData) => {
     this.root = this._createNode(menuData);
@@ -32,6 +44,7 @@ class Menu extends pageManager {
   }
 
   cambiarMenu = (name) => {
+    this.showMenu(true)
     this._cambiarMenu(name);
     const newMenu = this.menuActual.data;
     if (this.menuActual != this.root) {

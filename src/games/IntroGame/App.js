@@ -16,6 +16,7 @@ class introGameApp extends EventManager {
     this.box = this.container.querySelector(".box");
     this.pregunta = this.container.querySelector(".gift");
     this.index = 0;
+    this.resumen = false
   }
 
   jugar() {
@@ -29,12 +30,69 @@ class introGameApp extends EventManager {
     this._addEvent(this.box, "click", this.manejarRespuestaUsuario);
   }
 
+  _animarInicio() {
+    // document.onload = document.body.classList.add("onload");
+    if(document.body.classList.contains("onload")){
+      this.box.addEventListener(
+        "animationend",() => {document.body.classList.remove("onload");},
+        { once: true }
+      );
+    }
+  }
+
+
+  recordar = () => {
+    memory.set("partida", {
+      ...memory.get("partida"),
+      intro_base              : "init",
+      intro_estado            : this.estado,
+      intro_pregunta          : this.preguntas[this.index],
+      intro_progreso          : this.obtenerProgreso(),
+      intro_index             : this.index,
+      intro_intentos          : this.intentos,
+      intro_intentosRestantes : this.intentosRestantes,
+      intro_quiz              : this.quiz,
+      intro_preguntas         : this.preguntas 
+    });
+  };
+
+  reanudarPartida(partida) {
+    if (partida.intro_base == "_") {
+      // importante: caso base de la recursion
+      return;
+    }
+    if (this.resumen) {
+      this.quiz              = partida.intro_quiz;
+      this.intentos          = partida.intro_intentos;
+      this.intentosRestantes = partida.intro_intentosRestantes;
+      this.preguntas         = partida.intro_preguntas
+      this.estado            = partida.intro_estado;
+      this.index             = partida.intro_index;
+      document.body.classList.add('playGame', this.estado)
+      this.progreso.style.width = `${partida.intro_progreso}%`;
+      this.pregunta.src = `src/assets/img/objects/${
+        this.preguntas[this.index??0]
+      }.png`
+      memory.set("partida", {
+        ...memory.get("partida"),
+        quiz: this.quiz,
+        preguntasDisponibles: this.preguntas,
+      });
+      this.resumen = false
+    }
+  }
+
+
   endGame() {
     this.cambiarEstado({ endgame: true });
     this.box.addEventListener(
       "animationend",
       () => {
         memory.set("token", "quiz-loaded");
+        App.setPreRender( ()=>{
+          document.body.classList.add('onload')
+        })
+      
         App.router("/quiz");
       },
       { once: true }
@@ -124,6 +182,8 @@ class introGameApp extends EventManager {
       }.png`;
       this.progreso.style.width = `${this.obtenerProgreso()}%`;
       this.intentosRestantes--;
+
+      this.recordar()
     }
   };
 }

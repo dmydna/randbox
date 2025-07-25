@@ -15,8 +15,15 @@ class AppManger extends EventManager {
     this.navbar;
     this.headerElem;
     this.content;
+    this.preRender = null;
   }
 
+  _init(){
+    if(this.root && this.router){
+      this.fastRender("menu");
+      this.router();
+    }
+  }
   _createApp(array) {
     array.forEach(({ id, render }, index) => {
       const pagew = new pageItem(id, render);
@@ -29,8 +36,6 @@ class AppManger extends EventManager {
         this.paginaAtras  = pagew;
       }
     });
-    this.fastRender("menu");
-    this.router();
   }
 
   _siguiente = (name) => {
@@ -55,6 +60,10 @@ class AppManger extends EventManager {
     container.appendChild(render(this));
   };
 
+  setPreRender(callback){
+    this.preRender = callback;
+  }
+
   fastRender(name) {
     const node = this.root.findChild(name);
     const render = node.render;
@@ -71,6 +80,11 @@ class AppManger extends EventManager {
     document.body.className = "";
     document.documentElement.id = name;
     document.documentElement.className = "";
+
+    if(this.preRender){
+      this.preRender()
+      this.preRender = null
+    }
 
     container.appendChild(render(this));
   }

@@ -22,7 +22,6 @@ function quizPage(App){
         return
     }
     
-    document.body.className = ""
     const template = document.createElement("template");
 
     template.innerHTML = `
