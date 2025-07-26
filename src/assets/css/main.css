@@ -1,4 +1,4 @@
-@import url('./animalista.css');
+/* @import url('./animalista.css'); */
 
 
 :root {
@@ -360,6 +360,7 @@ input:checked + .slider:before {
   opacity: calc(1* var(--menu-enable));
   cursor: pointer;
   padding: 16px;
+  font-size: larger;
 }
 
 .root-btn:hover{

@@ -36,3 +36,7 @@
 #info .onload .container{
     overflow-y: visible;
 }
+
+#info .root-btn {
+    display: none;
+}
