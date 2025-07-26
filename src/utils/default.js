@@ -12,7 +12,7 @@ const preguntas = shuffleArr(Appimgs.game);
 
 // afecta a toda la App
 const opciones = {
-  menu: 1,            // root-btn
+  menu: 1,            // menuDots
   progreso: 1,
   vidas: 3,
   dificultad: 5,      // cantidad de imagenes distintas
@@ -96,4 +96,5 @@ function preloadImages() {
   }
 }
 
-export { AppMemory, src_obj, src_pop, src_ui, preloadImages };
+export { AppMemory, preloadImages, src_obj, src_pop, src_ui };
+

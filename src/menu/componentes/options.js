@@ -31,6 +31,11 @@ function menuOptions() {
       {id: "vidas", title: "vidas", value: 3, type: "range", max: 12 },
       {id: "intentos",title: "intentos",value: 3,type: "range",min: 2,max: 12,},      
     ], hide:true},
+    { id: "storage", title: "limpiar cache", value: 0, type: "switch", func : ()=>{
+      if(document.querySelector('#storage').checked){
+        localStorage.clear()
+      }
+    } }
 
   ];
 
@@ -74,8 +79,7 @@ function menuOptions() {
 // Handlers
 
 
-function _switchHandler(elem, key){
-
+function _switchHandler(elem, key, funcion = null){
   if(elem.checked){
     memory.set("opciones", {
       ...memory.get("opciones"),
@@ -86,6 +90,9 @@ function _switchHandler(elem, key){
       ...memory.get("opciones"),
       [key]: 0,
     });
+  }
+  if(funcion){
+    funcion()
   }
 }
 

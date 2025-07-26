@@ -227,12 +227,13 @@ function _createSwitchItem(item, _switchHandler){
   const input = container.querySelector('input')
 
 
+  input.id = item.id
   input.checked = opciones[item.id] == 0 ? false : true
   input.value = opciones[item.id] ?? item.value;
   span.textContent = item.title;
 
   input.addEventListener("input", () => {
-    _switchHandler(input, item.id);
+    _switchHandler(input, item.id, item.func);
   });
 
   return container 

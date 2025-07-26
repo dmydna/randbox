@@ -37,6 +37,7 @@
     overflow-y: visible;
 }
 
-#info .root-btn {
+#info #menuDots {
     display: none;
 }
+
