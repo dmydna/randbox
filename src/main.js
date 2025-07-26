@@ -1,4 +1,6 @@
-import page from "https://cdn.skypack.dev/page";
+// import page from "https://cdn.skypack.dev/page";
+
+import page from 'page';
 import renderNav from "./componentes/renderNav.js";
 import AppManger from "./managers/AppManager.js";
 import Navbar from "./managers/Nav.js";

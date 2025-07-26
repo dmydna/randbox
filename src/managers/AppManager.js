@@ -22,7 +22,8 @@ class AppManger extends EventManager {
   _init(){
     if(this.root && this.router){
       this.fastRender("menu");
-      this.router();
+      // this.router();
+      this.router.start()
     }
   }
   _createApp(array) {
