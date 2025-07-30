@@ -1,17 +1,11 @@
-import QuizApp from "../games/quizGame/App.js";
-import { hoverClassToggle } from "../utils/utils.js";
-
-
-// Renders
 import renderBar from '../componentes/renderBar.js';
 import renderPopup from '../componentes/renderPopup.js';
 import renderQuiz from '../componentes/renderQuiz.js';
-
-// Clases
+import QuizApp from "../games/quizGame/App.js";
 import PopupClass from "../games/quizGame/Popup.js";
 import ShuffleImgs from "../games/quizGame/ShuffleImgs.js";
 import memory from "../managers/Memory.js";
-
+import { hoverClassToggle } from "../utils/utils.js";
 
 
 function quizPage(App){
@@ -31,14 +25,8 @@ function quizPage(App){
     </div>
     `
     const container = template.content.cloneNode(true);
-
-    const appNav = App.navbar // class
-    const appHeader = App.headerElem // Node
-
     const gameContainer = container.querySelector('.game-container') 
     const popupContainer = container.querySelector('.popup-container')
-
-
     const Quiz = renderQuiz()
     const Popup = renderPopup()
 
@@ -49,10 +37,6 @@ function quizPage(App){
 
     gameContainer.appendChild(Quiz)
     popupContainer.appendChild(Popup)
-
-
-
-
     const config =   memory.get("opciones")
     const partida =  memory.get("partida_quiz")
 
@@ -77,11 +61,10 @@ function quizPage(App){
     QuizGame.iniciarJuego()
     QuizGame.animarInicio()
 
-
     if(config.memoria == 1){
         QuizGame.resumen = true;
         QuizGame.reanudarPartida(partida)
-        memory.set('continuar_en', '/quiz')
+        memory.set('resume', 'quiz')
     }
 
     // Animaciones

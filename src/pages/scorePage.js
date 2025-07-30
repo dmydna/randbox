@@ -2,9 +2,6 @@ import scoreHeader from '../componentes/scoreHeader.js';
 import memory from '../managers/Memory.js';
 
 
-
-
-
 function createScoreBoardElem(pregunta, respuesta){
   const url = `src/assets/img/objects/${pregunta}.png`
   return (
@@ -53,9 +50,9 @@ function scoreBarAnim(scoreContainer){
 }
 
 
-
-
 function scorePage(App){
+
+
 
   const token = memory.get('token')
   if( token == 'init' || token == 'quiz-loaded'){
@@ -85,16 +82,17 @@ function scorePage(App){
   scoreBarAnim(scoreContainer)
 
 
-
   App.navbar._updateNav([
-    {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.router('/quiz')},
-    {id: 2, ico : 'fi-rr-home',       handler: ()=> App.router('/menu')},
-    {id: 3, ico : 'fi-rr-angle-right',       handler: ()=> App.router('/info')}
+    {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.back()},
+    {id: 2, ico : 'fi-rr-home',       handler: ()=> App.home()},
+    {id: 3, ico : 'fi-rr-angle-right',handler: ()=> App.forward()}
   ])
 
   const partida_quiz = memory.get("partida_quiz").quiz
     
   const scoreBoardElem = createScoreBoard(gameContainer, partida_quiz)
+
+
 
   // Visualiza score items con delay
   if(document.body.classList.contains('onload')){
