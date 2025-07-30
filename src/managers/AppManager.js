@@ -66,11 +66,16 @@ class AppManger extends EventManager {
   refresh(){
     this.paginaAtras  =  this.paginaActual;
     this.paginaActual = this.navigation.current;
+    if(this.navigationType == 'lineal' ||
+      this.navigationType == 'jump'){
+      history.pushState(null, '', this.navigation.current.url);
+    }
     this.fastRender(this.paginaActual.url)
-    history.pushState(null, '', this.navigation.current.url);
+
   }
 
   resume(resumeTo){
+    this.navigationType = 'jump'
     if(resumeTo){
       this.goTo(resumeTo)
     }else{
