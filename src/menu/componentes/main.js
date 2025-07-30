@@ -58,7 +58,7 @@ function menuMain(menu) {
 // Handlers
 
 function _resumeHandler() {
-  App.resume(memory.get('resume'))
+  App.resume(memory.get("resume_to"))
 }
 
 function _verScoreHandler() {

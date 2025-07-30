@@ -50,7 +50,7 @@ function introPage(App){
     if(config.memoria == 1){
         IntroGame.resumen = true;
         IntroGame.reanudarPartida(partida_intro)
-        memory.set('resume', 'intro')
+        memory.set('resume_to', 'intro')
     }
 
 

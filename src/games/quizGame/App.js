@@ -101,6 +101,7 @@ class QuizApp extends EventManager {
     memory.set("partida_quiz", {
       ...memory.get("partida_quiz"),
       ...this.juego.recordar(),
+      resume:   true,
       estado: this.estado,
       pregunta: this.juego.obtenerPreguntaActual(),
     });
@@ -129,25 +130,32 @@ class QuizApp extends EventManager {
   }
 
   salir() {
+
     /* salir a pagina de score */
-    document.body.classList.add("slide-out-left");
-    document.body.addEventListener(
+    const salida = () => { 
+      this.cambiarEstado();
+      this._popup.show(false);
+      this.kill();
+      App.setPreRender(()=>{
+        document.body.classList.add('onload')
+      })
+      App.router("/score");
+    }
+
+    // document.body.classList.add("slide-out-left");
+    
+    if(document.body.classList.contains("slide-out-left")){
+      document.body.addEventListener(
       "animationend",
-      () => {
-        this.cambiarEstado();
-        this._popup.show(false);
-        this.kill();
-        App.setPreRender(()=>{
-          document.body.classList.add('onload')
-        })
-        App.router("/score");
-      },
-      { once: true }
-    );
+      salida,
+      { once: true })
+    }else{
+      salida()
+    }
   }
 
   reanudarPartida(partida) {
-    if (partida.estado == "_") {
+    if (!partida.resume) {
       // importante: caso base de recursion
       return;
     }

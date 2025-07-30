@@ -9,27 +9,31 @@ function _updCssVars() {
 
   const html = document.documentElement;
   // html.style.setProperty("--progress-enable", opciones.progreso * 0.5);
-  html.style.setProperty("--menu-enable", opciones.menu);
+  html.style.setProperty("--menu-btn", opciones.menu);
   html.style.setProperty(
     "--animation-time",
     -1 * opciones.velocidad + 5.5 + "s"
   );
-  html.style.setProperty("--hearts", opciones.vidas);
-  html.style.setProperty(
-    "--continue-menu",
-    opciones.memoria == 1 &&
-      partida_quiz.estado != "_" &&
-      partida_quiz.estado != "user-wins" 
-      || partida_intro.intro_base != '_' &&  
+
+  if(opciones.memoria == 1){
+    html.style.setProperty(
+      "--continue-menu",
+      partida_quiz.resume &&
+      partida_quiz.estado != "user-wins" || 
+      partida_intro.resume &&  
       partida_quiz.estado != "user-wins" 
       ? "flex"
       : "none"
-  );
-  html.style.setProperty(
-    "--score-menu",
-    opciones.memoria == 1 && partida_quiz.estado == "user-wins" ? "flex" : "none"
-  );
-}
+    );
+    html.style.setProperty(
+      "--score-menu",
+      partida_quiz.estado == "user-wins" ? "flex" : "none"
+    );
+  }
+
+  }
+
+
 
 // MENU CREATE ITEMS
 

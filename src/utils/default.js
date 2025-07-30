@@ -12,15 +12,15 @@ const preguntas = shuffleArr(Appimgs.game);
 
 // afecta a toda la App
 const opciones = {
-  menu: 1,            // menuDots
-  progreso: 1,
-  vidas: 3,
+  menu:       1,      // menuDots
+  progreso:   1,
+  vidas:      3,
   dificultad: 5,      // cantidad de imagenes distintas
-  teclado: 1,
-  velocidad: 5,       // velocidad de animacion (3s a 0.5s)
-  memoria: 1,         // retoma partida
-  intentos: 8,        // cantidad de imagenes en total
-  tutorial: 1,        
+  teclado:    1,
+  velocidad:  5,      // velocidad de animacion (3s a 0.5s)
+  memoria:    1,      // retoma partida
+  intentos:   8,      // cantidad de imagenes en total
+  tutorial:   1,        
   mode: 'default',    // modos de juego, setea las opciones 
 };
 
@@ -31,6 +31,7 @@ const quiz = Object.fromEntries(
 );
 
 const partida_quiz = {
+  resume : false,
   quiz: quiz,
   preguntasDisponibles: [],
   intentosDisponibles: 3,
@@ -43,15 +44,15 @@ const partida_quiz = {
 };
 
 const partida_intro = {
-  intro_base              : "_",
-  intro_estado            : "",
-  intro_pregunta          : "",
-  intro_progreso          : "",
-  intro_index             : 0,
-  intro_intentos          : 0,
-  intro_intentosRestantes : 0,
-  intro_quiz              : 0,
-  intro_preguntas         : ""
+  resume            : false,
+  estado            : "",
+  pregunta          : "",
+  progreso          : "",
+  index             : 0,
+  intentos          : 0,
+  intentosRestantes : 0,
+  quiz              : {},
+  preguntas         : ""
 }
 
 
@@ -61,7 +62,7 @@ const AppMemory = {
   partida_quiz:  partida_quiz,
   partida_intro: partida_intro,
   token: "init",                 // restricciones de router
-  resume: null,             // menu continue
+  resume_to: null,               // menu continue
   version: '0.0100'       
 };
 

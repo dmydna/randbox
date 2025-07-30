@@ -78,8 +78,6 @@ function scorePage(App){
   const gameContainer = container.querySelector('.randbox') 
   const scoreContainer = App.headerElem.querySelector('.score-item')
 
-  // Visualiza score con delay
-  scoreBarAnim(scoreContainer)
 
 
   App.navbar._updateNav([
@@ -94,15 +92,17 @@ function scorePage(App){
 
 
 
-  // Visualiza score items con delay
+  // Animaciones onload body
   if(document.body.classList.contains('onload')){
     document.body.classList.remove('onload')
+    // Visualiza score bar con delay
+    scoreBarAnim(scoreContainer)
+    // Visualiza score items con delay
     scoreItemAnim(scoreBoardElem.childNodes)
   }else{
     const giftContainer = container.querySelectorAll('.gift-container')
-    giftContainer.forEach(element => {
-      element.style.opacity = '1'
-    }); 
+    giftContainer.forEach(elem => {elem.style.opacity = '1'}); 
+    scoreContainer.innerHTML = memory.get("partida_quiz").score
   }
 
   

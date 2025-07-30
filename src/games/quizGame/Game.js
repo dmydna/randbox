@@ -1,8 +1,10 @@
-/*  Quiz es un tad que recibe preguntas y respuestas. 
-Dada la respuesta del user notifica si la respuesta es correcta. 
-Quiz es circular y no tiene ninguna limitacion en intentos  */
+/*  QuizManger: 
+-Recibe preguntas y respuestas (un objeto quiz implicito). 
+-Dada la respuesta del user notifica si la respuesta es correcta. 
+-Avanza de forma circular.
+-No tiene limitaciones de intentos */
 
-class Quiz {
+class QuizManager {
   #datos;
   #preguntaActual;
 
@@ -66,7 +68,7 @@ class Quiz {
   }
 }
 
-/* Dado un quiz, JuegoQuiz limita los intentos, agrega un sistema de puntaje, 
+/* Dado un QuizManager, JuegoQuiz limita los intentos, agrega un sistema de puntaje, 
 agrega la capacidad de saltar preguntas del quiz
 */
 
@@ -79,7 +81,7 @@ class JuegoQuiz {
 
 
   constructor(datos, intentos=3) {
-    this.quiz = new Quiz(datos);
+    this.quiz = new QuizManager(datos);
     this.preguntaActual = this.quiz.obtenerPregunta()
     this.progreso = 0;
     this.puntaje  = 0;

@@ -40,7 +40,7 @@ class introGameApp extends EventManager {
       );
       // memory.set("partida_intro", {
       //   ...memory.get("partida_intro"),
-      //   intro_base              : "init",
+      //   base              : "init",
       // })
       this.recordar()
     }
@@ -50,41 +50,41 @@ class introGameApp extends EventManager {
   recordar = () => {
     memory.set("partida_intro", {
       ...memory.get("partida_intro"),
-      intro_base              : "init",
-      intro_estado            : this.estado,
-      intro_pregunta          : this.preguntas[this.index],
-      intro_progreso          : this.progreso.style.width ,
-      intro_index             : this.index,
-      intro_intentos          : this.intentos,
-      intro_intentosRestantes : this.intentosRestantes,
-      intro_quiz              : this.quiz,
-      intro_preguntas         : this.preguntas 
+      resume            : true,
+      estado            : this.estado,
+      pregunta          : this.preguntas[this.index],
+      progreso          : this.progreso.style.width ,
+      index             : this.index,
+      intentos          : this.intentos,
+      intentosRestantes : this.intentosRestantes,
+      quiz              : this.quiz,
+      preguntas         : this.preguntas 
     });
   };
 
   reanudarPartida(partida) {
-    if (partida.intro_base == "_") {
+    if (!partida.resume) {
       // importante: caso base de  recursion
       return;
     }
     if (this.resumen) {
 
-      this.quiz              = partida.intro_quiz;
-      this.intentos          = partida.intro_intentos;
-      this.intentosRestantes = partida.intro_intentosRestantes;
-      this.preguntas         = partida.intro_preguntas
-      this.estado            = partida.intro_estado;
-      this.index             = partida.intro_index;
+      this.quiz =              partida.quiz;
+      this.intentos =          partida.intentos;
+      this.intentosRestantes = partida.intentosRestantes;
+      this.preguntas  =        partida.preguntas
+      this.estado  =           partida.estado;
+      this.index  =            partida.index;
 
       document.body.classList.add('continue')
-      if(partida.intro_progreso == ''){
-        console.log(partida.intro_progreso)
+      if(partida.progreso == ''){
+        console.log(partida.progreso)
         document.body.classList.remove('playGame')
       }else{
         document.body.classList.add('playGame')
       }
 
-      this.progreso.style.width = `${partida.intro_progreso}`;
+      this.progreso.style.width = `${partida.progreso}`;
       this.pregunta.src = `${src_obj}${this.preguntas[this.index]}.png`
       memory.set("partida_quiz", {
         ...memory.get("partida_quiz"),
@@ -157,7 +157,7 @@ class introGameApp extends EventManager {
   actualizarData() {
     // Actualiza cantidad de apariciones
     const pregunta = this.preguntas[this.index];
-    this.quiz[pregunta] = this.quiz[pregunta] ?? 0;
+    this.quiz[pregunta] ?? 0;
     this.quiz[pregunta]++;
 
     memory.set("partida_quiz", {

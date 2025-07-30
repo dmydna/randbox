@@ -23,7 +23,7 @@
   --animation-time: 2.5s;
   --progress-enable: 0.5;
   --popup-enable: 0;
-  --menu-enable: 1;
+  --menu-btn: 1;
   --menu-title : 1;
   --continue-menu: none;
   --score-menu: none;
@@ -358,7 +358,7 @@ input:checked + .slider:before {
   position: absolute;
   top: 10px;
   right: 0;
-  opacity: calc(1* var(--menu-enable));
+  opacity: calc(1* var(--menu-btn));
   cursor: pointer;
   padding: 16px;
   font-size: 25px;
