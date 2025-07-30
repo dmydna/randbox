@@ -1,12 +1,10 @@
 
-import Nav from "../componentes/renderNav.js";
 import memory from "../managers/Memory.js";
-import Navbar from "../managers/Nav.js";
 
 import { hoverClassToggle } from "../utils/utils.js";
 
 
-function infoPage(App){
+function aboutPage(App){
 
    document.body.className = ""
 
@@ -17,7 +15,7 @@ function infoPage(App){
        <div id="game-container">
             <div class="randbox">
                 <img class="box bounce-in-top" src="/src/assets/img/ui/open-box.png">
-                <div class="info-container">
+                <div class="about-container">
                     <h1 class="title">randbox</h1>
                     <div class="descrip">
                        Un juego simple de preguntas y respuestas que explora la frecuencia de aparición.
@@ -39,8 +37,8 @@ function infoPage(App){
    const nav = App.navbar
 
    nav._updateNav([
-        {id: 1, ico : 'fi-rr-angle-left', handler: () => App.router('/score')},
-        {id: 2, ico : 'fi-rr-home',       handler: () => App.router('/menu')},
+        {id: 1, ico : 'fi-rr-angle-left', handler: () => App.back()},
+        {id: 2, ico : 'fi-rr-home',       handler: () => App.home()},
         {id: 3, ico : 'fi-rr-info',       handler: () => window.open( GIT ,'_blank') }
     ])
 
@@ -64,4 +62,4 @@ function infoPage(App){
    return container
 }
 
-export default infoPage
+export default aboutPage
