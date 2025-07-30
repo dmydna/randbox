@@ -77,16 +77,9 @@ const menuPage = (App, startMenu=null) => {
 
         Menu.createMenu(menuContent)
         Menu.box = container.querySelector('.box')
-        Menu.animarInicio()
-
-        
+        Menu.animarInicio()        
         Menu.cambiarMenu('main-menu')
-    
 
-        // container.querySelector('.box').addEventListener('animationend', ()=>{
-
-        //     document.body.classList.remove('onload')
-        // },{once:true})
     }
 
 
