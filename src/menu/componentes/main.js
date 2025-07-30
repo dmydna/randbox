@@ -1,23 +1,24 @@
-import App from "../../main.js";
+import App from "../../App.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon, shuffleArr } from "../../utils/utils.js";
+import popup_menu from "/src/assets/img/popup/menu-game.png";
 
 function menuMain(menu) {
 
   // Agrega Menu Items
   const menuItems = [
-    { id: "play-btn", title: "PLAY", ico: "fi fi-rr-play" },
-    { id: "score-btn", title: "SCORE", ico: "fi fi-rr-trophy-star" },
+    { id: "play-btn",     title: "PLAY",     ico: "fi fi-rr-play" },
+    { id: "score-btn",    title: "SCORE",    ico: "fi fi-rr-trophy-star" },
     { id: "continue-btn", title: "CONTINUE", ico: "fi fi-rr-dice-d10" },
-    { id: "options-btn", title: "OPTIONS", ico: "fi fi-rr-settings" },
-    { id: "help-btn", title: "HELP", ico: "fi fi-rr-info" },
+    { id: "options-btn",  title: "OPTIONS",  ico: "fi fi-rr-settings" },
+    { id: "help-btn",     title: "HELP",     ico: "fi fi-rr-info" },
   ];
 
   const container = document.createElement("section");
   container.classList.add("main-menu");
   const img = document.createElement("img");
 
-  img.src = "/src/assets/img/popup/menu-game.png";
+  img.src = popup_menu;
   img.className = "popup-ico";
   img.height = "100px";
 
@@ -37,13 +38,13 @@ function menuMain(menu) {
           _verScoreHandler();
           break;
         case "continue-btn":
-          _continueGameHandler();
+          _resumeHandler();
           break;
         case "options-btn":
-          menu.cambiarMenu("options");
+          menu.changeMenu("options");
           break;
         case "help-btn":
-          menu.cambiarMenu("help");
+          menu.changeMenu("help");
           break;
       }
     });
@@ -56,9 +57,8 @@ function menuMain(menu) {
 
 // Handlers
 
-function _continueGameHandler() {
-  const continue_game = memory.get('continuar_en')
-  App.router(continue_game);
+function _resumeHandler() {
+  App.resume(memory.get('resume'))
 }
 
 function _verScoreHandler() {
@@ -75,8 +75,11 @@ function _playMenuHandler(menu) {
   memory.reset("partida_intro");
   memory.set("token", "init");
 
+
+  // window.dispatchEvent();
+  
   App.setPreRender( ()=>{
-    document.body.classList.add('onload')
+     document.body.classList.add('onload')
   })
 
   // Genera Partida aleatoria basada en dificultad

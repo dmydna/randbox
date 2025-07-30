@@ -11,7 +11,7 @@ import {
 
 function menuOptions() {
 
-  memory.refresh()
+  // memory.refresh()
   const cantPreg = memory.get("preguntas").length;
 
   const opcionesItems = [

@@ -1,14 +1,11 @@
-import { pageManager } from "../managers/PageManajer.js";
+import { NavigationMenu } from "../managers/NavigationMenu.js";
 
-class Menu extends pageManager {
-  constructor(elem) {
-    super();
-    this.root = null;
-    this.elem = elem.querySelector(".popup");
-    this.levels = [];
-    this.nav = null;
-    this.estado = "hidden";
-    this.box ;
+class Menu  {
+  constructor({elem, nav, box}) {
+    this.menu  = new NavigationMenu()
+    this.elem  = elem
+    this.nav   = nav;
+    this.box   = box
   }
 
   animarInicio() {
@@ -23,75 +20,58 @@ class Menu extends pageManager {
 
 
   createMenu = (menuData) => {
-    this.root = this._createNode(menuData);
-    this.menuActual = this.root;
-
-    const navContent = [
-      { id: 1, ico: "fi-rr-angle-left", handler: this.atras },
+    this.menu._init(menuData);
+    this.nav._updateNav([
+      { id: 1, ico: "fi-rr-angle-left",       handler: this.back },
       { id: 2, ico: "fi-rr-settings-sliders", handler: this.home },
-      { id: 3, ico: "fi-rr-angle-right", handler: this._siguiente },
-    ];
-    this.nav._updateNav(navContent);
+      { id: 3, ico: "fi-rr-angle-right" },
+    ]);
+    this.refresh()
   };
 
-  killmenu() {
-    document.body.classList = "";
+  refresh(){
+    document.body.classList.remove(this.currentMenu);     // old-menu
+    this.currentMenu = this.menu?.currentMenu?.data       // update-menu
+    document.body.classList.add(this.currentMenu);        // new-menu
   }
 
-  cambiarMenu = (name) => {
-    this.showMenu(true)
-    this._cambiarMenu(name);
-    const newMenu = this.menuActual.data;
-    if (this.menuActual != this.root) {
-      const oldMenu = this.menuActual.parent.data;
-      document.body.classList.remove(oldMenu);
-      document.body.classList.remove(this.root.data);
+
+  changeMenu = (name) => {
+    if(this.menu?._goTo(name)){
+      this.refresh()
+      this.showMenu(true)
+      this.render();
     }
-    document.body.classList.add(newMenu);
-    this.renderMenu();
   };
-  atras = () => {
-    if (this.menuActual.parent) {
-      const newMenu = this.menuActual.parent.data;
-      const oldMenu = this.menuActual.data;
-      document.body.classList.add(newMenu);
-      if (newMenu != oldMenu) {
-        document.body.classList.remove(oldMenu);
-      }
+
+  back = () => {
+    if(this.menu?._back()){
+      this.refresh()
+      this.render();
     }
-    this._atras(); // actualizo struct
-    this.renderMenu();
   };
+
 
   home = () => {
-    if (this.menuAtras) {
-      document.body.classList.remove(this.menuAtras.data);
+    if(this.menu){
+      this.menu.currentMenu = this.menu.root
+      this.refresh()
+      this.render();
     }
-    document.body.classList.remove(this.menuActual.data);
-    document.body.classList.add(this.root.data);
-    this.menuActual = this.root;
-    this.renderMenu();
   };
 
-  cambiarEstado(newState) {
-    const oldState = this.menuActual.data;
-    document.body.classList.remove(oldState);
-    document.body.classList.add(newState);
-  }
 
-  renderMenu = () => {
+  render = () => {
     const container = this.elem;
     container.innerHTML = "";
-    const func = this.menuActual.render;
-    container.appendChild(func(this));
+    const render = this.menu.currentMenu.render;
+    container.appendChild(render(this));
   };
 
   showMenu(bool = true) {
     if (bool) {
       document.body.classList.add("popup-active");
-      document.body.classList.add(this.root.data);
     } else {
-      document.body.classList.remove(this.root.data);
       document.body.classList.remove("popup-active");
       this.elem.style.display = "none";
     }

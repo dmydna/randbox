@@ -1,6 +1,6 @@
 import EventManager from "./Events";
 
-class pageItem {
+class menuNode {
 
   constructor(name, render, data=null) {
     this.name = name;
@@ -30,16 +30,22 @@ class pageItem {
   }
 }
 
-class pageManager extends EventManager {
+class NavigationMenu extends EventManager {
   
   constructor() {
     super();
     this.root;
-    this.menuActual;
+    this.currentMenu;
+  }
+
+
+  _init(nodeData){
+    this.root = this._createNode(nodeData)
+    this.currentMenu = this.root
   }
 
   _createNode = (nodeData) => {
-    const node = new pageItem(nodeData.name, nodeData.render, nodeData.estado);
+    const node = new menuNode(nodeData.name, nodeData.render, nodeData.estado);
     if (nodeData.children) {
       nodeData.children.forEach((childData) => {
         const childNode = this._createNode(childData);
@@ -49,16 +55,22 @@ class pageManager extends EventManager {
     return node;
   };
 
-  _cambiarMenu = (name) => {
-    const menu = this.root.findChild(name);
-    this.menuActual = menu;
+  _goTo = (name) => {
+    const found = this.root.findChild(name);
+    if(found){
+      this.currentMenu = found;
+      return true
+    }return false
   };
 
-  _atras = () => {
-    if (this.menuActual.parent) {
-      this.menuActual = this.menuActual.parent;
-    }
+  _back = () => {
+    if (this.currentMenu.parent) {
+      this.currentMenu = this.currentMenu.parent;
+      return true
+    } return false
   };
+
 }
 
-export { pageItem, pageManager };
+export { NavigationMenu, menuNode };
+

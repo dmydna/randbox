@@ -61,11 +61,11 @@ const AppMemory = {
   partida_quiz:  partida_quiz,
   partida_intro: partida_intro,
   token: "init",                 // restricciones de router
-  continuar_en: "_",             // menu continue
+  resume: null,             // menu continue
   version: '0.0100'       
 };
 
-/*Nota: memoryManager.check
+/*Nota: MemoryManagerEx.check
 para las claves , se checkea que coincidan  AppStorage con AppMemory
 para los valores, se checkea la version  AppStorage con AppMemory
 */
@@ -95,6 +95,16 @@ function preloadImages() {
     });
   }
 }
+
+
+// const navigationEvent = new CustomEvent("navigation:init", {
+//   detail: {
+//     type: "internal", // o "external"
+//     from: "/menu",
+//     to: "/juego"
+//   }
+// })
+
 
 export { AppMemory, preloadImages, src_obj, src_pop, src_ui };
 
