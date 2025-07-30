@@ -1,6 +1,6 @@
-import MemoryManager from "./MemoryManager.js";
+import MemoryManagerEx from "./MemoryManager.js";
 
-class EventManager extends MemoryManager {
+class EventManager extends MemoryManagerEx {
   constructor() {
     super();
     this.currentHandlers = [];
