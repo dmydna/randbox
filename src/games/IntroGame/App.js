@@ -1,4 +1,4 @@
-import App from "../../main.js";
+import App from "../../App.js";
 import EventManager from "../../managers/Events.js";
 import memory from "../../managers/Memory.js";
 import { src_obj } from "../../utils/default.js";

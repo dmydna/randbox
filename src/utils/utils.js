@@ -1,4 +1,3 @@
-import App from "../main";
 
 
 function hoverClassToggle(elem, secondary, targetElem = null) {
@@ -56,4 +55,5 @@ function decrypt(text, key) {
   return res;
 }
 
-export { hoverFlatIcon, hoverClassToggle, shuffleArr, encrypt, decrypt };
+export { decrypt, encrypt, hoverClassToggle, hoverFlatIcon, shuffleArr };
+
