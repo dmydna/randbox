@@ -1,11 +1,12 @@
 import { NavigationMenu } from "../managers/NavigationMenu.js";
 
 class Menu  {
-  constructor({elem, nav, box}) {
+  constructor() {
     this.menu  = new NavigationMenu()
-    this.elem  = elem
-    this.nav   = nav;
-    this.box   = box
+    this.elem  
+    this.nav   
+    this.box       
+    this.estado = "root"
   }
 
   animarInicio() {
@@ -18,14 +19,19 @@ class Menu  {
     }
   }
 
-
-  createMenu = (menuData) => {
-    this.menu._init(menuData);
+  init({elem, nav, box}){
+    this.elem = elem
+    this.nav = nav 
+    this.box = box
     this.nav._updateNav([
       { id: 1, ico: "fi-rr-angle-left",       handler: this.back },
       { id: 2, ico: "fi-rr-settings-sliders", handler: this.home },
       { id: 3, ico: "fi-rr-angle-right" },
     ]);
+  }
+
+  createMenu = (menuData) => {
+    this.menu._init(menuData);
     this.refresh()
   };
 
@@ -33,6 +39,7 @@ class Menu  {
     document.body.classList.remove(this.currentMenu);     // old-menu
     this.currentMenu = this.menu?.currentMenu?.data       // update-menu
     document.body.classList.add(this.currentMenu);        // new-menu
+
   }
 
 

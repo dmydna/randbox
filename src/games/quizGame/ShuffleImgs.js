@@ -77,6 +77,12 @@ class ShuffleImgsAnim {
     }
   };
 
+  async setPromise(){
+    return new Promise((resolve) => {
+      this.promise = resolve;
+    });
+  }
+
   detenerAnimacion = () => {
     if (this.intervalo) {
       clearInterval(this.intervalo);

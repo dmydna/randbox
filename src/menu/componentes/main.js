@@ -1,28 +1,32 @@
 import App from "../../App.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon, shuffleArr } from "../../utils/utils.js";
-import popup_menu from "/src/assets/img/popup/menu-game.png";
+import root_menu from "/src/assets/img/popup/menu-game.png";
+import pause_menu from "/src/assets/img/popup/walkman.png";
+
 
 function menuMain(menu) {
 
   // Agrega Menu Items
   const menuItems = [
-    { id: "play-btn",     title: "PLAY",     ico: "fi fi-rr-play" },
-    { id: "score-btn",    title: "SCORE",    ico: "fi fi-rr-trophy-star" },
-    { id: "continue-btn", title: "CONTINUE", ico: "fi fi-rr-dice-d10" },
-    { id: "options-btn",  title: "OPTIONS",  ico: "fi fi-rr-settings" },
-    { id: "help-btn",     title: "HELP",     ico: "fi fi-rr-info" },
+    { id: "play-btn",     title: "PLAY",     ico: "fi fi-rr-play"         },
+    { id: "score-btn",    title: "SCORE",    ico: "fi fi-rr-trophy-star"  },
+    { id: "continue-btn", title: "CONTINUE", ico: "fi fi-rr-dice-d10"     },
+    { id: "options-btn",  title: "OPTIONS",  ico: "fi fi-rr-settings"     },
+    { id: "help-btn",     title: "HELP",     ico: "fi fi-rr-info"         },
+    { id: "exit-btn",     title: "EXIT",     ico: "fi fi-rr-sign-out-alt" },
   ];
 
   const container = document.createElement("section");
   container.classList.add("main-menu");
+
   const img = document.createElement("img");
 
-  img.src = popup_menu;
   img.className = "popup-ico";
+  img.src = memory.get('menu').pause == 1 ? pause_menu : root_menu
   img.height = "100px";
-
   container.appendChild(img);
+
   const ul = document.createElement("ul");
   ul.classList.add("menu");
 
@@ -46,11 +50,16 @@ function menuMain(menu) {
         case "help-btn":
           menu.changeMenu("help");
           break;
+        case "exit-btn":
+          _exitHandler(menu,container);
+          break;
       }
     });
     ul.appendChild(li);
   });
   container.appendChild(ul);
+
+  document.dispatchEvent(new CustomEvent("onChangeMenu"))
 
   return container;
 }
@@ -58,12 +67,32 @@ function menuMain(menu) {
 // Handlers
 
 function _resumeHandler() {
-  App.resume(memory.get("resume_to"))
+  App.resume(memory.get("menu").resume_to)
 }
 
 function _verScoreHandler() {
   App.router("/score");
 }
+
+function _exitHandler(menu, container) {
+  App.setPreRender(()=>{
+    document.body.classList.add('onload');
+  })
+
+  memory.set('menu', {
+    ...memory.get('menu'),
+    pause: 0,
+  })
+
+  document.body.addEventListener('animationend', ()=>{
+    document.body.classList.remove('onload');
+  },{once:true})
+  
+  App.home();
+
+}
+
+
 
 function _playMenuHandler(menu) {
   // Inicia nueva partida con preguntas aleatorias
@@ -84,7 +113,7 @@ function _playMenuHandler(menu) {
 
   // Genera Partida aleatoria basada en dificultad
   const opciones = memory.get("opciones");
-  const partida = memory.get("partida_quiz");
+  const partida  = memory.get("partida_quiz");
 
   const preguntas = Array.from(memory.get("preguntas"));
   const quiz = Object.fromEntries(
@@ -107,8 +136,10 @@ function _playMenuHandler(menu) {
     }, 2000);
   }
 
-
-
+  memory.set('menu', {
+    ...memory.get('menu'),
+    pause: 1,
+  })
 
   App.router("/intro");
 }

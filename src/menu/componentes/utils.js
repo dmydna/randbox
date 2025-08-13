@@ -1,3 +1,4 @@
+import App from "../../App.js";
 import memory from "../../managers/Memory";
 
 // CSS CONFIG
@@ -9,7 +10,7 @@ function _updCssVars() {
 
   const html = document.documentElement;
   // html.style.setProperty("--progress-enable", opciones.progreso * 0.5);
-  html.style.setProperty("--menu-btn", opciones.menu);
+  html.style.setProperty("--menu-btn", opciones.menu == 1 ? 'block' : 'none');
   html.style.setProperty(
     "--animation-time",
     -1 * opciones.velocidad + 5.5 + "s"
@@ -210,6 +211,37 @@ function _createGroupRadio(item, _groupHandler){
 
 
 
+// // Switchers
+
+function _createButtonItem(item, _switchHandler){
+  const opciones = memory.get("opciones");
+  const template = document.createElement("template");
+
+  template.innerHTML = `
+  <li class="menu-options-item">
+    <span class='title-options'></span>
+    <div class="button-menu-item" checked>
+      <i class="${item.data.class}" ></i>
+    </div>
+  </li>`
+
+  const container = template.content.cloneNode(true);
+
+  const span  = container.querySelector('.title-options')
+  const div = container.querySelector('.button-menu-item')
+
+
+  div.id = item.id
+  div.checked = opciones[item.id] == 0 ? false : true
+  span.textContent = item.title;
+
+  div.addEventListener("click", () => {
+    _switchHandler(div, item.id, item.func);
+  });
+
+  return container 
+}
+
 // Switchers
 
 function _createSwitchItem(item, _switchHandler){
@@ -277,6 +309,6 @@ function _createRangeItem(item, _rangeHandler) {
 
 export {
   _createGroup, _createGroupRadio, _createRangeItem, _createSwitchItem,
-  _updCssVars
+  _updCssVars, _createButtonItem
 };
 

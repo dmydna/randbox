@@ -82,6 +82,12 @@ const App = function(){
   });
   
   i.addEventListener('click', ()=>{
+    App.setPreRender(()=>{
+      memory.set('menu', {
+        ...memory.get('menu'),
+        pause: 1,
+      })
+    })
     App.router('/menu')
   })
 

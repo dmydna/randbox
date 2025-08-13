@@ -136,8 +136,14 @@
 } 
 
 #menu 
-.continue-btn{
-  display: var(--continue-menu)!important;
+.menu .continue-btn{
+  /* display: var(--continue-menu)!important;  */
+  display: none;
+}
+
+
+#menu .menu .exit-btn{
+  display: none;
 }
 
 #menu 
@@ -203,6 +209,7 @@
 .help-menu {
   min-width: 300px;
 }
+
 
 
 #menu 
@@ -281,6 +288,22 @@
 
 
 
+#menu .menu-pause .continue-btn, 
+#menu .menu-pause .exit-btn{
+  display: block;
+}
+#menu .menu-pause .play-btn,
+#menu .menu-pause .options-btn {
+  display: none;
+}
+
+#menu .button-menu-item {
+  font-size: 2px;
+}
+
+#menu .menu-pause .popup-ico{
+  animation-name: heartbeat;
+}
 
 /*Intancia tutorial desde otras paginas*/
 

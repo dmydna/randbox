@@ -62,8 +62,8 @@ const AppMemory = {
   partida_quiz:  partida_quiz,
   partida_intro: partida_intro,
   token: "init",                 // restricciones de router
-  resume_to: null,               // menu continue
-  version: '0.0100'       
+  menu : {resumen_to: null, pause: 0},
+  version: '0.0111'       
 };
 
 /*Nota: MemoryManagerEx.check
@@ -74,7 +74,7 @@ para los valores, se checkea la version  AppStorage con AppMemory
 
 const src_obj = "src/assets/img/objects/";
 const src_pop = "src/assets/img/popup/";
-const src_ui = "src/assets/img/ui/";
+const src_ui  = "src/assets/img/ui/";
 
 // Precargar Imagenes
 
@@ -98,13 +98,7 @@ function preloadImages() {
 }
 
 
-// const navigationEvent = new CustomEvent("navigation:init", {
-//   detail: {
-//     type: "internal", // o "external"
-//     from: "/menu",
-//     to: "/juego"
-//   }
-// })
+
 
 
 export { AppMemory, preloadImages, src_obj, src_pop, src_ui };

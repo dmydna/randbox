@@ -1,323 +1,96 @@
-import App from "../../App.js";
-import EventManager from "../../managers/Events.js";
+
 import memory from "../../managers/Memory.js";
-import { src_obj } from "../../utils/default.js";
-import JuegoQuiz from "./Game.js";
+import renderBar from "../../componentes/renderBar.js";
+import renderPopup from '../../componentes/renderPopup.js';
+import renderQuiz from '../../componentes/renderQuiz.js';
+import QuizGameUI from './GameUI.js'
+import PopupClass from "./Popup.js";
+import ShuffleImgs from "./ShuffleImgs.js";
+import { hoverClassToggle } from "../../utils/utils.js";
 
-// Maneja la interfaz del juego
-// JuegoQuizUI -> JuegoQuiz -> Quiz
+const QuizGameApp = async (App, container) => {
 
-class QuizApp extends EventManager {
-  constructor(preguntas, cantVidas, gameElem) {
-    super();
-    this.estado = null;
-    this.juego = new JuegoQuiz(preguntas, cantVidas);
-    this.respuestaActual = 0;
-    this.preguntas = Object.keys(preguntas);
-    this.resumen = false;
-    this._tablero = gameElem;
-    this.teclado = false;
-  }
+    const gameContainer  = container.querySelector('.game-container') 
+    const popupContainer = container.querySelector('.popup-container')
+    const Quiz = renderQuiz()
+    const Popup = renderPopup()
 
-  createApp({_animations,_controls,_popup, _progress}) {
-    this._animations = _animations;
-    this._controlls  = _controls;
-    this._popup      = _popup;
-    this._progress   = _progress;
-  }
 
-  _init() {
-    this.box = this._tablero.querySelector(".box");
-    this._animations._init(this.preguntas, this.box);
-    this._popup._init(this);
-    this.puntos = this._tablero.querySelector(".points");
-    this.respUser = this._tablero.querySelector(".user-reply");
-    this.respUser.innerHTML = 0;
-  }
+    gameContainer.style.width = '100%'
+    App.headerElem.appendChild(renderBar())
 
-  iniciarJuego() {
-    this._controlls._updateNav([
-      { id: 1, ico: "fi-rr-refresh", handler: this.AnswerReset },
-      { id: 2, ico: "fi-rr-social-network", handler: this.manejarRespuestaUsuario },
-      { id: 3, ico: "fi-rr-plus", handler: this.AnswerInc },
-    ]);
-    // incializa la primer pregunta
-    this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
-    this._addEvent(this.respUser, "click", this.AnswerInc);
-    this._addEvent(this.box, "click", this.avanzarJuego);
-    this._addEvent(this._popup.btn, "click", this.terminarPartida);
-    if (this.teclado) {
-      this._addEvent(document, "keydown", (e) => {
-        this.keyboardHander(e);
-      });
+
+    gameContainer.appendChild(Quiz)
+    popupContainer.appendChild(Popup)
+    const config =   memory.get("opciones")
+    const partida =  memory.get("partida_quiz")
+
+    // Incializo Quiz
+
+    const QuizGame =   new QuizGameUI({...partida.quiz}, config.vidas, gameContainer)
+
+    QuizGame.createApp({
+        _animations: new ShuffleImgs(),
+        _controls: App.navbar,
+        _popup: new PopupClass(popupContainer),
+        _progress: App.headerElem.querySelector('.progress-bar')
+    })
+
+
+
+    // Comienza Quiz
+    container.onload = QuizGame._init()
+
+    // Carga config
+    if(config.teclado == 1){
+        QuizGame.teclado = true
     }
-  }
-
-  keyboardHander(e) {
-    switch (e.key) {
-      case " ":
-        e.preventDefault();
-        this.AnswerInc();
-        break;
-      case "Enter":
-        this.manejarRespuestaUsuario();
-        break;
-      case "Back":
-        this.AnswerReset();
-        break;
-      case "h":
-        this.avanzarJuego();
-        break;
-    }
-  }
-
-  animarInicio() {
-    // document.onload = document.body.classList.add("onload");
-    if(document.documentElement.classList.contains("onload")){
-      this.box.addEventListener(
-        "animationend",() => {document.documentElement.classList.remove("onload");},
-        { once: true }
-      );
-    }
-  }
-
-
-  AnswerInc = (e) => {
-
-    if(e){ e.stopPropagation() }
-
-    this.respUser.innerHTML++;
-    memory.set("partida_quiz", {
-      ...memory.get("partida_quiz"),
-      respuesta: Number(this.respUser.innerHTML),
-    });
-  };
-
-  AnswerReset = () => {
-    this.respUser.innerHTML = 0;
-  };
-
-  recordar = () => {
-    memory.set("partida_quiz", {
-      ...memory.get("partida_quiz"),
-      ...this.juego.recordar(),
-      resume:   true,
-      estado: this.estado,
-      pregunta: this.juego.obtenerPreguntaActual(),
-    });
-  };
-
-  async cambiarEstado(newState) {
-    // elimina estado anterior y actualiza
-    const oldState = this.estado;
-    document.body.classList.remove(oldState);
-    if (newState == null) {
-      return;
-    }
-    this.estado = newState;
-    document.body.classList.add(newState);
-    this._popup.actualizar();
-
-    if (this.resumen) {
-      this.recordar();
-    }
-    return;
-  }
-
-  kill() {
-    this._removeAllEvents();
-    this._controlls._removeAllEvents();
-  }
-
-  salir() {
-
-    /* salir a pagina de score */
-    const salida = () => { 
-      this.cambiarEstado();
-      this._popup.show(false);
-      this.kill();
-      App.setPreRender(()=>{
-        document.body.classList.add('onload')
-      })
-      App.router("/score");
+    if(config.memoria == 1){
+        QuizGame.resumen = true;
+        QuizGame.reanudarPartida(partida)
+        memory.set( 'menu', { ...memory.get('menu'), resume_to: 'quiz' } )
     }
 
-    // document.body.classList.add("slide-out-left");
-    
-    if(document.body.classList.contains("slide-out-left")){
-      document.body.addEventListener(
-      "animationend",
-      salida,
-      { once: true })
-    }else{
-      salida()
+    // Animaciones
+    const box     = container.querySelector('.box')
+    const repUser = container.querySelector('.user-reply')
+
+    hoverClassToggle(box, 'box heartbeat')
+    hoverClassToggle(repUser, 'user-reply heartbeat')
+
+    // Expande zonas clickeables
+    const boxClicker = container.querySelector('.box-clicker')
+    const respUserClicker = container.querySelector('.respUser-clicker')
+
+
+    boxClicker.addEventListener('click' ,(e)=>{
+        e.preventDefault()
+        box.click()
+    })
+
+    respUserClicker.addEventListener('click', (e)=>{
+        e.preventDefault()
+        repUser.click()
+    })
+
+
+    if(config.tutorial == 1){
+        setTimeout(() => {
+            App.router("/tutorial")
+            const html = document.documentElement;
+            html.classList.add('tutorial-from-quiz')
+            memory.set('opciones',{
+                ...memory.get('opciones'),
+                tutorial : 0
+            })
+          }, 2000);
     }
-  }
 
-  reanudarPartida(partida) {
-    if (!partida.resume) {
-      // importante: caso base de recursion
-      return;
-    }
+    await QuizGame.jugar() // espera que termine partida
 
-    if (this.resumen) {
-      if (partida.estado == "user-loses") {
-        this.cambiarEstado("user-loses");
-        this._popup.show();
-      } else if (partida.estado == "user-wins") {
-        this.cambiarEstado("user-wins");
-        this._popup.show();
-      }
-
-      for (let i = 0; i < this.juego.intentosRestantes - partida.vidas; i++) {
-        this._popup.quitarCorazones();
-      }
-
-      this.juego.retomarPartida(partida);
-      this._progress.style.width = `${partida.progreso}%`;
-      this.box.src = this.__srcHandler(`${partida.pregunta}`);
-      this.estado = partida.estado;
-      this.respUser.innerHTML = partida.respuesta;
-    }
-  }
-
-  terminarPartida = () => {
-    if (this.estado == "user-loses") {
-      this.jugarOtraVez();
-    }
-    if (this.estado == "user-wins") {
-      this.salir();
-    }
-  };
-
-  async jugarOtraVez() {
-    this.juego.intentarDeNuevo();
-    this.cambiarEstado("user-restart-game");
-    await this._popup.reiniciar();
-    // REINCIA JUEGO
-    this.AnswerReset();
-    this._progress.style.width = 0;
-    this.box.src = this.__srcHandler(this.juego.obtenerPreguntaActual());
-    this.cambiarEstado();
-    this._popup.show(false);
-    // this.resumen = false
-  }
-
-  userPierde() {
-    this.cambiarEstado("user-loses");
-  }
-
-  userGana() {
-    this.cambiarEstado("user-wins");
     memory.set("token", "score-loaded");
-  }
-
-  userRespondeBien() {
-    this.puntos.innerHTML = `+ ${this.juego.incPuntaje()}`;
-    this._progress.style.width = ` ${this.juego.getProgreso()}%`;
-    this.cambiarEstado("user-reply-succeeded");
-    this.userRespondeTimeout();
-  }
-
-  userRespondeMal() {
-    this.AnswerReset();
-    this.puntos.innerHTML = `- ${this.juego.decPuntaje()}`;
-    this.cambiarEstado("user-reply-failed");
-    this.userRespondeTimeout();
-  }
-
-  verificarRespuestaUsuario() {
-    return this.juego.verificarRespuesta(this.respuestaActual);
-  }
-
-  userRespondeTimeout() {
-    setTimeout(() => {
-      this.cambiarEstado();
-      this._popup.show(false);
-    }, 1200);
-  }
-
-  avanzarJuego = async (e) => {
-
-    if(e){ e.stopPropagation() }
-
-    const siguientePregunta = this.juego.siguientePregunta();
-
-    const shufflePromise = async () => {
-      return new Promise((resolve) => {
-        shuffleImgs.promise = resolve;
-        shuffleImgs.shuffleAnimate(null, 2000);
-      });
-    };
-
-    const shuffleImgs = this._animations;
-    this.AnswerReset(); // cantAp -> 0
-
-    if (this.juego.haTerminado()) {
-      /* Si el juego termina no cambia de pregunta */
-      return false;
-    }
-
-    /* Pasa a la sig pregunta con una animacion shuffle*/
-    if (shuffleImgs) {
-      document.body.style.pointerEvents = "none";
-      await shufflePromise();
-      document.body.style.pointerEvents = "auto";
-    }
-
-    /* por default pasa a la sig pregunta */
-    this.box.src = this.__srcHandler(siguientePregunta);
-
-    if (this.resumen) {
-      this.recordar();
-    }
-    
-    this.guardarScore();
-
-    return true;
-  };
-
-  __srcHandler(respuesta) {
-    return ` ${src_obj}${respuesta}.png`;
-  }
-
-  manejarRespuestaUsuario = () => {
-    this.respuestaActual = this.respUser.innerHTML;
-    this._popup.show(true);
-    if (this.verificarRespuestaUsuario()) {
-      if (!this.juego.haTerminado()) {
-        this.userRespondeBien();
-        this.avanzarJuego();
-      } else {
-        this.finDelJuego();
-      }
-    } else {
-      if (!this.juego.haTerminado()) {
-        this.userRespondeMal();
-      } else {
-        this.finDelJuego();
-      }
-    }
-  };
-
-  finDelJuego() {
-    if (this.juego.haPerdido()) {
-      this.userPierde();
-    } else {
-      this.userGana();
-    }
-    this.guardarScore();
-  }
-  guardarScore() {
-    memory.set("partida_quiz", {
-      ...memory.get("partida_quiz"),
-      score: this.juego.puntaje,
-    });
-  }
+    App.setPreRender(()=>{document.body.classList.add('onload')})
+    App.forward();
 }
 
-// TODO :
-// crear gameManager General que se encarga de pasar informacion
-// cuando el juego termino
-
-export default QuizApp;
+export default QuizGameApp

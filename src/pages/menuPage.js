@@ -1,10 +1,19 @@
 import memory from "../managers/Memory.js";
-import MenuApp from "../menu/App.js";
-import menuControls from "../menu/componentes/controls.js";
-import menuHelp from "../menu/componentes/help.js";
-import menuMain from "../menu/componentes/main.js";
-import menuOptions from "../menu/componentes/options.js";
-import menuTutorial from "../menu/componentes/tutorial.js";
+import Menu from "../menu/Menu.js";
+
+function menuPause(){
+  const memory_config = memory.get("opciones");
+  const memory_menu = memory.get("menu");
+  if(memory.get('token') != 'score-loaded'){
+    if(memory_config.menu == 1 && 
+     memory_config.memoria == 1  && 
+     memory_menu.pause == 1 ){
+      document.body.classList.add('menu-pause')
+    }else{
+      document.body.classList.remove('menu-pause')
+    }
+  }
+}
 
 function menuPage(App, startMenu = null) {
 
@@ -21,33 +30,18 @@ function menuPage(App, startMenu = null) {
   const container = template.content.cloneNode(true);
   const popupContainer = container.querySelector(".popup");
 
-  const Menu = new MenuApp({
+
+
+  Menu.init({
     elem: popupContainer, 
     nav: App.navbar, 
     box: container.querySelector('.box')
   });
 
 
-  const menuContent = {
-    name: "main-menu",
-    estado: "main-menu-active",
-    render: menuMain, children: [
-      { name: "continue", estado: "continue-menu-active" },
-      { name: "play", estado: "play-game" },
-      { name: "options", estado: "options-menu-active", render: menuOptions },
-      { name: "help", estado: "help-menu-active", render: menuHelp, 
-        children: [
-          {name: "tutorial",estado: "resumen-submenu-active",render: menuTutorial},
-          {name: "controls",estado: "controls-submenu-active",render: menuControls},
-        ],
-      },
-    ],
-  };
-
   if (startMenu) {
     // Renderiza pagina basada en menu
     // muestra instancia unica de menu
-    Menu.createMenu(menuContent);
     Menu.showMenu(true);
     Menu.changeMenu(startMenu);
     document.documentElement.id = "menu";
@@ -61,14 +55,15 @@ function menuPage(App, startMenu = null) {
     },{ once: true });
 
     popupContainer.appendChild(i);
+
   } else {
     // Inicia por default main
     // Animacion de inicio
-    const config = memory.get("opciones");
-    Menu.createMenu(menuContent);
     Menu.box = container.querySelector(".box");
     Menu.animarInicio();
     Menu.changeMenu("main-menu");
+    menuPause()
+    // inicia en modo pausa
   }
 
   return container;
