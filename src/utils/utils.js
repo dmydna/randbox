@@ -1,3 +1,5 @@
+
+
 function hoverClassToggle(elem, secondary, targetElem = null) {
   const target = targetElem || elem;
   const primary = target.className;
@@ -53,4 +55,5 @@ function decrypt(text, key) {
   return res;
 }
 
-export { hoverFlatIcon, hoverClassToggle, shuffleArr, encrypt, decrypt };
+export { decrypt, encrypt, hoverClassToggle, hoverFlatIcon, shuffleArr };
+

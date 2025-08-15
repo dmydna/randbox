@@ -1,16 +1,14 @@
 import { AppMemory } from "../utils/default.js";
 
-
-/*Nota: MemoryManagerEx
-funciona como memoryManger, pero usa el evento 'beforeunload'
-para hacer lecturas y escrituras minimas al localStorage,
-elimina la clave durante la session
+/*Nota: MemoryManager.check
+para las claves , se checkea que coincidan  AppStorage con AppMemory
+para los valores, se checkea la version  AppStorage con AppMemory
 */
 
-class MemoryManager{
+class MemoryManager {
   constructor() {
-    this.storage = "appxStorage" // define clave de local storage 
-    this._Default = AppMemory;   // es el valor de appStorage por default 
+    this.storage = "appStorage" // define clave de local storage 
+    this._Default = AppMemory; // es el valor de appStorage por default 
     this._Data = this.load();
   }
 
@@ -35,7 +33,7 @@ class MemoryManager{
     keys2.every(key => keys1.includes(key));
 
     if(!mismaKeys){
-      this._Data =  JSON.parse(JSON.stringify(this._Default));
+      this._Data = localStorage.setItem(this.storage, JSON.stringify(this._Default));
       console.log("AppStorage corrupted fix!")
       return this._Data
     }
@@ -44,17 +42,16 @@ class MemoryManager{
       return this._Data
     }else{
       console.log("AppStorage actualizado!")
-      this._Data =  JSON.parse(JSON.stringify(this._Default));
+      this._Data = localStorage.setItem(this.storage, JSON.stringify(this._Default));
       return this._Data
     }
   }
   load() {
     try {
-      const state = JSON.parse(localStorage.getItem(this.storage)) || 
-      JSON.parse(JSON.stringify(this._Default))
-      this.clear(true) // limpia localStorage durante la session
-      return state
-
+      return (
+        JSON.parse(localStorage.getItem(this.storage)) ||
+        JSON.parse(JSON.stringify(this._Default)) )
+      ;
     } catch (e) {
       console.error("Error al cargar localStorage, usando Default:", e);
       return JSON.parse(JSON.stringify(this._Default));
@@ -66,10 +63,12 @@ class MemoryManager{
       throw new Error("No se puede guardar el objeto en sí mismo como valor");
     }
     this._Data[name] = value;
+    this.refresh();
   }
 
 
   get(name) {
+    this._Data = this.load();
     return this._Data[name];
   }
 
@@ -79,11 +78,12 @@ class MemoryManager{
 
   fullreset() {
     this._Data = JSON.parse(JSON.stringify(this._Default));
+    this.refresh();
   }
 
   clear(bool) {
     if (bool) {
-        localStorage.removeItem(this.storage)
+      localStorage.removeItem(this.storage)
     }
   }
 }

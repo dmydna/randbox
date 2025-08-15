@@ -6,6 +6,18 @@ class Popup {
     this.elem = elem;
     this.contexto = null;
     this.estado = "hidden";
+    this.promise = null
+  }
+
+  async setPromise(){
+    return new Promise((resolve) => {
+      this.promise = resolve;
+    });
+  }
+
+  resolvePromise(value){
+    this.promise(value)
+    this.promise = null
   }
 
   _init = (contexto) => {
@@ -37,7 +49,7 @@ class Popup {
     }
   }
 
-  async recargarVidaPromise(resolve) {
+  recargarVida = () => {
     let i = 0;
     let intervalo = setInterval(() => {
       i = i % this.corazones.length;
@@ -49,16 +61,10 @@ class Popup {
       if (i == this.corazones.length) {
         setTimeout(() => {
           clearInterval(intervalo);
-          resolve(true);
+          this.resolvePromise(true)
         }, 300);
       }
     }, 500);
-  }
-
-  recargarVida() {
-    return new Promise((resolve) => {
-      this.recargarVidaPromise(resolve);
-    });
   }
 
   crearCorazones() {
@@ -90,7 +96,8 @@ class Popup {
   async reiniciar() {
     // inicia shuffle infinito
     this.contexto._animations.shuffleAnimate(null, "infinite");
-    await this.recargarVida();
+    this.recargarVida()
+    await this.setPromise()
     // detiene shuffle infinito
     this.contexto._animations.detenerAnimacion();
     // para devolver una promesa envuela

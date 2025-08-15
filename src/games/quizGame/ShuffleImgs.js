@@ -4,12 +4,12 @@ import { src_obj } from "../../utils/default.js";
 
 class ShuffleImgsAnim {
   constructor() {
-    this.imagen = null; // pasar por parametro
+    this.imagen = null;      // pasar por parametro
     this.srcInicial = null; // pasar por parametro
     this.srcFinal = null;
-    this.datos = null; // pasar por parametro
+    this.datos = null;         // pasar por parametro
     this.tiempoDeCambio = 100; // ms entre cada cambio de imagen
-    this.duracionTotal; // ms de duración total del efecto
+    this.duracionTotal;        // ms de duración total del efecto
     this.intervalo;
     this.timeout;
     this.indiceActual = 0;
@@ -76,6 +76,12 @@ class ShuffleImgsAnim {
       );
     }
   };
+
+  async setPromise(){
+    return new Promise((resolve) => {
+      this.promise = resolve;
+    });
+  }
 
   detenerAnimacion = () => {
     if (this.intervalo) {

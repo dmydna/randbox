@@ -11,6 +11,8 @@ function menuTutorial(menu) {
          <li>Cuenta cuántas veces aparece cada objeto.</li>
          <li>Vuelve hacer clic para ver la siguiente aparicion.</li>
          <li>Continua hasta completar la barra</li>
+         <br>
+         <li>Usa <i class="fi fi-rr-menu-dots-vertical"></i> para pausar el juego en cualquier momento</li>
         </ul>
         </secction>
         <secction class="tutorial-quiz">

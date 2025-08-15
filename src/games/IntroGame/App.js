@@ -1,131 +1,54 @@
-import App from "../../main.js";
-import EventManager from "../../managers/Events.js";
-import memory from "../../managers/Memory.js";
+import renderBar from '../../componentes/renderBar.js';
+import renderQuiz from '../../componentes/renderQuiz.js';
+import IntroGameUI from './GameUI.js';
+import memory from '../../managers/Memory.js';
 
-class introGameApp extends EventManager {
-  constructor(quizVacio, intentos, container) {
-    super();
-    this.quiz = quizVacio;
-    this.intentos = intentos;
-    this.intentosRestantes = intentos;
-    this.preguntas = Object.keys(quizVacio);
-    this.estado = null;
-    this.container = container;
-    this.progreso = null;
-    this.teclado = false;
-    this.box = this.container.querySelector(".box");
-    this.pregunta = this.container.querySelector(".gift");
-    this.index = 0;
-  }
+const IntroGameApp = async (App, container) => {
 
-  jugar() {
-    if (this.teclado) {
-      this._addEvent(document, "keydown", (e) => {
-        this.keyboardHander(e);
-      });
+    const gameContainer = container.querySelector('#game-container') 
+    const progressContainer = container.querySelector('.progress-container')
+
+    const ProgressBar = renderBar()
+    const Quiz = renderQuiz()
+
+    progressContainer.appendChild(ProgressBar)
+    gameContainer.appendChild(Quiz)
+
+
+    const userResp = container.querySelector('.respUser-clicker')
+    const img = document.createElement('img')
+    img.className = 'gift'
+    userResp.replaceWith(img)
+
+    const boxContainer = container.querySelector('.box-container')
+    boxContainer.classList.add('center-fix')
+
+ 
+    const partida = memory.get("partida_quiz")
+    const opciones = memory.get("opciones")
+    const partida_intro = memory.get("partida_intro")
+
+
+    const IntroGame = new IntroGameUI(partida.quiz, opciones.intentos, gameContainer)
+    IntroGame.progreso = progressContainer.querySelector('.progress-bar')
+    // Carga config teclado
+    if(opciones.teclado == 1){
+    	IntroGame.teclado = true
     }
-    this._addEvent(this.box, "animationstart", this.boxAnimationStart);
-    this._addEvent(this.box, "animationend", this.boxAnimationEnd);
-    this._addEvent(this.box, "click", this.manejarRespuestaUsuario);
-  }
 
-  endGame() {
-    this.cambiarEstado({ endgame: true });
-    this.box.addEventListener(
-      "animationend",
-      () => {
-        memory.set("token", "quiz-loaded");
-        App.router("/quiz");
-      },
-      { once: true }
-    );
-  }
-
-  cambiarEstado(States) {
-    Object.entries(States).forEach(([State, bool]) => {
-      if (bool) {
-        this.estado = State;
-        document.body.classList.add(State);
-      } else {
-        document.body.classList.remove(State);
-      }
-    });
-  }
-
-  keyboardHander(e) {
-    if (e.key == " ") {
-      if(this.estado == 'box-down'){
-         this.box.click();
-      }
+    if(opciones.memoria == 1){
+        IntroGame.resumen = true;
+        IntroGame.reanudarPartida(partida_intro)
+        memory.set( 'menu', { ...memory.get('menu'), resume_to: 'intro' } )
     }
-  }
 
-  kill() {
-    this._removeAllEvents();
-  }
 
-  boxAnimationStart = () => {
-    this.cambiarEstado({
-      "box-up": true,
-      "box-down": false,
-      "box-anim": true,
-    });
-  };
+    await IntroGame.jugar() // espera que termine partida
 
-  boxAnimationEnd = () => {
-    this.cambiarEstado({
-      "box-up": false,
-      "box-down": true,
-      "box-anim": false,
-    });
-    if (this.intentosRestantes == 0) {
-      this.endGame();
-    }
-  };
+    memory.set("token", "quiz-loaded");
+    App.setPreRender(()=>{document.body.classList.add('onload')})
+    App.forward();
 
-  actualizarData() {
-    // Actualiza cantidad de apariciones
-    const pregunta = this.preguntas[this.index];
-    this.quiz[pregunta] = this.quiz[pregunta] ?? 0;
-    this.quiz[pregunta]++;
-
-    memory.set("partida", {
-      ...memory.get("partida"),
-      quiz: this.quiz,
-      preguntasDisponibles: this.preguntas,
-    });
-  }
-
-  manejarRespuestaUsuario = () => {
-    if (this.intentosRestantes == 0) {
-      this._removeAllEvents();
-      return;
-    }
-    this.cambiarEstado({ playGame: true });
-    this.avanzarJuego();
-    this.actualizarData();
-  };
-
-  obtenerProgreso() {
-    let progreso =
-      ((this.intentos - this.intentosRestantes + 1) / this.intentos) * 100;
-    if (this.intentosRestantes == 0) {
-      progreso = "100%";
-    }
-    return progreso;
-  }
-
-  avanzarJuego = () => {
-    if (!this.container.querySelector(".box-up")) {
-      this.index = Math.floor(Math.random() * this.preguntas.length);
-      this.cambiarEstado({ "box-anim": true, "box-down": false });
-      this.pregunta.src = `src/assets/img/objects/${
-        this.preguntas[this.index]
-      }.png`;
-      this.progreso.style.width = `${this.obtenerProgreso()}%`;
-      this.intentosRestantes--;
-    }
-  };
 }
 
-export default introGameApp;
+export default IntroGameApp

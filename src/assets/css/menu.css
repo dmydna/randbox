@@ -1,7 +1,6 @@
-
-
 #menu 
 .box {   
+  opacity: 0;
   position: relative;
   z-index: 1;
   top: 0;
@@ -17,17 +16,12 @@
 
 #menu 
 .onload .box {
-    animation: bounce-in-top 1.1s both;
-}
-
-
-#menu 
-.onload .box {
+    opacity: 1;
     animation: caida-randbox var(--animation-time) !important;
 }
 
 #menu 
-.onload #menu{
+.onload .popup{
     opacity: 0;
 }
 
@@ -47,12 +41,8 @@
 #menu .range span {
     width: 25px;
     display: inline-block;
-  }
-  
-#menu 
-.popup-active .box {
-    display: none;
-  }
+}
+
 
 #menu 
 .onStartGame .gift {
@@ -146,8 +136,14 @@
 } 
 
 #menu 
-.continue-btn{
-  display: var(--continue-menu)!important;
+.menu .continue-btn{
+  /* display: var(--continue-menu)!important;  */
+  display: none;
+}
+
+
+#menu .menu .exit-btn{
+  display: none;
 }
 
 #menu 
@@ -213,6 +209,7 @@
 .help-menu {
   min-width: 300px;
 }
+
 
 
 #menu 
@@ -282,6 +279,45 @@
   font-size: 20px;
   font-weight: bold;
   margin-inline: 3px;
+}
+
+
+#menu #menuDots{
+  display: none;
+}
+
+
+
+#menu .menu-pause .continue-btn, 
+#menu .menu-pause .exit-btn{
+  display: block;
+}
+#menu .menu-pause .play-btn,
+#menu .menu-pause .options-btn {
+  display: none;
+}
+
+#menu .button-menu-item {
+  font-size: 2px;
+}
+
+#menu .menu-pause .popup-ico{
+  animation-name: heartbeat;
+}
+
+
+#menu .menu-pause.main-menu-active .popup::before{
+  font-weight: bolder;
+  position: relative;
+  background: white;
+  width: fit-content;
+  margin-inline: auto;
+  font-size: 22px;
+  padding: 0 10px;
+  letter-spacing: 3pt;
+  content: 'PAUSE';
+  left: 5px;
+  top: -25px;
 }
 
 

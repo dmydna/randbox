@@ -1,10 +1,5 @@
-import renderNav from '../componentes/renderNav.js';
-import App from "../main.js";
+import scoreHeader from '../componentes/scoreHeader.js';
 import memory from '../managers/Memory.js';
-import Navbar from '../managers/Nav.js';
-
-
-
 
 
 function createScoreBoardElem(pregunta, respuesta){
@@ -42,7 +37,7 @@ function scoreItemAnim(elems){
 }
 
 function scoreBarAnim(scoreContainer){
-  const score_points = memory.get('partida').score
+  const score_points = memory.get("partida_quiz").score
   let i = 0;
   let intervalo = setInterval(() => {
     scoreContainer.innerHTML = i;
@@ -55,9 +50,9 @@ function scoreBarAnim(scoreContainer){
 }
 
 
-
-
 function scorePage(App){
+
+
 
   const token = memory.get('token')
   if( token == 'init' || token == 'quiz-loaded'){
@@ -65,53 +60,51 @@ function scorePage(App){
     return
   }
 
-  document.body.className = ""
-  document.documentElement.className = ""
   document.documentElement.classList.add('score');  
 
   const template = document.createElement("template");
 
   template.innerHTML = `
-    <div class="header">
-      <img height="60px" src="src/assets/img/ui/high-score.png">
-      <h1 class="score-bar">
-      <img height="35px" src="src/assets/img/ui/coin.png"></i>
-      <p class="score-item"></p>
-      </h1>
-    </div>
      <div class="container">
-     <div id="game-container">
-        <div class="randbox"></div>
-      </div>
+       <div id="game-container">
+         <div class="randbox"></div>
+       </div>
      </div>
-     </div>
-     <div class="nav-footer"></div>
   `
   const container = template.content.cloneNode(true);
-  
+  App.headerElem.appendChild(
+    scoreHeader()
+  )  
   const gameContainer = container.querySelector('.randbox') 
-  const navContainer = container.querySelector('.nav-footer') 
-  const scoreContainer = container.querySelector('.score-item')
+  const scoreContainer = App.headerElem.querySelector('.score-item')
 
-  // Visualiza score con delay
-  scoreBarAnim(scoreContainer)
 
-  navContainer.appendChild(renderNav())
 
-  const nav = new Navbar(navContainer)
-    
-  nav._createNav([
-    {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.router('/quiz')},
-    {id: 2, ico : 'fi-rr-home',       handler: ()=> App.router('/menu')},
-    {id: 3, ico : 'fi-rr-info',       handler: ()=> App.router('/info')}
+  App.navbar._updateNav([
+    {id: 1, ico : 'fi-rr-angle-left', handler: ()=> App.back()},
+    {id: 2, ico : 'fi-rr-home',       handler: ()=> App.home()},
+    {id: 3, ico : 'fi-rr-angle-right',handler: ()=> App.forward()}
   ])
 
-  const partida = memory.get("partida").quiz
+  const partida_quiz = memory.get("partida_quiz").quiz
     
-  const scoreBoardElem = createScoreBoard(gameContainer, partida)
+  const scoreBoardElem = createScoreBoard(gameContainer, partida_quiz)
 
-  // Visualiza score items con delay
-  scoreItemAnim(scoreBoardElem.childNodes)
+
+
+  // Animaciones onload body
+  if(document.body.classList.contains('onload')){
+    document.body.classList.remove('onload')
+    // Visualiza score bar con delay
+    scoreBarAnim(scoreContainer)
+    // Visualiza score items con delay
+    scoreItemAnim(scoreBoardElem.childNodes)
+  }else{
+    const giftContainer = container.querySelectorAll('.gift-container')
+    giftContainer.forEach(elem => {elem.style.opacity = '1'}); 
+    scoreContainer.innerHTML = memory.get("partida_quiz").score
+  }
+
   
   return container
 }

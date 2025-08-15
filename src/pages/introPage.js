@@ -1,61 +1,18 @@
-import renderBar from '../componentes/renderBar.js';
-import renderQuiz from '../componentes/renderQuiz.js';
-import IntroGameApp from '../games/IntroGame/App.js';
-import memoria from '../managers/Memory.js';
-
+import IntroGameApp from "../games/IntroGame/App.js";
 
 function introPage(App){
-    document.body.className = ""
+
     const template = document.createElement("template");
 
     template.innerHTML = `
-    <div class="header"></div>
     <div class="container">
         <div id="game-container"></div>
         <div class="progress-container"></div>
     </div>
-    <div class="nav-footer"></div>
     `
     const container = template.content.cloneNode(true); 
-    const gameContainer = container.querySelector('#game-container') 
-    const progressContainer = container.querySelector('.progress-container')
 
-    const ProgressBar = renderBar()
-    const Quiz = renderQuiz()
-
-    progressContainer.appendChild(ProgressBar)
-    gameContainer.appendChild(Quiz)
-
-    // Animacion Inicial
-    const box = container.querySelector('.box')
-
-    document.body.classList.add("onload")
-    box.addEventListener('animationend', ()=>{
-        document.body.classList.remove('onload')
-    },{once:true})
-    
-
-    const userResp = container.querySelector('.respUser-clicker')
-    const img = document.createElement('img')
-    img.className = 'gift'
-    userResp.replaceWith(img)
-
-    const boxContainer = container.querySelector('.box-container')
-    boxContainer.classList.add('center-fix')
-
- 
-    const partida = memoria.get("partida")
-    const config = memoria.get("opciones")
-
-
-    const IntroGame = new IntroGameApp(partida.quiz, config.intentos, gameContainer)
-    IntroGame.progreso = progressContainer.querySelector('.progress-bar')
-    // Carga config teclado
-    if(config.teclado == 1){
-    	IntroGame.teclado = true
-    }
-
-    IntroGame.jugar()
+    IntroGameApp(App, container)
 
     return container
 }

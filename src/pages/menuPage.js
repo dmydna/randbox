@@ -1,101 +1,73 @@
-import memory       from '../managers/Memory.js';
-import renderNav    from '../componentes/renderNav.js';
-import Navbar       from '../managers/Nav.js';
-import MenuApp      from '../menu/App.js';
-import menuControls from '../menu/componentes/controls.js';
-import menuHelp     from '../menu/componentes/help.js';
-import menuMain     from '../menu/componentes/main.js';
-import menuOptions  from '../menu/componentes/options.js';
-import menuTutorial from '../menu/componentes/tutorial.js';
+import memory from "../managers/Memory.js";
+import Menu from "../menu/App.js";
+
+function menuPause(){
+  const memory_config = memory.get("opciones");
+  const memory_menu = memory.get("menu");
+  if(memory.get('token') != 'score-loaded'){
+    if(memory_config.menu == 1 && 
+     memory_config.memoria == 1  && 
+     memory_menu.pause == 1 ){
+      document.body.classList.add('menu-pause')
+    }else{
+      document.body.classList.remove('menu-pause')
+    }
+  }
+}
+
+function menuPage(App, startMenu = null) {
 
 
+  const template = document.createElement("template");
 
-const menuPage = (App, startMenu=null) => {
-
-    const template = document.createElement("template");
-
-    template.innerHTML = `
-    <div class="header"></div>
+  template.innerHTML = `
     <div class="container">
         <img class="box" src="/src/assets/img/ui/open-box.png" />
         <div class="popup"></div>
     </div>
-    <div class="nav-footer"></div>
-    `
-    const container = template.content.cloneNode(true);
-    const navContainer = container.querySelector('.nav-footer')
-    const popupContainer = container.querySelector('.popup')
+    `;
 
-    const Nav = renderNav()
-    navContainer.appendChild(Nav)
-
-    const Menu = new MenuApp(container)
-    Menu.nav = new Navbar(navContainer)
-    
-    const menuContent = {
-        name: 'main-menu',
-        estado: 'main-menu-active',
-        render:  menuMain,
-        children: [
-          {name: 'continue',estado: 'continue-menu-active'},
-          {name: 'play',    estado: 'play-game'},
-          {name: 'options', estado: 'options-menu-active', render: menuOptions},
-          {name: 'help',    estado: 'help-menu-active',    render: menuHelp,
-            children: [
-              {name: 'tutorial', estado: 'resumen-submenu-active', render: menuTutorial},
-              {name: 'controls', estado: 'controls-submenu-active',render: menuControls}
-            ]
-          }
-        ]
-    }
-
-
-    if(startMenu){
-        // Renderiza pagina basada en menu
-        // crea instancia unica de menu
-        Menu._createMenu(menuContent)
-        Menu.showMenu(true)
-        Menu.cambiarMenu(startMenu)
-        document.documentElement.id= 'menu'
-        document.documentElement.className = startMenu
-        navContainer.style.visibility = 'hidden'
-        const i = document.createElement('i')
-        i.className = 'fi fi-ss-cross close-btn'
-
-        i.addEventListener('click', ()=>{
-            history.back();
-        },{once: true})
+  const container = template.content.cloneNode(true);
+  const popupContainer = container.querySelector(".popup");
 
 
 
-
-        popupContainer.appendChild(i)
-
-    }else{
-        // Inicia por default main
-        // Animacion de inicio
-        document.onload = document.body.classList.add("onload");
-        const config = memory.get('opciones')
-
-        container.querySelector('.box').addEventListener('animationend', ()=>{
-            if( config.menu == 0 ){
-                App.router('/intro')
-            }else{
-                Menu._createMenu(menuContent)
-                Menu.showMenu(true)
-                Menu.cambiarMenu('main-menu')
-            }
-            document.body.classList.remove('onload')
-        },{once:true})
-    }
+  Menu.init({
+    elem: popupContainer, 
+    nav: App.navbar, 
+    box: container.querySelector('.box')
+  });
 
 
+  if (startMenu) {
+    // Renderiza pagina basada en menu
+    // muestra instancia unica de menu
+    Menu.showMenu(true);
+    Menu.changeMenu(startMenu);
+    document.documentElement.id = "menu";
+    document.documentElement.className = startMenu;
+    const i = document.createElement("i");
+    i.className = "fi fi-ss-cross close-btn";
+    document.documentElement.classList.add("nav-hide");
+
+    i.addEventListener("click",() => {
+        App.resume()
+    },{ once: true });
+
+    popupContainer.appendChild(i);
+
+  } else {
+    // Inicia por default main
+    // Animacion de inicio
+    Menu.box = container.querySelector(".box");
+    Menu.animarInicio();
+    Menu.changeMenu("main-menu");
+    menuPause()
+    // inicia en modo pausa
+  }
 
 
-    return container
+  return container;
 }
 
-
-export default menuPage
-
-
+export default menuPage;

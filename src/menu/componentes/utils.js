@@ -2,31 +2,38 @@ import memory from "../../managers/Memory";
 
 // CSS CONFIG
 
-function _updCssVars() {
+function updateCssVars() {
   const opciones = memory.get("opciones");
-  const partida = memory.get("partida");
+  const partida_quiz = memory.get("partida_quiz");
+  const partida_intro = memory.get("partida_intro")
 
   const html = document.documentElement;
   // html.style.setProperty("--progress-enable", opciones.progreso * 0.5);
-  html.style.setProperty("--menu-enable", opciones.menu);
+  html.style.setProperty("--menu-btn", opciones.menu == 1 ? 'block' : 'none');
   html.style.setProperty(
     "--animation-time",
     -1 * opciones.velocidad + 5.5 + "s"
   );
-  html.style.setProperty("--hearts", opciones.vidas);
-  html.style.setProperty(
-    "--continue-menu",
-    opciones.memoria == 1 &&
-      partida.estado != "_" &&
-      partida.estado != "user-wins"
+
+  if(opciones.memoria == 1){
+    html.style.setProperty(
+      "--continue-menu",
+      partida_quiz.resume &&
+      partida_quiz.estado != "user-wins" || 
+      partida_intro.resume &&  
+      partida_quiz.estado != "user-wins" 
       ? "flex"
       : "none"
-  );
-  html.style.setProperty(
-    "--score-menu",
-    opciones.memoria == 1 && partida.estado == "user-wins" ? "flex" : "none"
-  );
-}
+    );
+    html.style.setProperty(
+      "--score-menu",
+      partida_quiz.estado == "user-wins" ? "flex" : "none"
+    );
+  }
+
+  }
+
+
 
 // MENU CREATE ITEMS
 
@@ -203,6 +210,37 @@ function _createGroupRadio(item, _groupHandler){
 
 
 
+// // Switchers
+
+function _createButtonItem(item, _switchHandler){
+  const opciones = memory.get("opciones");
+  const template = document.createElement("template");
+
+  template.innerHTML = `
+  <li class="menu-options-item">
+    <span class='title-options'></span>
+    <div class="button-menu-item" checked>
+      <i style="font-size:20px" class="${item.data.class}" ></i>
+    </div>
+  </li>`
+
+  const container = template.content.cloneNode(true);
+
+  const span  = container.querySelector('.title-options')
+  const div = container.querySelector('.button-menu-item')
+
+
+  div.id = item.id
+  div.checked = opciones[item.id] == 0 ? false : true
+  span.textContent = item.title;
+
+  div.addEventListener("click", () => {
+    _switchHandler(div, item.id, item.func);
+  });
+
+  return container 
+}
+
 // Switchers
 
 function _createSwitchItem(item, _switchHandler){
@@ -224,12 +262,13 @@ function _createSwitchItem(item, _switchHandler){
   const input = container.querySelector('input')
 
 
+  input.id = item.id
   input.checked = opciones[item.id] == 0 ? false : true
   input.value = opciones[item.id] ?? item.value;
   span.textContent = item.title;
 
   input.addEventListener("input", () => {
-    _switchHandler(input, item.id);
+    _switchHandler(input, item.id, item.func);
   });
 
   return container 
@@ -268,8 +307,7 @@ function _createRangeItem(item, _rangeHandler) {
 }
 
 export {
-  _createGroupRadio, _createRangeItem, _createSwitchItem, 
-  _updCssVars,
-  _createGroup,
+  _createButtonItem, _createGroup, _createGroupRadio, _createRangeItem, _createSwitchItem,
+  updateCssVars
 };
 

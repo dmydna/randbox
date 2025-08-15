@@ -1,5 +1,5 @@
 // memory.js
-import MemoryManager from './MemoryManager.js';
+import MemoryManager from './MemoryManagerDev.js';
 
 const memory = new MemoryManager();
 

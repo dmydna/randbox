@@ -1,24 +1,21 @@
 
-import Nav from "../componentes/renderNav.js";
 import memory from "../managers/Memory.js";
-import Navbar from "../managers/Nav.js";
 
 import { hoverClassToggle } from "../utils/utils.js";
 
 
-function infoPage(App){
+function aboutPage(App){
 
    document.body.className = ""
 
    const template = document.createElement("template");
 
    template.innerHTML = `
-   <div class="header"></div>
    <div class="container">
        <div id="game-container">
             <div class="randbox">
                 <img class="box bounce-in-top" src="/src/assets/img/ui/open-box.png">
-                <div class="info-container">
+                <div class="about-container">
                     <h1 class="title">randbox</h1>
                     <div class="descrip">
                        Un juego simple de preguntas y respuestas que explora la frecuencia de aparición.
@@ -30,21 +27,18 @@ function infoPage(App){
             </div>
         </div>
    </div>
-   <div class="nav-footer"></div>
    `
    const container = template.content.cloneNode(true);
-   const navContainer = container.querySelector('.nav-footer')
-   navContainer.appendChild(Nav()) 
    const box = container.querySelector(".bounce-in-top");
 
 
    const GIT = "https://github.com/dmydna/randbox"
 
-   const nav = new Navbar(navContainer)
+   const nav = App.navbar
 
-   nav._createNav([
-        {id: 1, ico : 'fi-rr-angle-left', handler: () => App.router('/score')},
-        {id: 2, ico : 'fi-rr-home',       handler: () => App.router('/menu')},
+   nav._updateNav([
+        {id: 1, ico : 'fi-rr-angle-left', handler: () => App.back()},
+        {id: 2, ico : 'fi-rr-home',       handler: () => App.home()},
         {id: 3, ico : 'fi-rr-info',       handler: () => window.open( GIT ,'_blank') }
     ])
 
@@ -68,4 +62,4 @@ function infoPage(App){
    return container
 }
 
-export default infoPage
+export default aboutPage

@@ -15,8 +15,8 @@ function menuHelp(menu) {
   const li_tutorial = container.querySelector(".tutorial-ref");
   const li_controls = container.querySelector(".controls-ref");
 
-  li_controls.addEventListener("click", () => menu.cambiarMenu("controls"));
-  li_tutorial.addEventListener("click", () => menu.cambiarMenu("tutorial"));
+  li_controls.addEventListener("click", () => menu.changeMenu("controls"));
+  li_tutorial.addEventListener("click", () => menu.changeMenu("tutorial"));
 
   return container;
 }

@@ -1,3 +1,5 @@
+.gitignore
+src/managers/Memory.js
 # Logs
 logs
 *.log

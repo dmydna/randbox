@@ -1,16 +1,17 @@
 function menuControls() {
+  
   const keys = [
-    { name: "m", type: "key", title: "menu" },
-    { name: "space", type: "key", title: "lanzar caja" },
-    { name: "#", type: "title", title: "Seccion de preguntas" },
-    { name: "#", type: "title", title: "# teclado" },
-    { name: "back", type: "key", title: "reinciar contador" },
-    { name: "space", type: "key", title: "incrementar contador" },
-    { name: "enter", type: "key", title: "enviar respuesta" },
-    { name: "h", type: "key", title: "siguiente objeto" },
-    { name: "#", type: "title", title: "# botones" },
-    { name: "refresh", type: "btn", title: "reinciar contador" },
-    { name: "plus", type: "btn", title: "incrementar contador" },
+    { name: "escape", type: "key",   title: "menu" },
+    { name: "space",  type: "key",   title: "lanzar caja" },
+    { name: "#",      type: "title", title: "SECCION DE PREGUNTAS" },
+    { name: "#",      type: "title", title: "# teclado" },
+    { name: "back",   type: "key",   title: "reinciar contador" },
+    { name: "space",  type: "key",   title: "incrementar contador" },
+    { name: "enter",  type: "key",   title: "enviar respuesta" },
+    { name: "h",      type: "key",   title: "siguiente objeto" },
+    { name: "#",      type: "title", title: "# botones" },
+    { name: "refresh",type: "btn",   title: "reinciar contador" },
+    { name: "plus",   type: "btn",   title: "incrementar contador" },
     { name: "social-network", type: "btn", title: "enviar respuesta" },
   ];
 
@@ -19,7 +20,7 @@ function menuControls() {
   template.innerHTML = `
     <section class="controls-submenu">
         <h2 class="menu-title">
-            <i class="fi fi-rr-gamepad"></i>controles
+          <i class="fi fi-rr-gamepad"></i>controles
         </h2>
         <ul class="menu"></ul>
     </section>
@@ -42,13 +43,13 @@ function menuControls() {
     }
 
     menuContainer.innerHTML += `
-            <li> 
-               <div>${title}</div> 
-               <div style="display: flex; gap: 10px;">  
-                 ${image}
-               </div>
-            </li>
-        `;
+       <li> 
+        <div>${title}</div> 
+        <div style="display: flex; gap: 10px;">  
+          ${image}
+        </div>
+       </li>
+    `;
   });
 
   return container;

@@ -1,23 +1,23 @@
 import memory from "../../managers/Memory.js";
 import {
-  _updCssVars,
-  _createSwitchItem,
-  _createRangeItem,
+  _createButtonItem,
+  _createGroup,
   _createGroupRadio,
-  _createGroup
+  _createRangeItem,
+  _createSwitchItem
 } from "./utils.js";
 
 
 
 function menuOptions() {
 
-  memory.refresh()
+  // memory.refresh()
   const cantPreg = memory.get("preguntas").length;
 
   const opcionesItems = [
-    { id: "memoria", title: "guarda partida", value: 0, type: "switch" },
+    { id: "memoria", title: "continuar partida", value: 0, type: "switch" },
+    { id: "menu", title: "boton menu", value: 0, type: "switch" },
     { id: "teclado", title: "teclado", value: 0, type: "switch" },
-    { id: "menu", title: "menu", value: 0, type: "switch" },
     { id: "tutorial", title: "tutorial", value: 0, type: "switch" },
     {id: "modo",title: "modo de juego" ,value: 3,type: "group-radio", group: [
       { id: "mode-1",   title: "Child",   value: 0, type: "switch" },
@@ -31,6 +31,10 @@ function menuOptions() {
       {id: "vidas", title: "vidas", value: 3, type: "range", max: 12 },
       {id: "intentos",title: "intentos",value: 3,type: "range",min: 2,max: 12,},      
     ], hide:true},
+    { id: "cache", title: "limpiar cache", value: 0, type: "button", data: {
+      class: "fi fi-rr-trash-xmark",
+    }
+    } 
 
   ];
 
@@ -51,6 +55,9 @@ function menuOptions() {
   opcionesItems.forEach((item) => {
     let li = "";
     switch (item.type) {
+      case "button":
+        li = _createButtonItem(item, CacheHandler);
+        break;
       case "switch":
         li = _createSwitchItem(item, _switchHandler);
         break;
@@ -71,11 +78,27 @@ function menuOptions() {
   return container;
 }
 
+
+
+
+// Cache Handler
+
+function CacheHandler(div){
+  memory.fullreset() 
+  const i = div.querySelector('i')
+  if(i.className.includes('rr')){
+    i.className =  i.className.replace('rr', 'ss') 
+  }else{
+    i.className =  i.className.replace('ss', 'rr') 
+  }
+  
+}
+
+
 // Handlers
 
 
-function _switchHandler(elem, key){
-
+function _switchHandler(elem, key, funcion = null){
   if(elem.checked){
     memory.set("opciones", {
       ...memory.get("opciones"),
@@ -86,6 +109,9 @@ function _switchHandler(elem, key){
       ...memory.get("opciones"),
       [key]: 0,
     });
+  }
+  if(funcion){
+    funcion()
   }
 }
 
