@@ -1,9 +1,8 @@
 import App from "../../App.js";
 import memory from "../../managers/Memory.js";
 import { hoverFlatIcon, shuffleArr } from "../../utils/utils.js";
+import { updateCssVars } from "./utils.js";
 import root_menu from "/src/assets/img/popup/menu-game.png";
-import pause_menu from "/src/assets/img/popup/walkman.png";
-
 
 function menuMain(menu) {
 
@@ -23,7 +22,7 @@ function menuMain(menu) {
   const img = document.createElement("img");
 
   img.className = "popup-ico";
-  img.src = memory.get('menu').pause == 1 ? pause_menu : root_menu
+  img.src = memory.get('menu').pause == 1 ? root_menu : root_menu
   img.height = "100px";
   container.appendChild(img);
 
@@ -60,6 +59,8 @@ function menuMain(menu) {
   container.appendChild(ul);
 
   document.dispatchEvent(new CustomEvent("onChangeMenu"))
+
+  updateCssVars()
 
   return container;
 }

@@ -1,11 +1,10 @@
 import memory from "../../managers/Memory.js";
 import {
-  _updCssVars,
-  _createSwitchItem,
-  _createRangeItem,
-  _createGroupRadio,
+  _createButtonItem,
   _createGroup,
-  _createButtonItem
+  _createGroupRadio,
+  _createRangeItem,
+  _createSwitchItem
 } from "./utils.js";
 
 

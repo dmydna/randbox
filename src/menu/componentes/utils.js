@@ -1,9 +1,8 @@
-import App from "../../App.js";
 import memory from "../../managers/Memory";
 
 // CSS CONFIG
 
-function _updCssVars() {
+function updateCssVars() {
   const opciones = memory.get("opciones");
   const partida_quiz = memory.get("partida_quiz");
   const partida_intro = memory.get("partida_intro")
@@ -221,7 +220,7 @@ function _createButtonItem(item, _switchHandler){
   <li class="menu-options-item">
     <span class='title-options'></span>
     <div class="button-menu-item" checked>
-      <i class="${item.data.class}" ></i>
+      <i style="font-size:20px" class="${item.data.class}" ></i>
     </div>
   </li>`
 
@@ -308,7 +307,7 @@ function _createRangeItem(item, _rangeHandler) {
 }
 
 export {
-  _createGroup, _createGroupRadio, _createRangeItem, _createSwitchItem,
-  _updCssVars, _createButtonItem
+  _createButtonItem, _createGroup, _createGroupRadio, _createRangeItem, _createSwitchItem,
+  updateCssVars
 };
 

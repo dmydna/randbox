@@ -1,9 +1,9 @@
 function menuControls() {
   
   const keys = [
-    { name: "m",      type: "key",   title: "menu" },
+    { name: "escape", type: "key",   title: "menu" },
     { name: "space",  type: "key",   title: "lanzar caja" },
-    { name: "#",      type: "title", title: "Seccion de preguntas" },
+    { name: "#",      type: "title", title: "SECCION DE PREGUNTAS" },
     { name: "#",      type: "title", title: "# teclado" },
     { name: "back",   type: "key",   title: "reinciar contador" },
     { name: "space",  type: "key",   title: "incrementar contador" },

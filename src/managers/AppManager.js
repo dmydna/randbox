@@ -1,5 +1,5 @@
+import { updateCssVars } from "../menu/componentes/utils.js";
 import EventManager from "./Events.js";
-import { _updCssVars } from "../menu/componentes/utils.js";
 import Navigation from "./NavigationApp.js";
 
 
@@ -128,7 +128,7 @@ class AppManger extends EventManager {
     this.headerElem.innerHTML = ''
     this.navbar._kill()
 
-    _updCssVars();
+    updateCssVars();
 
     container.innerHTML = "";
     document.body.className = "";

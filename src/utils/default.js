@@ -62,7 +62,7 @@ const AppMemory = {
   partida_quiz:  partida_quiz,
   partida_intro: partida_intro,
   token: "init",                 // restricciones de router
-  menu : {resumen_to: null, pause: 0},
+  menu : {resume_to: null, pause: 0},
   version: '0.0111'       
 };
 

@@ -1,5 +1,5 @@
 import memory from "../managers/Memory.js";
-import Menu from "../menu/Menu.js";
+import Menu from "../menu/App.js";
 
 function menuPause(){
   const memory_config = memory.get("opciones");
@@ -65,6 +65,7 @@ function menuPage(App, startMenu = null) {
     menuPause()
     // inicia en modo pausa
   }
+
 
   return container;
 }

@@ -305,6 +305,22 @@
   animation-name: heartbeat;
 }
 
+
+#menu .menu-pause.main-menu-active .popup::before{
+  font-weight: bolder;
+  position: relative;
+  background: white;
+  width: fit-content;
+  margin-inline: auto;
+  font-size: 22px;
+  padding: 0 10px;
+  letter-spacing: 3pt;
+  content: 'PAUSE';
+  left: 5px;
+  top: -25px;
+}
+
+
 /*Intancia tutorial desde otras paginas*/
 
 .tutorial-from-intro .tutorial-tips,

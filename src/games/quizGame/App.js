@@ -89,6 +89,7 @@ const QuizGameApp = async (App, container) => {
     await QuizGame.jugar() // espera que termine partida
 
     memory.set("token", "score-loaded");
+    memory.set("menu",{resume_to: null, pause:0})
     App.setPreRender(()=>{document.body.classList.add('onload')})
     App.forward();
 }
