@@ -3,7 +3,7 @@
 __Randbox__ es un minijuego web de tipo trivia, en el que el jugador debe contar cuántas veces aparece cada objeto en pantalla.
 
 
-<img width="40%" style="border-radius: 10px" src="https://i.ibb.co/JFqHdVnc/randbox-preview.gif">
+<img width="35%" style="border-radius: 10px" src="https://i.ibb.co/gFMGMPRt/git-randbox-preview.gif">
 
 🔗 **Demo en vivo:** [https://randbox.netlify.app/](https://randbox.netlify.app/)
 
