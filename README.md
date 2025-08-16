@@ -1,13 +1,19 @@
-# Randbox
+# 🎮 Randbox
 
-Randbox es un minijuego web, similar a un juego de trivia, con una idea muy simple invita al jugador a contar la cantidad de apariciones de cada objeto que se muestra en pantalla.
-
-Este proyecto se desarrollo con la idea de un armar SPA usando solamente js vanilla.
+__Randbox__ es un minijuego web de tipo trivia, en el que el jugador debe contar cuántas veces aparece cada objeto en pantalla.
 
 
-<img width="40%"  src="https://i.ibb.co/JFqHdVnc/randbox-preview.gif">
+<img width="40%" style="border-radius: 10px" src="https://i.ibb.co/JFqHdVnc/randbox-preview.gif">
 
 🔗 **Demo en vivo:** [https://randbox.netlify.app/](https://randbox.netlify.app/)
+
+
+## 📖 Acerca del proyecto
+
+
+El proyecto nació como una __SPA desarrollada íntegramente con JavaScript vanilla__, y más adelante se incorporaron herramientas como __Vite__, __Page.js__ y __Flaticon__ para optimizar la carga, la navegación y los recursos visuales.
+
+A pesar de estas adiciones, se mantuvo la filosofía de __no usar frameworks pesados__ como React, priorizando un código ligero y control total sobre la implementación.
 
 ---
 
@@ -30,6 +36,12 @@ cd randbox
 npm install
 npm run dev
 ```
+Build de producción:
+
+```bash
+npm run build
+npm run preview
+```
 
 ---
 
@@ -51,83 +63,99 @@ src/
 ```
 ---
 
-## 🖥️  Secciones de la SPA
+## 🖥️ Secciones de la SPA
 
-1. Menu
-2. Intro     
-3. Quiz      
-4. Score
-5. About
+La aplicación consta de las siguientes vistas:
 
+1. **Menu** – Navegación principal y configuración.
+2. **Intro** – Primera etapa del juego.
+3. **Quiz** –  Segunda etapa, cuestionario basado en la partida.
+4. **Score** – Resultados y respuestas.
+5. **About** – Créditos.
 
-> El acceso a ciertas rutas esta restringido hasta completar las distintas etapas del juego
-
+> Algunas rutas están restringidas y solo se desbloquean al completar etapas previas.
 
 ---
 
-### Menu
 
-Se accede via UI o con la ruta `/menu` o por defecto  `/`. <br>
-En Menu se encuentra toda la informacion para navegar y configurar la UI de la App.
+### 📂 Menu
 
+Ruta: `/menu` o `/` (por defecto).
 
-####  Opciones de Menu
+Permite acceder a todas las secciones y configurar la UI de la App.
 
-> Cada opcion afectara de forma distinta a la SPA
+#### Opciones de Menú
 
 ```
 Options/
- ├── continuar partida    # Permite pausar juego y continuar
- ├── boton menu           # Muestra boton de menu 
- ├── teclado              # Jugar con teclado (en PC)
- ├── tutorial             # Tutorial (se activa por unica vez)
- ├── modo de juego/       # Distintas configuraciones del Juego
- |    ├── child/           
- |    ├── normal/          
- |    ├── default/         
- |    └── custom          # Muestra Configuracion manual (avanzado/)
- ├── avanzado/
- |    ├── velocidad       # Velocidad de animaciones (3 a 0.5)segs
- |    ├── dificultad      # Cantidad de imagenes distintas
- |    ├── vidas           # Cantidad de vidas
- |    └── intentos        # Canitdad de imagenes totales
- └── limpiar cache        # Borra partida 
+  ├── continuar partida # Activa modo pausa
+  ├── boton menu        # Muestra el botón de menú
+  ├── teclado           # Permite jugar con teclado (PC)
+  ├── tutorial          # Guía inicial (solo una vez)
+  ├── modo de juego/    # Configuraciones de partida
+  | ├── child/
+  | ├── normal/
+  | ├── default/
+  | └── custom          # Configuración manual avanzada
+  ├── avanzado/
+  | ├── velocidad       # Velocidad de animaciones (3 a 0.5 seg)
+  | ├── vidas           # Vidas disponibles
+  | ├── variedad        # Imágenes distintas mostradas
+  | └── apariciones     # Total de imagenes mostradas
+  └── limpiar cache     # Borrar la partida
 ```
 
-#### Modo Pausa
-
-Cuando la opcion esta activa, se puede pausar el juego aprentando el boton de __menu__. 
-En este modo se muestra la opcion __continue__ en UI de MENU.
-
-#### Modo tutorial
-
-Cuando la opcion esta activa, se puede acceder de forma directa a la seccion de __tutorial__ de menu. 
-`( menu > help > tutorial )`. <br>
-En este modo se muestra una version UI ligeramente distinta del __mismo__ MENU.
+#### Modos especiales
+- **Pausa**: Permite detener el juego y reanudarlo desde la opción *Continuar*.
+- **Tutorial**: Acceso directo a `/tutorial` desde `menu > help > como jugar?`.
 
 ---
 
-### Intro 
 
-Se accede via UI (al tocar `play / continue` en Menu) o directamente con la ruta: `/intro`. <br>
-Es la primer parte del juego, el jugador arma la partida.
-> Completar la primera parte dara acceso a otra vista de la SPA (quiz)
+## 🎯 Flujo del juego
 
-#
+### Intro
+
+Ruta: `/intro` (requiere acceso desde menú o partida previa).
+
+Primera parte del juego: preparación de la partida.  
+> Al completarla, se desbloquea el *Quiz*.
+
+---
 
 ### Quiz
 
-Se accede via UI (al tocar  `play / continue` en Menu) o directamente con la ruta: `/quiz`. <br>
-En la segunda parte del juego, se debera responder un quiz basado en la primera parte.
-> Completar la segunda parte dara acceso a otra vista de la SPA (score)
+Ruta: `/quiz` (requiere completar *Intro*).
 
-#
+Segunda parte: cuestionario basado en la partida.  
+> Al completarlo, se desbloquea *Score*.
+
+---
 
 ### Score
 
-Se accede via UI (al tocar `score` en Menu) o directamente con la ruta: `/score`. <br>
-Muestra el puntaje obtenido en la partida y todas las respuestas de la partida.
-> Se desbloquea esta vista, al completar 'quiz'
+Ruta: `/score` (requiere completar *Quiz*).
+
+Muestra el puntaje y todas las respuestas de la partida.
+
+---
+
+
+
+### 🌐 Rutas disponibles
+
+| Ruta        | Descripción | Restricciones |
+|-------------|-------------|--------------|
+| `/`         | Menú principal (por defecto) | No |
+| `/menu`     | Menú principal | No |
+| `/tutorial` | Tutorial (`menu > help > como jugar?`) | No |
+| `/options`  | Opciones del menú | No |
+| `/intro`    | Primera parte del juego | Sí |
+| `/quiz`     | Segunda parte del juego | Sí |
+| `/score`    | Informacion de la partida | Sí |
+| `/about`    | Créditos | No |
+
+
 
 
 
