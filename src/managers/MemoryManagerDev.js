@@ -1,14 +1,16 @@
 import { AppMemory } from "../utils/default.js";
 
-/*Nota: MemoryManager.check
-para las claves , se checkea que coincidan  AppStorage con AppMemory
-para los valores, se checkea la version  AppStorage con AppMemory
-*/
+/**
+ * MemoryManagerDev
+ * ----------------
+ * Administra y persiste los estados de la SPA usando `localStorage`.
+ * Mantiene los datos durante toda la sesión.
+ */
 
 class MemoryManager {
   constructor() {
     this.storage = "appStorage" // define clave de local storage 
-    this._Default = AppMemory; // es el valor de appStorage por default 
+    this._Default = AppMemory;  // valor de appStorage por default 
     this._Data = this.load();
   }
 
@@ -23,6 +25,14 @@ class MemoryManager {
   }
 
 
+/**
+ * Verifica la integridad del almacenamiento de la app.
+ *
+ * - Claves: si difieren → corrupción.
+ * - Versión: si no coincide con AppMemory.version → incompatibilidad de esquema.
+ * 
+ * @see AppMemory.version (default.js) para definición del número de versión.
+ */
   check(){
     const keys1 = Object.keys(this._Data)
     const keys2 = Object.keys(this._Default)

@@ -38,7 +38,7 @@ function updateCssVars() {
 // MENU CREATE ITEMS
 
 
-function _createGroup(group_item, {_range, _switch}){
+function _createGroup(group_item, {rangeHandler, switchHandler, buttonHandler}){
   const template = document.createElement("template");
 
   template.innerHTML = `
@@ -74,11 +74,11 @@ function _createGroup(group_item, {_range, _switch}){
     let li;
     switch (item.type) {
       case "switch":
-        li = _createSwitchItem(item, _switch);
-        break;
+        li = _createSwitchItem(item, switchHandler);break;
       case "range":
-        li = _createRangeItem(item, _range);
-        break;
+        li = _createRangeItem(item, rangeHandler);break;
+      case "button":
+        li = _createButtonItem(item, rangeHandler);break;
     }
     this_group.appendChild(li);
   });
@@ -151,7 +151,7 @@ function _createGroupRadioW(item, _groupHandler){
 
 
 
-function _createGroupRadio(item, _groupHandler){
+function _createGroupRadio(item, handler){
 
   // Caso Particular
   const opciones = memory.get('opciones')
@@ -185,15 +185,15 @@ function _createGroupRadio(item, _groupHandler){
 
   item.group.forEach(elem => {
 
-    let funchandler;
+    let itemHandler;
     switch(elem.id){
-      case 'mode-1':   funchandler = ()=>{ _groupHandler({...config_1, mode: elem.id}) }; break;
-      case 'mode-2':   funchandler = ()=>{ _groupHandler({...config_2, mode: elem.id}) }; break;
-      case 'default':   funchandler = ()=>{ _groupHandler({...config_0, mode: elem.id}) }; break;
-      case 'custom':   funchandler = ()=>{ _groupHandler({ mode: elem.id })}; break;
+      case 'mode-1':   itemHandler = ()=>{ handler({...config_1, mode: elem.id}) }; break;
+      case 'mode-2':   itemHandler = ()=>{ handler({...config_2, mode: elem.id}) }; break;
+      case 'default':  itemHandler = ()=>{ handler({...config_0, mode: elem.id}) }; break;
+      case 'custom':   itemHandler = ()=>{ handler({ mode: elem.id })}; break;
     }
     
-    const li = _createSwitchItem(elem, funchandler )
+    const li = _createSwitchItem(elem, itemHandler )
     const input = li.querySelector('input')
     input.value= elem.id
     input.name= item.id
@@ -212,7 +212,7 @@ function _createGroupRadio(item, _groupHandler){
 
 // // Switchers
 
-function _createButtonItem(item, _switchHandler){
+function _createButtonItem(item, handler){
   const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
@@ -235,7 +235,7 @@ function _createButtonItem(item, _switchHandler){
   span.textContent = item.title;
 
   div.addEventListener("click", () => {
-    _switchHandler(div, item.id, item.func);
+    handler(div, item.id, item.func);
   });
 
   return container 
@@ -243,7 +243,7 @@ function _createButtonItem(item, _switchHandler){
 
 // Switchers
 
-function _createSwitchItem(item, _switchHandler){
+function _createSwitchItem(item, handler){
   const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
@@ -268,7 +268,7 @@ function _createSwitchItem(item, _switchHandler){
   span.textContent = item.title;
 
   input.addEventListener("input", () => {
-    _switchHandler(input, item.id, item.func);
+    handler(input, item.id, item.func);
   });
 
   return container 
@@ -277,7 +277,7 @@ function _createSwitchItem(item, _switchHandler){
 
 // Range
 
-function _createRangeItem(item, _rangeHandler) {
+function _createRangeItem(item, handler) {
   const opciones = memory.get("opciones");
   const template = document.createElement("template");
 
@@ -301,7 +301,7 @@ function _createRangeItem(item, _rangeHandler) {
   input.max = item.max ?? 12;
   input.value = opciones[item.id] ?? item.value;
 
-  input.addEventListener("input", () => _rangeHandler(input, item.id));
+  input.addEventListener("input", () => handler(input, item.id));
 
   return container;
 }

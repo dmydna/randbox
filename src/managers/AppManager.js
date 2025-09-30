@@ -3,14 +3,19 @@ import EventManager from "./Events.js";
 import Navigation from "./NavigationApp.js";
 
 
-/*Nota:
-La navegacion tiene 3 tipos ( external, jump, lineal )
-*external: Cuando se rutea desde barra de direcciones
-Cuando se rutea desde la ui de la app (ej navbar, href) 
-es de tipo implicito internal:
- - *jump: cuando se rompe el orden de las paginas (ej. rutear con href)
- - *lineal: cuando se rutea con forward, back 
+/**
+ * Tipos de navegación soportados en la App
+ *
+ * - EXTERNAL: navegación desde la barra de direcciones del navegador.
+ * - JUMP: navegación interna que rompe el orden secuencial (ej: <a href> salteando pantallas).
+ * - LINEAL: navegación interna secuencial mediante forward/back.
  */
+const NavigationType = Object.freeze({
+  EXTERNAL: 'external',
+  JUMP: 'jump',
+  LINEAR: 'lineal'
+});
+
 
 
 class AppManger extends EventManager {
@@ -45,7 +50,7 @@ class AppManger extends EventManager {
 
   forward () {
     if(this.navigation.forward()){
-      this.navigationType = 'lineal'
+      this.navigationType = NavigationType.LINEAR
       this.refresh()
     };
   };
@@ -58,7 +63,7 @@ class AppManger extends EventManager {
 
   back () {
     if(this.navigation.back()){
-      this.navigationType = 'lineal'
+      this.navigationType = NavigationType.LINEAR
       this.refresh()
     }
   };
@@ -66,8 +71,8 @@ class AppManger extends EventManager {
   refresh(){
     this.paginaAtras  =  this.paginaActual;
     this.paginaActual = this.navigation.current;
-    if(this.navigationType == 'lineal' ||
-      this.navigationType == 'jump'){
+    if(this.navigationType ==   NavigationType.LINEAR ||
+      this.navigationType == NavigationType.JUMP ){
       history.pushState(null, '', this.navigation.current.url);
     }
     this.fastRender(this.paginaActual.url)
@@ -75,7 +80,7 @@ class AppManger extends EventManager {
   }
 
   resume(resumeTo){
-    this.navigationType = 'jump'
+    this.navigationType = NavigationType.JUMP
     if(resumeTo){
       this.goTo(resumeTo)
     }else{
@@ -84,7 +89,7 @@ class AppManger extends EventManager {
   }
 
   jump(id){
-    this.navigationType = 'jump'
+    this.navigationType = NavigationType.JUMP
     this.goTo(id)
   }
   
@@ -100,7 +105,7 @@ class AppManger extends EventManager {
 
   navigationEvent() {
 
-    const type    = this.navigationType ?? "external"
+    const type    = this.navigationType ?? NavigationType.EXTERNAL;
     const fromUrl = this.paginaAtras?.url ?? "";
     const toUrl   = this.paginaActual?.url ?? "";
   

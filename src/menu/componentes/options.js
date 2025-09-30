@@ -7,6 +7,7 @@ import {
   _createSwitchItem
 } from "./utils.js";
 
+import Modal from "../../componentes/modal.js";
 
 
 function menuOptions() {
@@ -29,13 +30,11 @@ function menuOptions() {
       {id: "velocidad",title: "velocidad",value: 3,type: "range",min: 2,max: 5,},
       {id: "dificultad",title: "dificultad",value: 5,type: "range",min: 1,max: cantPreg,},
       {id: "vidas", title: "vidas", value: 3, type: "range", max: 12 },
-      {id: "intentos",title: "intentos",value: 3,type: "range",min: 2,max: 12,},      
+      {id: "intentos",title: "intentos",value: 3,type: "range",min: 2,max: 12},   
+			{ id: "cache", title: "limpiar cache", value: 0, type: "button", 
+				data: {class: "fi fi-rr-trash-xmark",}
+			}   
     ], hide:true},
-    { id: "cache", title: "limpiar cache", value: 0, type: "button", data: {
-      class: "fi fi-rr-trash-xmark",
-    }
-    } 
-
   ];
 
   const template = document.createElement("template");
@@ -68,11 +67,17 @@ function menuOptions() {
         li = _createGroupRadio(item, _groupRadioHandler);
         break;
       case "group":      // grupo de opcion multiple
-        li = _createGroup(item, { _range:_rangeHandler, _switch: _switchHandler});
+        li = _createGroup(item, 
+          { 
+						rangeHandler:_rangeHandler,
+						switchHandler: _switchHandler,
+						rangeHandler: CacheHandler
+				});
         break;
     }
     ul.appendChild(li);
   });
+
 
 
   return container;
