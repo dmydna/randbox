@@ -1,11 +1,13 @@
 import { AppMemory } from "../utils/default.js";
 
 
-/*Nota: MemoryManagerEx
-funciona como memoryManger, pero usa el evento 'beforeunload'
-para hacer lecturas y escrituras minimas al localStorage,
-elimina la clave durante la session
-*/
+/**
+ * MemoryManager
+ * -------------
+ * Variante de MemoryManagerDev que:
+ * - Usa el evento `beforeunload` para guardar solo al salir.
+ * - Elimina los datos durante la sesión para reducir lecturas/escrituras.
+ */
 
 class MemoryManager{
   constructor() {
@@ -24,7 +26,14 @@ class MemoryManager{
     return this._Data;
   }
 
-
+/**
+ * Verifica la integridad del almacenamiento de la app.
+ *
+ * - Claves: si difieren → corrupción.
+ * - Versión: si no coincide con AppMemory.version → incompatibilidad de esquema.
+ * 
+ * @see AppMemory.version (default.js) para definición del número de versión.
+ */
   check(){
     const keys1 = Object.keys(this._Data)
     const keys2 = Object.keys(this._Default)
